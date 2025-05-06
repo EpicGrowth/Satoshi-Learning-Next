@@ -1,0 +1,538 @@
+/* Dark mode enhancements for Satoshi Station Next
+   This stylesheet is loaded conditionally in dark mode to apply more specific styling */
+
+/* Standardized color variables - using the exact Satoshi Station orange */
+:root {
+  --std-orange: #FF523C;         /* Exact Satoshi Station orange */
+  --std-orange-hover: #FF6E5C;   /* Lighter hover state */
+  --std-orange-deep: #E64431;    /* Deeper accent for shadows/focus */
+  --std-green: #2ECC71;          /* Standard Green for success/beginner */
+  --std-yellow: #F1C40F;         /* Standard Yellow for intermediate */
+  --std-red: #E74C3C;            /* Standard Red for advanced/error */
+  --std-blue: #3498DB;           /* Standard Blue for info */
+}
+
+:root.dark {
+  /* Enhanced dark mode colors */
+  --bg-dark: #0f1219;            /* Deeper background */
+  --bg-card: #171c26;            /* Card background */
+  --bg-card-hover: #1c2230;      /* Card hover state */
+  --border-subtle: rgba(255, 255, 255, 0.08); /* Subtle borders */
+}
+
+/* Overall theme improvements */
+.dark body {
+  background-color: var(--bg-dark);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CRITICAL BRAND REQUIREMENT: Ensure all instances of Satoshi Station text use exactly the same styling */
+[class*='satoshi-station'],
+.brand-name,
+span:contains('Satoshi Station'),
+h1 span:contains('Satoshi Station'),
+.font-brand,
+[data-brand-text='true'] {
+  font-family: var(--font-brand), 'Exo 2', sans-serif !important;
+  color: #FF523C !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-shadow: 0 0 1px rgba(255, 82, 60, 0.1) !important;
+  white-space: nowrap !important;
+}
+
+/* Minor adjustments for header/footer logo - ensuring consistent branding */
+header .font-brand,
+footer .font-brand {
+  /* These same styles should be used in any instance of the Satoshi Station text */
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+/* Hero section specific styling - in both light and dark modes */
+section:first-of-type h1 .font-brand,
+section:first-of-type h1 span {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-feature-settings: "salt", "ss02";
+  font-size: calc(2rem + 2vw);
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: inline-block;
+}
+
+/* Enhanced sidebar with darker background and subtle design */
+.dark .sidebar {
+  background-color: rgba(15, 18, 25, 0.95); /* slightly transparent for depth */
+  box-shadow: inset -1px 0 0 0 var(--border-subtle);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--border-subtle);
+}
+
+/* Use exact Satoshi Station orange for all active elements with better contrast */
+.dark .lightning-active,
+.dark .bitcoin-active,
+.dark .active-path {
+  background-color: rgba(255, 82, 60, 0.15);
+  border-left: 3px solid var(--std-orange);
+}
+
+/* Make the active item text white for better readability */
+.dark .lightning-active span,
+.dark .bitcoin-active span,
+.dark .active-path span {
+  color: white;
+  font-weight: 500;
+}
+
+/* Enhanced card styling with better shadows, hover effects, and visual depth */
+.dark .card,
+.dark [class*='card'] {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.dark .card:hover,
+.dark [class*='card']:hover {
+  background-color: var(--bg-card-hover);
+  border-color: rgba(255, 82, 60, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 82, 60, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Better checkbox visibility using Satoshi Station orange */
+.dark .verify-checkbox,
+.dark [type="checkbox"] {
+  border-color: rgba(255, 82, 60, 0.5);
+  transition: all 0.15s ease;
+}
+
+.dark .verify-checkbox:hover,
+.dark [type="checkbox"]:hover {
+  border-color: var(--std-orange);
+  box-shadow: 0 0 0 2px rgba(255, 82, 60, 0.2);
+}
+
+.dark .verify-checkbox:checked,
+.dark [type="checkbox"]:checked {
+  background-color: var(--std-orange);
+  border-color: var(--std-orange-deep);
+}
+
+/* Make progress bars use the original orange with gradient for depth */
+.dark .progress,
+.dark [role="progressbar"],
+.dark .progress-bar-lightning,
+.dark .progress-bar-bitcoin {
+  background: linear-gradient(90deg, var(--std-orange-deep), var(--std-orange));
+  overflow: hidden;
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Add subtle animation to progress bars */
+.dark .progress::after,
+.dark [role="progressbar"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Improve button styling with Satoshi Station orange */
+.dark .btn,
+.dark [class*='btn'],
+.dark button[type="submit"],
+.dark .button {
+  background: var(--std-orange);
+  border: none;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(255, 82, 60, 0.4);
+  transition: all 0.2s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .btn:hover,
+.dark [class*='btn']:hover,
+.dark button[type="submit"]:hover,
+.dark .button:hover {
+  background: var(--std-orange-hover);
+  box-shadow: 0 4px 12px rgba(255, 82, 60, 0.6);
+  transform: translateY(-1px);
+}
+
+.dark .btn:active,
+.dark [class*='btn']:active,
+.dark button[type="submit"]:active,
+.dark .button:active {
+  background: var(--std-orange-deep);
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(255, 82, 60, 0.4);
+}
+
+/* Add subtle ripple effect to buttons */
+.dark .btn::after,
+.dark [class*='btn']::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.dark .btn:focus::after,
+.dark [class*='btn']:focus::after {
+  animation: ripple 0.5s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+/* Enhance code block styling with better background and highlights */
+.dark pre {
+  background-color: rgba(15, 18, 25, 0.8);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  padding: 1rem;
+}
+
+.dark code {
+  color: var(--std-orange);
+  font-weight: 500;
+}
+
+/* Enhanced scrollbar in dark mode using Satoshi Station orange */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgba(15, 18, 25, 0.8);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 82, 60, 0.5);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 82, 60, 0.7);
+}
+
+/* Main header enhancements with glass effect */
+.dark header {
+  background-color: rgba(15, 18, 25, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhance header navigation links */
+.dark header nav a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.dark header nav a:hover {
+  color: var(--std-orange);
+}
+
+.dark header nav a.active {
+  color: var(--std-orange);
+}
+
+.dark header nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--std-orange);
+  transform: scaleX(0.8);
+  transition: transform 0.2s ease;
+}
+
+.dark header nav a.active:hover::after {
+  transform: scaleX(1);
+}
+
+/* Status badges with beautiful, contrasted styling */
+.dark .badge,
+.dark [class*='badge'] {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.dark .badge:hover,
+.dark [class*='badge']:hover {
+  transform: translateY(-1px);
+}
+
+.dark .badge-beginner {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--std-green);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.dark .badge-intermediate {
+  background-color: rgba(241, 196, 15, 0.15);
+  color: var(--std-yellow);
+  border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.dark .badge-advanced {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: var(--std-red);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* Better navigation indicators with animation */
+.dark .nav-item.active {
+  position: relative;
+  color: var(--std-orange);
+}
+
+.dark .nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--std-orange);
+  animation: navIndicator 0.3s ease-in-out;
+}
+
+@keyframes navIndicator {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Add subtle background texture with improved design */
+.dark main {
+  background: linear-gradient(to bottom, var(--bg-dark), rgba(23, 28, 38, 0.98));
+  position: relative;
+  z-index: 0;
+}
+
+.dark main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/images/hex-pattern.svg');
+  background-size: 200px 200px;
+  opacity: 0.04;
+  z-index: -1;
+}
+
+/* Enhanced section links with better interaction */
+.dark .section-link {
+  position: relative;
+  transition: all 0.25s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.dark .section-link:hover {
+  background-color: rgba(255, 82, 60, 0.1);
+  transform: translateX(2px);
+}
+
+.dark .section-link.active {
+  background-color: rgba(255, 82, 60, 0.15);
+  color: white;
+}
+
+.dark .section-link.completed {
+  color: var(--std-orange);
+}
+
+.dark .section-link.completed::after {
+  content: '✓';
+  position: absolute;
+  right: 10px;
+  font-size: 0.8rem;
+  color: var(--std-orange);
+}
+
+/* Make headings use Poppins font with styling like the old website */
+.dark h1, 
+.dark h2, 
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  font-family: var(--font-display), Poppins, sans-serif;
+  color: var(--std-orange);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  line-height: 1.1;
+}
+
+/* Style all section headers with orange for consistency */
+.dark [class*='lightning'] h1,
+.dark [class*='lightning'] h2,
+.dark [class*='lightning'] h3,
+.dark [class*='bitcoin'] h1,
+.dark [class*='bitcoin'] h2,
+.dark [class*='bitcoin'] h3 {
+  color: var(--std-orange);
+}
+
+/* Enhanced hero section typography to match the old website style */
+.dark h1.page-title,
+.dark .hero-title,
+.dark h1[class*='hero'],
+.dark [class*='hero'] h1,
+.dark section h1 {
+  font-family: var(--font-display), Poppins, sans-serif;
+  color: white;
+  font-size: 3.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-shadow: 0 0 15px rgba(255, 82, 60, 0.4);
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+/* Specific styling for the homepage hero section */
+.dark section:first-of-type h1 {
+  text-align: center;
+  font-size: 4rem;
+}
+
+.dark section:first-of-type h1 span {
+  font-family: var(--font-brand), 'Exo 2', sans-serif;
+  font-size: 4.5rem;
+  display: block;
+  margin-top: 0.5rem;
+  letter-spacing: -0.03em;
+  position: relative;
+  font-weight: 600;
+}
+
+.dark section:first-of-type h1 span::after {
+  content: '';
+  position: absolute;
+  bottom: -0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background-color: var(--std-orange);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.dark h1.page-title > span,
+.dark .hero-title > span,
+.dark [class*='hero'] h1 > span {
+  color: var(--std-orange);
+  position: relative;
+  display: inline-block;
+}
+
+.dark h1.page-title::after,
+.dark .hero-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 80px;
+  height: 4px;
+  background: var(--std-orange);
+  border-radius: 2px;
+}
+
+/* Subtitle/lead paragraph styling */
+.dark .hero-subtitle,
+.dark [class*='hero'] p {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  max-width: 650px;
+  margin-bottom: 2rem;
+}
+
+/* Improve links and interactive elements */
+.dark a:not([class]) {
+  color: var(--std-orange);
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dark a:not([class])::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--std-orange);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.dark a:not([class]):hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

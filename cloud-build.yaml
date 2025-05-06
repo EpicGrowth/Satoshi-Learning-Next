@@ -1,0 +1,26 @@
+steps:
+  # Install dependencies
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['ci']
+    
+  # Build Next.js application with export for static hosting
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+    
+  # Deploy to Google Cloud Storage bucket
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'rsync', '-r', '-d', './out', 'gs://sats-sv-static']
+    
+  # Set cache headers for HTML files
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'setmeta', '-h', 'Cache-Control:public, max-age=3600', 'gs://sats-sv-static/**/*.html']
+    
+  # Set cache headers for static assets
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'setmeta', '-h', 'Cache-Control:public, max-age=86400', 'gs://sats-sv-static/static/**']
+    
+  # Set cache headers for Next.js assets
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'setmeta', '-h', 'Cache-Control:public, max-age=31536000', 'gs://sats-sv-static/_next/**']
+
+timeout: '1800s'

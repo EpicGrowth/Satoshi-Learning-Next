@@ -1,0 +1,4 @@
+Backup created on Tue  6 May 12:54:19 CEST 2025
+Original site: sats.sv
+Backup reason: Pre-Next.js Migration
+This is a local backup simulation (actual backup would be in Google Cloud)
