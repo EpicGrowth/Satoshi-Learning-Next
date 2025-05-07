@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // Export to static HTML files for GCS hosting
+  output: 'standalone', // For containerized deployment to Cloud Run
   images: {
-    unoptimized: true, // Required for static export
-    domains: ['sats.sv'],
+    domains: ['sats.sv', 'staging.sats.sv'],
+    formats: ['image/avif', 'image/webp'],
   },
-  trailingSlash: true, // Add trailing slashes to all URLs for better compatibility with static hosting
+  trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
   
   // Base path if deploying to a subdirectory
   // basePath: '',

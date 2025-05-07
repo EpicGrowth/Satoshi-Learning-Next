@@ -6,6 +6,7 @@ module.exports = {
     'react/jsx-no-undef': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
-    '@next/next/no-css-tags': 'warn'
+    '@next/next/no-css-tags': 'warn',
+    '@typescript-eslint/no-empty-interface': 'off' // Turn off empty interface warning
   }
 };
