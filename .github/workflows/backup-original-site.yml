@@ -1,0 +1,51 @@
+name: Backup Original sats.sv Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      backup_name:
+        description: 'Backup version name'
+        required: true
+        default: 'pre-nextjs-migration'
+
+jobs:
+  backup-site:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Create backup of current production site
+        run: |
+          # Create a timestamped backup folder name
+          TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+          BACKUP_BUCKET="sats-sv-backups"
+          BACKUP_FOLDER="${{ github.event.inputs.backup_name }}-${TIMESTAMP}"
+          
+          # Ensure backup bucket exists
+          gsutil mb -p $(gcloud config get-value project) gs://${BACKUP_BUCKET} || true
+          
+          # Copy all files from production to backup
+          echo "Backing up sats.sv to gs://${BACKUP_BUCKET}/${BACKUP_FOLDER}/"
+          gsutil -m cp -r gs://sats-sv-static/* gs://${BACKUP_BUCKET}/${BACKUP_FOLDER}/
+          
+          # Create backup metadata file
+          echo "Backup created on $(date)" > backup-info.txt
+          echo "Original site: sats.sv" >> backup-info.txt
+          echo "Backup reason: ${{ github.event.inputs.backup_name }}" >> backup-info.txt
+          echo "Created by GitHub Actions" >> backup-info.txt
+          
+          # Upload metadata file
+          gsutil cp backup-info.txt gs://${BACKUP_BUCKET}/${BACKUP_FOLDER}/backup-info.txt
+          
+          echo "Backup complete at gs://${BACKUP_BUCKET}/${BACKUP_FOLDER}/"
