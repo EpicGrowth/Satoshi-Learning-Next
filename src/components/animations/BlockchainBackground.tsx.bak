@@ -1,0 +1,157 @@
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+
+interface BlockchainBackgroundProps {
+  fullHeight?: boolean;
+  density?: 'low' | 'medium' | 'high';
+  animated?: boolean;
+  opacity?: number;
+}
+
+export function BlockchainBackground({ 
+  fullHeight = false, 
+  density = 'medium',
+  animated = true,
+  opacity = 1
+}: BlockchainBackgroundProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current || !animated) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Resize canvas to fill container
+    const resizeCanvas = () => {
+      if (containerRef.current) {
+        canvas.width = containerRef.current.offsetWidth;
+        canvas.height = containerRef.current.offsetHeight;
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Create nodes (representing blockchain blocks)
+    const nodeDensityMap = {
+      low: 30,
+      medium: 50,
+      high: 80
+    };
+
+    const nodeCount = nodeDensityMap[density];
+    
+    const nodes: { x: number; y: number; size: number; speed: number; connections: number[] }[] = [];
+    
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 3 + 1,
+        speed: Math.random() * 0.5 + 0.1,
+        connections: []
+      });
+    }
+
+    // Connect nodes that are close to each other
+    const calculateConnections = () => {
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].connections = [];
+        for (let j = 0; j < nodes.length; j++) {
+          if (i !== j) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 150) { // Connection threshold
+              nodes[i].connections.push(j);
+            }
+          }
+        }
+      }
+    };
+
+    calculateConnections();
+
+    // Animation loop
+    let animationId: number;
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw connections
+      ctx.lineWidth = 0.3;
+      ctx.strokeStyle = `rgba(255, 153, 0, ${opacity * 0.1})`;
+      
+      for (let i = 0; i < nodes.length; i++) {
+        for (const j of nodes[i].connections) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+      
+      // Draw nodes
+      for (let i = 0; i < nodes.length; i++) {
+        ctx.beginPath();
+        ctx.arc(nodes[i].x, nodes[i].y, nodes[i].size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 153, 0, ${opacity * 0.3})`;
+        ctx.fill();
+        
+        // Move nodes
+        nodes[i].x += Math.sin(Date.now() * 0.001 + i) * nodes[i].speed;
+        nodes[i].y += Math.cos(Date.now() * 0.001 + i) * nodes[i].speed;
+        
+        // Wrap around edges
+        if (nodes[i].x < 0) nodes[i].x = canvas.width;
+        if (nodes[i].x > canvas.width) nodes[i].x = 0;
+        if (nodes[i].y < 0) nodes[i].y = canvas.height;
+        if (nodes[i].y > canvas.height) nodes[i].y = 0;
+      }
+      
+      // Recalculate connections periodically
+      if (Math.random() < 0.05) {
+        calculateConnections();
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationId);
+    };
+  }, [animated, density, opacity]);
+
+  return (
+    <div 
+      ref={containerRef} 
+      className={`fixed inset-0 -z-10 ${fullHeight ? 'h-full' : 'h-screen'} w-full overflow-hidden`}
+    >
+      {/* Grid pattern background */}
+      <div className="absolute h-full w-full bg-[linear-gradient(to_right,#f0f0f080_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f080_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+      
+      {/* Floating Bitcoin-colored orbs */}
+      <div className="absolute top-1/4 right-1/5 w-64 h-64 rounded-full bg-bitcoin-orange/5 blur-3xl animate-float-slow"></div>
+      <div className="absolute bottom-1/5 left-1/4 w-96 h-96 rounded-full bg-bitcoin-orange/3 blur-3xl animate-float-slow" style={{ animationDelay: '-5s' }}></div>
+      <div className="absolute top-1/3 left-1/2 w-48 h-48 rounded-full bg-lightning-purple/5 blur-2xl animate-float-slow" style={{ animationDelay: '-10s' }}></div>
+      
+      {/* Canvas for animated connections */}
+      {animated && (
+        <canvas 
+          ref={canvasRef} 
+          className="absolute inset-0 w-full h-full opacity-40"
+        />
+      )}
+      
+      {/* Subtle hash pattern overlay */}
+      <div className="absolute inset-0 bg-hash-pattern opacity-5"></div>
+    </div>
+  );
+}
