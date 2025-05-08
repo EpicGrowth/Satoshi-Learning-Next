@@ -5,6 +5,9 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
+// Force CSS loading for this client component
+import '@/app/globals.css';
+
 export default function BlockVerificationPage() {
   return (
     <div className="container py-12 max-w-4xl mx-auto">

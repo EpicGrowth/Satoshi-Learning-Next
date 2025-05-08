@@ -1,37 +1,47 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone', // For containerized deployment to Cloud Run
+  output: 'standalone',
   images: {
     domains: ['sats.sv', 'staging.sats.sv'],
     formats: ['image/avif', 'image/webp'],
-    unoptimized: true, // Disable image optimization to avoid issues in production
+    unoptimized: true,
   },
-  trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
+  // Important: Don't use trailing slash with React Server Components
+  trailingSlash: false,
   
-  // Asset handling configuration
-  // Using relative paths and ensuring cross-origin resources load correctly
+  // Fix static asset loading
   assetPrefix: '',
-  crossOrigin: 'anonymous',
-  
-  // Disable the powered by header for security
   poweredByHeader: false,
   
-  // ESLint configuration - ignore errors during build
+  // Relax build constraints
   eslint: {
-    // Warning instead of error during build
     ignoreDuringBuilds: true,
   },
-  
-  // TypeScript configuration - ignore errors during build
   typescript: {
-    // Warning instead of error during build
     ignoreBuildErrors: true,
   },
   
-  // Additional experimental features can be added here
+  // Enable CSS handling improvements
   experimental: {
-    // Server components are enabled by default in Next.js 13+
+    optimizeCss: true,
+    // Make sure App Router features are enabled
+    serverActions: true,
+    serverComponentsExternalPackages: [],
+  },
+  
+  // Fix webpack handling of CSS
+  webpack: (config, { dev, isServer }) => {
+    // Force CSS to be included in the client build
+    if (!isServer && !dev) {
+      config.optimization.splitChunks.cacheGroups.styles = {
+        name: 'styles',
+        test: /\.css$/,
+        chunks: 'all',
+        enforce: true,
+      };
+    }
+    return config;
   },
 };
 
