@@ -39,6 +39,10 @@ export default function RootLayout({
       suppressHydrationWarning 
       className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable} ${fontBrand.variable}`}
     >
+      <head>
+        {/* Force CSS override to ensure styles apply */}
+        <link rel="stylesheet" href="/css-fix.css" />
+      </head>
       <body className="min-h-screen font-sans antialiased">
         <ThemeProvider
           attribute="class"
