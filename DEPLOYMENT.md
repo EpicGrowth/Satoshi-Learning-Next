@@ -1,14 +1,19 @@
-# Satoshi Station Deployment Guide
+# Satoshi Station Deployment Guide (STAGING REPOSITORY)
+
+> **IMPORTANT**: This is the documentation for the **staging repository** that deploys to **staging.sats.sv**. For the production repository that deploys to **sats.sv**, see [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path).
 
 This document provides detailed information about the deployment architecture, CI/CD pipelines, and infrastructure setup for the Satoshi Station Learning Platform.
 
 ## Deployment Architecture
 
-Satoshi Station uses a modern cloud-native architecture:
+Satoshi Station uses a modern cloud-native architecture with separate repositories for staging and production:
 
-1. **Code Repositories**:
-   - Staging: `https://github.com/EpicGrowth/Satoshi-Learning-Next`
-   - Production: `https://github.com/Epic-Growth/Satoshi-Learning-Path`
+1. **Repository and Infrastructure Mapping**:
+
+   | Environment | Repository | Domain | Cloud Run Service |
+   |-------------|------------|--------|------------------|
+   | **Staging** | [Satoshi-Learning-Next](https://github.com/EpicGrowth/Satoshi-Learning-Next) (this repo) | staging.sats.sv | sats-web-staging |
+   | **Production** | [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path) | sats.sv, www.sats.sv | sats-web |
 
 2. **CI/CD Pipeline**: GitHub Actions workflows for automated builds and deployments
 
