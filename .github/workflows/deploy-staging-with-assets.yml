@@ -1,4 +1,4 @@
-name: Deploy to Staging with Static Assets
+name: Deploy to Staging with Static Export
 
 on:
   push:
@@ -23,71 +23,82 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Update next.config.js for asset URLs
+      - name: Create optimized static export next.config.js
         run: |
           cat > next.config.js << EOL
           /** @type {import('next').NextConfig} */
           const nextConfig = {
             reactStrictMode: true,
-            output: 'standalone',
-            // Disable caching but keep standard directory structure
-            generateEtags: false,
-            // Configure image loading
+            output: 'export',  // Changed to static export
+            distDir: 'out',    // Output to 'out' directory
             images: {
-              domains: ['sats.sv', 'staging.sats.sv'],
-              formats: ['image/avif', 'image/webp'],
-              unoptimized: true,
+              unoptimized: true, // Required for static export
             },
-            // IMPORTANT: No trailing slash to ensure RSC requests work properly
-            trailingSlash: false,
-            // Keep these empty to ensure proper path handling
-            basePath: '',
-            assetPrefix: '',
+            trailingSlash: true,
             poweredByHeader: false,
-            // Build config
             eslint: {
               ignoreDuringBuilds: true,
             },
             typescript: {
               ignoreBuildErrors: true,
             },
-            // Set cross-origin to anonymous for asset loading
-            crossOrigin: 'anonymous',
-            compress: true,
-            // Enable React Server Components explicitly
-            experimental: {
-              // Maximum memory allocation for SSR
-              isrMemoryCacheSize: 0,
-              // Make sure RSC is enabled
-              serverComponents: true,
-              // Optimize for server components
-              serverActions: true,
-              // Disable optimizations that might break RSC
-              optimizeCss: false
-            },
-            // Add this to ensure server component requests work
-            webpack: (config, { isServer }) => {
-              // Fixes RSC requests like /verify/blocks/?_rsc=1ld0r:1
-              if (!isServer) {
-                config.resolve.fallback = {
-                  ...config.resolve.fallback,
-                  fs: false,
-                  net: false,
-                  tls: false,
-                };
-              }
-              return config;
-            },
           };
           
           module.exports = nextConfig;
           EOL
 
-      - name: Build Next.js app
+      - name: Build Next.js static export
         run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: 'https://staging.sats.sv'
 
+      - name: Set up Nginx configuration for serving static files
+        run: |
+          cat > nginx.conf << EOL
+          server {
+            listen 8080;
+            server_name localhost;
+            root /usr/share/nginx/html;
+            index index.html;
+            
+            # Enable compression
+            gzip on;
+            gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+            
+            # Handle Next.js static paths
+            location / {
+              try_files \$uri \$uri.html \$uri/index.html /index.html =404;
+            }
+            
+            # Set caching headers for static assets
+            location ~* \.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ {
+              expires 30d;
+              add_header Cache-Control "public, no-transform";
+            }
+            
+            # Handle 404s with the Next.js custom 404 page
+            error_page 404 /404.html;
+          }
+          EOL
+
+      - name: Create Dockerfile for static hosting
+        run: |
+          cat > Dockerfile << EOL
+          FROM nginx:alpine
+          
+          # Copy static files
+          COPY out/ /usr/share/nginx/html/
+          
+          # Copy nginx configuration
+          COPY nginx.conf /etc/nginx/conf.d/default.conf
+          
+          # Expose port 8080 (Cloud Run standard)
+          EXPOSE 8080
+          
+          # Start Nginx
+          CMD ["nginx", "-g", "daemon off;"]
+          EOL
+      
       - name: Set up Cloud SDK
         uses: google-github-actions/auth@v1
         with:
@@ -121,7 +132,7 @@ jobs:
           service: sats-web-staging
           image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/sats-web-staging:${{ github.sha }}
           region: europe-west1
-          flags: --allow-unauthenticated --port=3000
+          flags: --allow-unauthenticated --port=8080
           
       - name: Show deployed URL
         run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
