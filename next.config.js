@@ -37,16 +37,18 @@ const nextConfig = {
     // Disable CSS optimization that might cause issues
     optimizeCss: false,
     // Make sure App Router features are enabled
-    serverActions: true,
+    serverActions: { allowedOrigins: ['localhost:3000'] },
   },
-  
-  // Modify the standalone output to ensure all assets are included
-  outputFileTracing: true,
   
   // Override webpack configuration to fix asset loading
   webpack: (config, { dev, isServer }) => {
     // Ensure static files are properly copied and referenced
     if (!isServer) {
+      // Make sure splitChunks and cacheGroups exist before modifying
+      if (!config.optimization) config.optimization = {};
+      if (!config.optimization.splitChunks) config.optimization.splitChunks = {};
+      if (!config.optimization.splitChunks.cacheGroups) config.optimization.splitChunks.cacheGroups = {};
+      
       // Prevent chunk splitting for CSS to keep it simpler
       config.optimization.splitChunks.cacheGroups.styles = {
         name: 'styles',
