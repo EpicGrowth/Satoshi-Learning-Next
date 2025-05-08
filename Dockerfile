@@ -2,48 +2,68 @@
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
-FROM base AS deps
+FROM node:18-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-# Copy package files
 COPY package.json package-lock.json ./
-
-# Install dependencies
 RUN npm ci
 
 # Rebuild the source code only when needed
-FROM base AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+# Copy only necessary files, prioritizing the /src directory
+COPY src/ ./src/
+COPY public/ ./public/
+COPY next.config.js package.json package-lock.json tsconfig.json postcss.config.js tailwind.config.js ./
 
-# Next.js collects anonymous telemetry data - disable it
-ENV NEXT_TELEMETRY_DISABLED 1
+# Create production environment file with fixed settings
+RUN echo "NODE_ENV=production" > .env.production
+RUN echo "NEXT_PUBLIC_BASE_URL=https://staging.sats.sv" >> .env.production
+RUN echo "NEXT_TELEMETRY_DISABLED=1" >> .env.production
 
-# Build the application
+# Build the application with a fixed build ID for stable asset paths
+ENV NEXT_BUILD_ID=sats-staging-build
 RUN npm run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_BUILD_ID sats-staging-build
 
-# Add a non-root user to run the app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built app
+# Copy necessary files for production
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.env.production ./
 
-# Set correct permissions for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Copy the ENTIRE .next directory to ensure all assets are included
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 
-# Automatically leverage output traces to reduce image size
+# Copy the standalone server output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Explicitly set permissions for all critical directories
+RUN chmod -R 755 ./public
+RUN chmod -R 755 ./.next/static
+RUN chmod -R 755 ./.next/server
+RUN chmod -R 755 ./.next/standalone
+
+# Ensure cache directories exist with proper permissions
+RUN mkdir -p ./.next/cache && chown -R nextjs:nodejs ./.next
+
+# Create a simple health check file for debugging
+RUN echo "Satoshi Station Next.js app - $(date)" > ./public/health.txt
+# Explicitly copy other static assets that might be needed
+COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+COPY --from=builder --chown=nextjs:nodejs /app/.next/required-server-files.json ./.next/
+RUN find ./.next -type d -exec chmod 755 {} \;
+RUN find ./.next -type f -exec chmod 644 {} \;
 
 USER nextjs
 

@@ -5,6 +5,9 @@ import { Network, Shield, Bitcoin, FileCheck } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+// Force CSS loading for this client component
+import '@/app/globals.css';
+
 const verificationTools = [
   {
     title: 'Block Explorer',

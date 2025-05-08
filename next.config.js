@@ -1,31 +1,67 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone', // For containerized deployment to Cloud Run
+  output: 'standalone',
+  distDir: '.next',
+  
   images: {
     domains: ['sats.sv', 'staging.sats.sv'],
     formats: ['image/avif', 'image/webp'],
+    unoptimized: true,
   },
-  trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
   
-  // Base path if deploying to a subdirectory
-  // basePath: '',
+  // Use trailing slash for consistency
+  trailingSlash: true,
   
-  // ESLint configuration - ignore errors during build
+  // Fix static asset loading
+  // This is critical - providing a specific prefix if needed
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  
+  // Other configurations
+  poweredByHeader: false,
+  generateBuildId: async () => {
+    // Use a consistent build ID to prevent asset path changes
+    return 'sats-staging-build'
+  },
+  
+  // Relax build constraints
   eslint: {
-    // Warning instead of error during build
     ignoreDuringBuilds: true,
   },
-  
-  // TypeScript configuration - ignore errors during build
   typescript: {
-    // Warning instead of error during build
     ignoreBuildErrors: true,
   },
   
-  // Additional experimental features can be added here
+  // Simplify experimental options
   experimental: {
-    // Server components are enabled by default in Next.js 13+
+    // Disable CSS optimization that might cause issues
+    optimizeCss: false,
+    // Make sure App Router features are enabled
+    serverActions: { allowedOrigins: ['localhost:3000'] },
+  },
+  
+  // Override webpack configuration to fix asset loading
+  webpack: (config, { dev, isServer }) => {
+    // Ensure static files are properly copied and referenced
+    if (!isServer) {
+      // Make sure splitChunks and cacheGroups exist before modifying
+      if (!config.optimization) config.optimization = {};
+      if (!config.optimization.splitChunks) config.optimization.splitChunks = {};
+      if (!config.optimization.splitChunks.cacheGroups) config.optimization.splitChunks.cacheGroups = {};
+      
+      // Prevent chunk splitting for CSS to keep it simpler
+      config.optimization.splitChunks.cacheGroups.styles = {
+        name: 'styles',
+        test: /\.css$/,
+        chunks: 'all',
+        enforce: true,
+      };
+      
+      // Ensure consistent chunk IDs
+      config.optimization.chunkIds = 'deterministic';
+    }
+    
+    return config;
   },
 };
 
