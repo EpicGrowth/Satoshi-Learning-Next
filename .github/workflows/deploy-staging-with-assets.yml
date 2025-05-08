@@ -33,15 +33,20 @@ jobs:
             images: {
               domains: ['sats.sv', 'staging.sats.sv'],
               formats: ['image/avif', 'image/webp'],
+              unoptimized: true,
             },
             trailingSlash: true,
-            assetPrefix: 'https://staging.sats.sv',
+            // Remove assetPrefix as it can cause issues with CSS loading
+            // assetPrefix: 'https://staging.sats.sv',
+            poweredByHeader: false,
             eslint: {
               ignoreDuringBuilds: true,
             },
             typescript: {
               ignoreBuildErrors: true,
             },
+            // Add crossOrigin configuration to help with resource loading
+            crossOrigin: 'anonymous',
           };
           
           module.exports = nextConfig;
