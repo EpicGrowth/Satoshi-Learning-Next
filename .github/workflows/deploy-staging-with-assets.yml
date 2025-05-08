@@ -30,33 +30,54 @@ jobs:
           const nextConfig = {
             reactStrictMode: true,
             output: 'standalone',
+            // Completely disable all caching in the staging environment
+            distDir: '.next-uncached',
+            generateEtags: false,
+            // Configure image loading
             images: {
               domains: ['sats.sv', 'staging.sats.sv'],
               formats: ['image/avif', 'image/webp'],
               unoptimized: true,
             },
-            trailingSlash: true,
-            // Ensure consistent asset URLs with basePath instead of assetPrefix
+            // IMPORTANT: No trailing slash to ensure RSC requests work properly
+            trailingSlash: false,
+            // Keep these empty to ensure proper path handling
             basePath: '',
-            // Force all asset URLs to be absolute from the root
             assetPrefix: '',
             poweredByHeader: false,
+            // Build config
             eslint: {
               ignoreDuringBuilds: true,
             },
             typescript: {
               ignoreBuildErrors: true,
             },
-            // Add crossOrigin configuration to help with resource loading
+            // Set cross-origin to anonymous for asset loading
             crossOrigin: 'anonymous',
-            // Disable compression in Next.js as it can cause issues with static assets
-            compress: false,
-            // Force all scripts to load with standard loading priority
-            optimizeFonts: false,
-            // Ensure static files are copied properly
+            compress: true,
+            // Enable React Server Components explicitly
             experimental: {
+              // Maximum memory allocation for SSR
               isrMemoryCacheSize: 0,
-              cpus: 1
+              // Make sure RSC is enabled
+              serverComponents: true,
+              // Optimize for server components
+              serverActions: true,
+              // Disable optimizations that might break RSC
+              optimizeCss: false
+            },
+            // Add this to ensure server component requests work
+            webpack: (config, { isServer }) => {
+              // Fixes RSC requests like /verify/blocks/?_rsc=1ld0r:1
+              if (!isServer) {
+                config.resolve.fallback = {
+                  ...config.resolve.fallback,
+                  fs: false,
+                  net: false,
+                  tls: false,
+                };
+              }
+              return config;
             },
           };
           
