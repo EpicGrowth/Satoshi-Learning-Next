@@ -14,6 +14,68 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install CSS optimization dependencies
+        run: npm install --save-dev critters
+        
+      - name: Create production next.config.js with CSS fixes
+        run: |
+          cat > next.config.js << EOL
+          /** @type {import('next').NextConfig} */
+          const nextConfig = {
+            reactStrictMode: true,
+            output: 'standalone',
+            images: {
+              domains: ['sats.sv', 'staging.sats.sv'],
+              formats: ['image/avif', 'image/webp'],
+              unoptimized: true,
+            },
+            // Ensure proper static asset loading
+            assetPrefix: '',
+            poweredByHeader: false,
+            eslint: {
+              ignoreDuringBuilds: true,
+            },
+            typescript: {
+              ignoreBuildErrors: true,
+            },
+            experimental: {
+              // Optimize CSS loading
+              optimizeCss: true,
+              // Force runtime to be server-side
+              runtime: 'nodejs'
+            },
+          };
+          
+          module.exports = nextConfig;
+          EOL
+
+      - name: Build Next.js app
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_URL: 'https://staging.sats.sv'
+          
+      - name: Create .env.production
+        run: |
+          cat > .env.production << EOL
+          # Force production mode
+          NODE_ENV=production
+          
+          # Disable caching headers in Next.js
+          NEXT_CACHE_HEADERS=false
+          
+          # Base URL
+          NEXT_PUBLIC_BASE_URL=https://staging.sats.sv
+          EOL
 
       - name: Set up Cloud SDK
         uses: google-github-actions/auth@v1
@@ -48,7 +110,7 @@ jobs:
           service: sats-web-staging
           image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/sats-web-staging:${{ github.sha }}
           region: europe-west1
-          flags: --allow-unauthenticated --port=3000
+          flags: --allow-unauthenticated --port=8080
 
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
+      - name: Show deployed URL
+        run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
