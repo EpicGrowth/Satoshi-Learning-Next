@@ -34,16 +34,28 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built app
+# Copy built app and ensure all static assets are included
 COPY --from=builder /app/public ./public
 
 # Set correct permissions for prerender cache
-RUN mkdir .next
+RUN mkdir -p .next
 RUN chown nextjs:nodejs .next
 
-# Automatically leverage output traces to reduce image size
+# Copy the standalone server build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+
+# Important: Create the complete .next directory structure first
+RUN mkdir -p ./.next/static
+RUN chown -R nextjs:nodejs ./.next
+
+# Copy all static files including CSS
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Explicitly copy other static assets that might be needed
+COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+COPY --from=builder --chown=nextjs:nodejs /app/.next/required-server-files.json ./.next/
+RUN find ./.next -type d -exec chmod 755 {} \;
+RUN find ./.next -type f -exec chmod 644 {} \;
 
 USER nextjs
 
