@@ -12,7 +12,10 @@ RUN npm ci
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+# Copy only necessary files, prioritizing the /src directory
+COPY src/ ./src/
+COPY public/ ./public/
+COPY next.config.js package.json package-lock.json tsconfig.json postcss.config.js tailwind.config.js ./
 
 # Create production environment file with fixed settings
 RUN echo "NODE_ENV=production" > .env.production
