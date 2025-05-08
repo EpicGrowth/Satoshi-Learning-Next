@@ -1,0 +1,34 @@
+name: Simple Deploy to Staging
+
+on:
+  workflow_dispatch:  # This allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Debug - Print project ID
+        run: |
+          echo "Project ID: ${{ secrets.GCP_PROJECT_ID }}"
+          gcloud config get-value project
+
+      - name: Deploy to Cloud Run directly
+        run: |
+          gcloud run deploy sats-web-staging \
+            --source . \
+            --platform managed \
+            --region europe-west1 \
+            --allow-unauthenticated
