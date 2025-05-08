@@ -5,11 +5,17 @@ const nextConfig = {
   images: {
     domains: ['sats.sv', 'staging.sats.sv'],
     formats: ['image/avif', 'image/webp'],
+    unoptimized: true, // Disable image optimization to avoid issues in production
   },
   trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
   
-  // Base path if deploying to a subdirectory
-  // basePath: '',
+  // Asset handling configuration
+  // Using relative paths and ensuring cross-origin resources load correctly
+  assetPrefix: '',
+  crossOrigin: 'anonymous',
+  
+  // Disable the powered by header for security
+  poweredByHeader: false,
   
   // ESLint configuration - ignore errors during build
   eslint: {
