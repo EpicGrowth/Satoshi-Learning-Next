@@ -30,8 +30,7 @@ jobs:
           const nextConfig = {
             reactStrictMode: true,
             output: 'standalone',
-            // Completely disable all caching in the staging environment
-            distDir: '.next-uncached',
+            // Disable caching but keep standard directory structure
             generateEtags: false,
             // Configure image loading
             images: {
