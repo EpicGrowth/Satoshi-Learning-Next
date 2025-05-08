@@ -2,17 +2,27 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  distDir: '.next',
+  
   images: {
     domains: ['sats.sv', 'staging.sats.sv'],
     formats: ['image/avif', 'image/webp'],
     unoptimized: true,
   },
-  // Important: Don't use trailing slash with React Server Components
-  trailingSlash: false,
+  
+  // Use trailing slash for consistency
+  trailingSlash: true,
   
   // Fix static asset loading
-  assetPrefix: '',
+  // This is critical - providing a specific prefix if needed
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  
+  // Other configurations
   poweredByHeader: false,
+  generateBuildId: async () => {
+    // Use a consistent build ID to prevent asset path changes
+    return 'sats-staging-build'
+  },
   
   // Relax build constraints
   eslint: {
@@ -22,26 +32,33 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Enable CSS handling improvements
+  // Simplify experimental options
   experimental: {
-    optimizeCss: true,
+    // Disable CSS optimization that might cause issues
+    optimizeCss: false,
     // Make sure App Router features are enabled
     serverActions: true,
-    serverComponentsExternalPackages: [],
-    // Remove any runtime setting that was causing build errors
   },
   
-  // Fix webpack handling of CSS
+  // Modify the standalone output to ensure all assets are included
+  outputFileTracing: true,
+  
+  // Override webpack configuration to fix asset loading
   webpack: (config, { dev, isServer }) => {
-    // Force CSS to be included in the client build
-    if (!isServer && !dev) {
+    // Ensure static files are properly copied and referenced
+    if (!isServer) {
+      // Prevent chunk splitting for CSS to keep it simpler
       config.optimization.splitChunks.cacheGroups.styles = {
         name: 'styles',
         test: /\.css$/,
         chunks: 'all',
         enforce: true,
       };
+      
+      // Ensure consistent chunk IDs
+      config.optimization.chunkIds = 'deterministic';
     }
+    
     return config;
   },
 };
