@@ -28,6 +28,7 @@ const nextConfig = {
     // Make sure App Router features are enabled
     serverActions: true,
     serverComponentsExternalPackages: [],
+    // Remove any runtime setting that was causing build errors
   },
   
   // Fix webpack handling of CSS

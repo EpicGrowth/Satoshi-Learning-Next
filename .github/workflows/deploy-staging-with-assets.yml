@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: Install CSS optimization dependencies
+        run: npm install --save-dev critters
+        
       - name: Create production next.config.js with CSS fixes
         run: |
           cat > next.config.js << EOL
