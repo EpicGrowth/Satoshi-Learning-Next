@@ -2,6 +2,22 @@
 
 This document outlines the comprehensive strategy for deploying the Next.js migration of the original sats.sv website.
 
+## Repository and Domain Structure
+
+Our deployment is structured around two separate repositories and domains:
+
+1. **Staging Environment**:
+   - Repository: [Satoshi-Learning-Next](https://github.com/EpicGrowth/Satoshi-Learning-Next) (this repository)
+   - Domain: `staging.sats.sv`
+   - Google Cloud Run Service: `sats-web-staging`
+   - Purpose: Testing and validating changes before production deployment
+
+2. **Production Environment**:
+   - Repository: [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path)
+   - Domains: `sats.sv` and `www.sats.sv`
+   - Google Cloud Run Service: `sats-web`
+   - Purpose: Live production site
+
 ## Pre-Deployment Checklist
 
 - [ ] All "Satoshi Station" text uses Exo 2 font (weight 700) with #FF523C orange color

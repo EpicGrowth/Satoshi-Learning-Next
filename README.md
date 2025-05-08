@@ -1,6 +1,8 @@
-# Satoshi Station Next
+# Satoshi Station Next (STAGING)
 
 Satoshi Station is a comprehensive learning platform for Bitcoin and Lightning Network education. This project is the Next.js migration and redesign of the original Satoshi Learning Path (sats.sv), built with modern web technologies and an improved user experience while maintaining the exact look and feel of the original site.
+
+> **IMPORTANT**: This is the **staging** repository that deploys to **staging.sats.sv**. For the production repository that deploys to **sats.sv**, see [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path).
 
 ## Project Overview
 
