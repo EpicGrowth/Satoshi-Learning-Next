@@ -242,26 +242,34 @@ When working on this project, follow these key principles:
 
 ## Deployment
 
-Satoshi Station Next is deployed using GitHub Actions to Google Cloud Storage with a Cloud Load Balancer for serving the content.
+Satoshi Station Next is deployed using GitHub Actions to Google Cloud Run with a Cloudflare CDN for serving the content.
 
 ### Deployment Architecture
 
-- **Development Repository**: GitHub at `EpicGrowth/Satoshi-Learning-Next`
-- **Production Repository**: GitHub at `Epic-Growth/Satoshi-Learning-Path`
-- **CI/CD**: GitHub Actions workflow (`.github/workflows/deploy.yml`)
-- **Hosting**: Google Cloud Storage static website + Cloud Load Balancer
-- **Domain**: `sats.sv`
+The project uses a modern containerized cloud architecture:
+
+- **Code Repositories**: 
+  - Staging: `https://github.com/EpicGrowth/Satoshi-Learning-Next`
+  - Production: `https://github.com/Epic-Growth/Satoshi-Learning-Path`
+- **CI/CD**: GitHub Actions workflows for automated builds and deployments
+- **Containerization**: Docker for consistent builds and deployments
+- **Hosting**: Google Cloud Run for serverless container deployment
+- **DNS & CDN**: Cloudflare for DNS management, CDN, and security
+- **Custom Domains**:
+  - Staging: `staging.sats.sv`
+  - Production: `sats.sv`
 
 ### Deployment Process
 
 The deployment process is fully automated:
 
 1. Push changes to the `main` branch
-2. GitHub Actions builds the Next.js app as static files
-3. Static files are deployed to Google Cloud Storage bucket `sats-sv-static`
-4. Content is served via Cloud Load Balancer with proper caching rules
+2. GitHub Actions builds the Next.js app in standalone mode
+3. A Docker container is built and pushed to Google Container Registry
+4. Container is deployed to Google Cloud Run
+5. Custom domains are mapped via Cloudflare and Google Cloud Run domain mapping
 
-For detailed deployment instructions, see the [Deployment Process](./DEVELOPMENT.md#deployment-process) section in the development documentation.
+For detailed deployment instructions and troubleshooting, see the [DEPLOYMENT.md](./DEPLOYMENT.md) file.
 
 ## Running the Project
 
