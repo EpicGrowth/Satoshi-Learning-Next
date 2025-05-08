@@ -2,55 +2,50 @@
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
-FROM base AS deps
+FROM node:18-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-# Copy package files
 COPY package.json package-lock.json ./
-
-# Install dependencies
 RUN npm ci
 
 # Rebuild the source code only when needed
-FROM base AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects anonymous telemetry data - disable it
-ENV NEXT_TELEMETRY_DISABLED 1
+# Create production environment file
+RUN echo "NODE_ENV=production" > .env.production
+RUN echo "NEXT_PUBLIC_BASE_URL=https://staging.sats.sv" >> .env.production
+RUN echo "NEXT_CACHE_HEADERS=false" >> .env.production
 
 # Build the application
 RUN npm run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
 
-# Add a non-root user to run the app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built app and ensure all static assets are included
+# Copy necessary files for production
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.env.production ./
 
-# Set correct permissions for prerender cache
-RUN mkdir -p .next
-RUN chown nextjs:nodejs .next
-
-# Copy the standalone server build
+# Copy the built app with proper permissions
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-
-# Important: Create the complete .next directory structure first
-RUN mkdir -p ./.next/static
-RUN chown -R nextjs:nodejs ./.next
-
-# Copy all static files including CSS
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Ensure proper permissions for all static assets
+RUN chmod -R 755 ./public
+RUN chmod -R 755 ./.next/static
+
+# Create cache directories with correct permissions
+RUN mkdir -p ./.next/cache && chown -R nextjs:nodejs ./.next
 # Explicitly copy other static assets that might be needed
 COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
 COPY --from=builder --chown=nextjs:nodejs /app/.next/required-server-files.json ./.next/

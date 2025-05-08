@@ -1,4 +1,4 @@
-name: Deploy to Staging with Static Export
+name: Deploy to Staging with Assets
 
 on:
   push:
@@ -23,18 +23,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Create optimized static export next.config.js
+      - name: Create production next.config.js with CSS fixes
         run: |
           cat > next.config.js << EOL
           /** @type {import('next').NextConfig} */
           const nextConfig = {
             reactStrictMode: true,
-            output: 'export',  // Changed to static export
-            distDir: 'out',    // Output to 'out' directory
+            output: 'standalone',
             images: {
-              unoptimized: true, // Required for static export
+              domains: ['sats.sv', 'staging.sats.sv'],
+              formats: ['image/avif', 'image/webp'],
+              unoptimized: true,
             },
-            trailingSlash: true,
+            // Ensure proper static asset loading
+            assetPrefix: '',
             poweredByHeader: false,
             eslint: {
               ignoreDuringBuilds: true,
@@ -42,61 +44,33 @@ jobs:
             typescript: {
               ignoreBuildErrors: true,
             },
+            experimental: {
+              // Optimize CSS loading
+              optimizeCss: true,
+              // Force runtime to be server-side
+              runtime: 'nodejs'
+            },
           };
           
           module.exports = nextConfig;
           EOL
 
-      - name: Build Next.js static export
+      - name: Build Next.js app
         run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: 'https://staging.sats.sv'
-
-      - name: Set up Nginx configuration for serving static files
+          
+      - name: Create .env.production
         run: |
-          cat > nginx.conf << EOL
-          server {
-            listen 8080;
-            server_name localhost;
-            root /usr/share/nginx/html;
-            index index.html;
-            
-            # Enable compression
-            gzip on;
-            gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-            
-            # Handle Next.js static paths
-            location / {
-              try_files \$uri \$uri.html \$uri/index.html /index.html =404;
-            }
-            
-            # Set caching headers for static assets
-            location ~* \.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ {
-              expires 30d;
-              add_header Cache-Control "public, no-transform";
-            }
-            
-            # Handle 404s with the Next.js custom 404 page
-            error_page 404 /404.html;
-          }
-          EOL
-
-      - name: Create Dockerfile for static hosting
-        run: |
-          cat > Dockerfile << EOL
-          FROM nginx:alpine
+          cat > .env.production << EOL
+          # Force production mode
+          NODE_ENV=production
           
-          # Copy static files
-          COPY out/ /usr/share/nginx/html/
+          # Disable caching headers in Next.js
+          NEXT_CACHE_HEADERS=false
           
-          # Copy nginx configuration
-          COPY nginx.conf /etc/nginx/conf.d/default.conf
-          
-          # Expose port 8080 (Cloud Run standard)
-          EXPOSE 8080
-          
-          # Start Nginx
-          CMD ["nginx", "-g", "daemon off;"]
+          # Base URL
+          NEXT_PUBLIC_BASE_URL=https://staging.sats.sv
           EOL
       
       - name: Set up Cloud SDK
