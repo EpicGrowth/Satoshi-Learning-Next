@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
+  // Change from 'standalone' to 'export' to generate static files in 'out' directory
+  output: 'export',
   distDir: '.next',
   
   images: {
