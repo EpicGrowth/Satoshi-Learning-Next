@@ -49,10 +49,10 @@ jobs:
           
           # List out directory to debug its structure
           echo "Listing output directory structure:"
-          find ./.next -type d | sort
+          find ./out -type d | sort
           
           # Sync all files to the bucket
-          gsutil -m rsync -r -d ./.next/standalone gs://${{ env.BUCKET_NAME }}
+          gsutil -m rsync -r -d ./out gs://${{ env.BUCKET_NAME }}
           
           # Set cache control headers for different file types
           gsutil -m setmeta -h "Cache-Control:public, max-age=3600" gs://${{ env.BUCKET_NAME }}/**/*.html
@@ -70,12 +70,21 @@ jobs:
         run: |
           echo "Updating Cloud Run service ${{ env.SERVICE_NAME }} for ${{ env.DEPLOY_ENV }} environment"
           
-          # Update the Cloud Run service to use the latest container
-          gcloud run services update ${{ env.SERVICE_NAME }} \
-            --project=${{ secrets.GCP_PROJECT_ID }} \
-            --region=us-central1 \
-            --update-env-vars="DEPLOY_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
-            --quiet
+          # If a Cloud Run service update is needed, uncomment and modify the following
+          # command with the specific parameters that need updating
+          #
+          # Example parameters that might be needed:
+          # --update-env-vars="BUCKET_NAME=${{ env.BUCKET_NAME }},DEPLOY_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          # --cpu=1
+          # --memory=512Mi
+          #
+          echo "Skipping Cloud Run service update as no changes are needed at this time."
+          # Alternatively, trigger a new revision deployment if needed:
+          # gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
+          #   --project=${{ secrets.GCP_PROJECT_ID }} \
+          #   --region=us-central1 \
+          #   --to-latest \
+          #   --quiet
             
       - name: Validate deployment
         run: |
