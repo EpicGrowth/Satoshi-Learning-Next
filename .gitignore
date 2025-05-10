@@ -8,7 +8,9 @@ node_modules
 
 # next.js
 /.next/
+.next/
 /out/
+out/
 .next/cache/
 /public/sw.js
 /public/workbox-*.js
