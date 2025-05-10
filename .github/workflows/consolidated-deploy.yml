@@ -1,28 +1,18 @@
-name: Satoshi Station Deployment
+name: Satoshi Station Staging Deployment
 
 on:
   push:
     branches:
       - main
-      - production
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      DEPLOY_ENV: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'staging') || (github.ref == 'refs/heads/production' && 'production') || 'staging' }}
-      BUCKET_NAME: ${{ github.ref == 'refs/heads/production' && 'sats-sv-static' || 'sats-sv-staging' }}
-      SERVICE_NAME: ${{ github.ref == 'refs/heads/production' && 'sats-web' || 'sats-web-staging' }}
+      DEPLOY_ENV: 'staging'
+      BUCKET_NAME: 'sats-sv-staging'
+      SERVICE_NAME: 'sats-web-staging'
 
     steps:
       - name: Checkout repository
@@ -88,8 +78,8 @@ jobs:
             
       - name: Validate deployment
         run: |
-          echo "Validating deployment for ${{ env.DEPLOY_ENV }} environment"
-          DOMAIN="${{ env.DEPLOY_ENV == 'production' && 'www.sats.sv' || 'staging.sats.sv' }}"
+          echo "Validating deployment for staging environment"
+          DOMAIN="staging.sats.sv"
           
           # Check if the site is accessible
           MAX_RETRIES=5
