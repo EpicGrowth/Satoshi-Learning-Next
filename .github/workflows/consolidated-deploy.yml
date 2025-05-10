@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DEPLOY_ENV: 'staging'
-      BUCKET_NAME: 'sats-sv-staging'
       SERVICE_NAME: 'sats-web-staging'
+      REGION: 'us-central1'
+      DOCKER_REPO: 'gcr.io/${{ secrets.GCP_PROJECT_ID }}'
 
     steps:
       - name: Checkout repository
@@ -27,12 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js app
-        run: npm run build
-        env:
-          # Add any environment variables needed for the build
-          NODE_ENV: production
-
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v1
@@ -43,48 +38,44 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Deploy to Google Cloud Storage
-        run: |
-          echo "Deploying to ${{ env.DEPLOY_ENV }} environment using bucket ${{ env.BUCKET_NAME }}"
-          
-          # List out directory to debug its structure
-          echo "Listing output directory structure:"
-          find ./out -type d | sort
-          
-          # Sync all files to the bucket
-          gsutil -m rsync -r -d ./out gs://${{ env.BUCKET_NAME }}
-          
-          # Set cache control headers for different file types
-          gsutil -m setmeta -h "Cache-Control:public, max-age=3600" gs://${{ env.BUCKET_NAME }}/**/*.html
-          
-          # Set cache for _next directory (App Router static assets)
-          gsutil -m setmeta -h "Cache-Control:public, max-age=31536000" gs://${{ env.BUCKET_NAME }}/_next/**
-          
-          # Try to set cache for any remaining static assets
-          gsutil -m setmeta -h "Cache-Control:public, max-age=86400" gs://${{ env.BUCKET_NAME }}/static/** || echo "No static directory found, continuing"
-          
-          # Set cache for images, if any
-          gsutil -m setmeta -h "Cache-Control:public, max-age:31536000" gs://${{ env.BUCKET_NAME }}/images/** || echo "No images directory found, continuing"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Update Cloud Run service
+      - name: Configure Docker to use Google Cloud
         run: |
-          echo "Updating Cloud Run service ${{ env.SERVICE_NAME }} for ${{ env.DEPLOY_ENV }} environment"
+          gcloud auth configure-docker gcr.io
+
+      - name: Build and Push Docker image
+        run: |
+          # Set image name
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          IMAGE_NAME="${{ env.DOCKER_REPO }}/${{ env.SERVICE_NAME }}:$TIMESTAMP"
+          LATEST_IMAGE="${{ env.DOCKER_REPO }}/${{ env.SERVICE_NAME }}:latest"
           
-          # If a Cloud Run service update is needed, uncomment and modify the following
-          # command with the specific parameters that need updating
-          #
-          # Example parameters that might be needed:
-          # --update-env-vars="BUCKET_NAME=${{ env.BUCKET_NAME }},DEPLOY_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          # --cpu=1
-          # --memory=512Mi
-          #
-          echo "Skipping Cloud Run service update as no changes are needed at this time."
-          # Alternatively, trigger a new revision deployment if needed:
-          # gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
-          #   --project=${{ secrets.GCP_PROJECT_ID }} \
-          #   --region=us-central1 \
-          #   --to-latest \
-          #   --quiet
+          echo "Building Docker image: $IMAGE_NAME"
+          
+          # Build and push the Docker image
+          docker build -t $IMAGE_NAME -t $LATEST_IMAGE .
+          docker push $IMAGE_NAME
+          docker push $LATEST_IMAGE
+          
+          # Save the image name for later use
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+
+      - name: Deploy to Cloud Run
+        run: |
+          echo "Deploying to Cloud Run service ${{ env.SERVICE_NAME }} in ${{ env.REGION }} region"
+          
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --project=${{ secrets.GCP_PROJECT_ID }} \
+            --region=${{ env.REGION }} \
+            --image=${{ env.IMAGE_NAME }} \
+            --platform=managed \
+            --allow-unauthenticated \
+            --cpu=1 \
+            --memory=512Mi \
+            --set-env-vars="DEPLOY_ENV=${{ env.DEPLOY_ENV }},DEPLOY_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+            --quiet
             
       - name: Validate deployment
         run: |

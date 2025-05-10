@@ -1,0 +1,21 @@
+# Include any files or directories that you don't want to be copied to your
+# container here (e.g., local build artifacts, temporary files, etc.).
+.git
+.github
+.next
+node_modules
+npm-debug.log
+README.md
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.eslintrc.json
+.gitignore
+docker-compose.yml
+docker-compose.*.yml
+
+# Include files needed by Next.js export
+!.next/standalone
+!.next/static
