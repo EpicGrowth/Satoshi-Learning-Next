@@ -8,9 +8,6 @@ const nextConfig = {
   },
   trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
   
-  // Base path if deploying to a subdirectory
-  // basePath: '',
-  
   // ESLint configuration - ignore errors during build
   eslint: {
     // Warning instead of error during build
