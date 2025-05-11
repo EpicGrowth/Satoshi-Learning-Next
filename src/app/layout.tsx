@@ -39,6 +39,11 @@ export default function RootLayout({
       suppressHydrationWarning 
       className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable} ${fontBrand.variable}`}
     >
+      <head>
+        {/* Add direct CSS links for more reliable loading */}
+        <link rel="stylesheet" href="/css-fix.css" />
+        <link rel="stylesheet" href="/styles/dark-mode-enhancements.css" />
+      </head>
       <body className="min-h-screen font-sans antialiased">
         <ThemeProvider
           attribute="class"

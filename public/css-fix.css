@@ -33,11 +33,19 @@ body {
 }
 
 /* Force link colors to match brand */
-a:not([class]) {
+a:not([class]), a.text-link {
   color: hsl(var(--primary)) !important;
   text-decoration: none;
 }
 
-a:not([class]):hover {
+a:not([class]):hover, a.text-link:hover {
   text-decoration: underline;
+}
+
+/* Ensure consistent heading styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: hsl(var(--primary)) !important;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
