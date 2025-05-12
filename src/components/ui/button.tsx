@@ -9,17 +9,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-bitcoin-orange text-white shadow hover:bg-bitcoin-deep hover:-translate-y-0.5 active:translate-y-0",
+          "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 border-0",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-bitcoin-orange/30 bg-background text-bitcoin-orange shadow-sm hover:bg-bitcoin-orange/10 hover:text-bitcoin-orange hover:border-bitcoin-orange",
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-bitcoin-orange/10 hover:text-bitcoin-orange",
-        link: "text-bitcoin-orange underline-offset-4 hover:underline",
-        // Match the original site's primary button style
-        primary: "bg-bitcoin-orange text-white shadow-primary hover:shadow-primary-hover hover:bg-bitcoin-deep hover:-translate-y-0.5 active:translate-y-0",
+        ghost: "hover:bg-[var(--primary-light)]/10 hover:text-[var(--primary-light)]",
+        link: "text-[var(--primary-light)] underline-offset-4 hover:underline",
+        // Standard branded button style with gradient background
+        primary: "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 border-0",
       },
       size: {
         default: "h-9 px-4 py-2",

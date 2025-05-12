@@ -1,5 +1,5 @@
-import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+'use client';
+
 import {
   Link,
   X,
@@ -12,23 +12,27 @@ import {
   FileWarning,
   Shield,
 } from 'lucide-react';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
+import { ModuleLayout } from '@/components/learn/shared/module-layout';
+import { ModuleContent } from '@/components/learn/shared/module-content';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
 import { Card } from '@/components/ui/card';
-import SatoshiQuote from '@/components/learn/shared/components/satoshi-quote';
+import SatoshiQuote from '@/components/learn/shared/satoshi-quote';
 
 export default function ClosingChannels() {
   return (
-    <ModuleContent
-      moduleId="lightning-channel-management"
-      moduleTitle="Closing Channels"
-      moduleDescription="The technical art of proper channel termination"
-      difficulty="Intermediate"
-      icon={Link}
-    >
-      <div className="space-y-8">
-        {/* A Note from Satoshi */}
-        <div className="bg-muted/50 p-6 rounded-lg border border-border/50">
-          <h2 className="text-xl font-bold mb-4">A Note from Satoshi</h2>
+    <ModuleLayout>
+      <ModuleContent
+        moduleId="lightning-channel-management"
+        sectionId="closing-channels"
+        moduleTitle="Closing Channels"
+        moduleDescription="The technical art of proper channel termination"
+        difficulty="Intermediate"
+        icon={Link}
+      >
+        <div className="space-y-8">
+          {/* A Note from Satoshi */}
+          <div className="bg-muted/50 p-6 rounded-lg border border-border/50">
+            <h2 className="text-xl font-bold mb-4">A Note from Satoshi</h2>
 
           <div className="prose dark:prose-invert max-w-none">
             <p>
@@ -439,6 +443,7 @@ export default function ClosingChannels() {
           />
         </div>
       </div>
-    </ModuleContent>
+      </ModuleContent>
+    </ModuleLayout>
   );
 }

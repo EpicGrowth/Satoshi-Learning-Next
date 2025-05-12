@@ -1,14 +1,16 @@
-import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+'use client';
+
 import { Link, ArrowLeftRight, Zap, BarChart3, BarChart4, ArrowRightLeft, RefreshCw, Scale, CircleDollarSign } from 'lucide-react';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
+import { ModuleLayout } from '@/components/learn/shared/module-layout';
+import { ModuleContent } from '@/components/learn/shared/module-content';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
 import { Card } from '@/components/ui/card';
-import { SubSectionContent } from '@/components/learn/shared/components/sub-section-content';
-import SatoshiQuote from '@/components/learn/shared/components/satoshi-quote';
+import SatoshiQuote from '@/components/learn/shared/satoshi-quote';
 
 export default function ChannelBalancing() {
   return (
-    <ModuleContent
+    <ModuleLayout>
+      <ModuleContent
       moduleId="lightning-channel-management"
       moduleTitle="Channel Balancing"
       moduleDescription="Mastering Lightning channel liquidity management"
@@ -818,6 +820,7 @@ export default function ChannelBalancing() {
           />
         </div>
       </div>
-    </ModuleContent>
+      </ModuleContent>
+    </ModuleLayout>
   );
 }

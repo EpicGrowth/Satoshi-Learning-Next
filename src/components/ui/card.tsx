@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    variant?: "default" | "bitcoin" | "lightning";
+    variant?: "default" | "bitcoin" | "lightning" | "brand";
   }
 >(({ className, variant = "default", ...props }, ref) => {
   const variantClasses = {
     default: "bg-card text-card-foreground",
-    bitcoin: "bg-bitcoin-orange/5 border-bitcoin-orange/20",
+    brand: "bg-[var(--primary-light)]/5 border-[var(--primary-light)]/20",
+    bitcoin: "bg-[var(--primary-light)]/5 border-[var(--primary-light)]/20",
     lightning: "bg-lightning-purple/5 border-lightning-purple/20",
   };
 

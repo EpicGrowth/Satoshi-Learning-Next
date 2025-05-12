@@ -1,6 +1,6 @@
 import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
+import { ModuleContent } from '@/components/learn/shared/module-content';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
 import { Settings } from 'lucide-react';
 
 const content = {

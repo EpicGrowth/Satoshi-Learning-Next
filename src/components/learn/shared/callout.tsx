@@ -23,7 +23,7 @@ export function Callout({ type, title, children, className }: CalloutProps) {
 
   const styles = {
     info: 'bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300',
-    warning: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-700 dark:text-yellow-300',
+    warning: 'bg-bitcoin-orange/10 border-bitcoin-orange/30 text-bitcoin-orange dark:text-bitcoin-orange',
     danger: 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300',
     bitcoin: 'bg-bitcoin-orange/10 border-bitcoin-orange/30 text-bitcoin-orange dark:text-bitcoin-orange',
     lightning: 'bg-lightning-purple/10 border-lightning-purple/30 text-lightning-purple dark:text-lightning-purple',

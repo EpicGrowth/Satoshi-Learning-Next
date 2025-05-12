@@ -1,93 +1,145 @@
-/* Dark mode enhancements for Satoshi Station Next
-   This stylesheet is loaded conditionally in dark mode to apply more specific styling */
+/* Enhanced dark mode styling for Satoshi Station Next
+   This stylesheet is loaded conditionally in dark mode to apply more specific styling for educational content */
 
-/* Standardized color variables - using the exact Satoshi Station orange */
+/* Standardized color variables with improved accessibility */
 :root {
-  --std-orange: #FF523C;         /* Exact Satoshi Station orange */
-  --std-orange-hover: #FF6E5C;   /* Lighter hover state */
-  --std-orange-deep: #E64431;    /* Deeper accent for shadows/focus */
-  --std-green: #2ECC71;          /* Standard Green for success/beginner */
-  --std-yellow: #F1C40F;         /* Standard Yellow for intermediate */
-  --std-red: #E74C3C;            /* Standard Red for advanced/error */
-  --std-blue: #3498DB;           /* Standard Blue for info */
+  --std-orange: #F7931A;         /* Standardized Bitcoin orange to match site-wide theme */
+  --std-orange-hover: #E87D18;   /* Hover state - consistent with site-wide hover */
+  --std-orange-deep: #D16C16;    /* Deeper orange for shadows/focus */
+  --std-green: #22C55E;          /* Brighter green for better visibility */
+  --std-yellow: #EAB308;         /* Brighter yellow for better visibility */
+  --std-red: #EF4444;            /* Brighter red for better visibility */
+  --std-blue: #3B82F6;           /* Brighter blue for better visibility */
+  --std-purple: #8B5CF6;         /* Purple for diversity in educational content */
 }
 
 :root.dark {
-  /* Enhanced dark mode colors */
-  --bg-dark: #0f1219;            /* Deeper background */
-  --bg-card: #171c26;            /* Card background */
-  --bg-card-hover: #1c2230;      /* Card hover state */
-  --border-subtle: rgba(255, 255, 255, 0.08); /* Subtle borders */
+  /* Enhanced dark mode colors optimized for educational content */
+  --bg-dark: #0f172a;            /* Deep navy background - easier on the eyes */
+  --bg-card: #1e293b;            /* Richer card background */
+  --bg-card-hover: #334155;      /* More noticeable card hover state */
+  --border-subtle: rgba(255, 255, 255, 0.1); /* Slightly more visible borders */
+  --text-primary: rgba(255, 255, 255, 0.92); /* High contrast text */
+  --text-secondary: rgba(255, 255, 255, 0.75); /* Medium contrast text */
+  --text-tertiary: rgba(255, 255, 255, 0.6); /* Low contrast text */
+
+  /* Educational content specific */
+  --code-bg: #1a1f35;             /* Code background color */
+  --link-underline: rgba(255, 144, 82, 0.4); /* Subtle underline */
+  --selection-bg: rgba(255, 144, 82, 0.3);  /* Text selection */
+  --focus-ring: rgba(255, 144, 82, 0.5);    /* Focus state */
 }
 
-/* Overall theme improvements */
+/* Overall theme improvements for educational content */
 .dark body {
   background-color: var(--bg-dark);
-  color: rgba(255, 255, 255, 0.9);
-  font-family: var(--font-sans), Inter, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Text selection styling */
+.dark ::selection {
+  background-color: var(--selection-bg);
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 /* CRITICAL BRAND REQUIREMENT: Ensure all instances of Satoshi Station text use exactly the same styling */
-[class*='satoshi-station'],
-.brand-name,
-span:contains('Satoshi Station'),
-h1 span:contains('Satoshi Station'),
-.font-brand,
-[data-brand-text='true'] {
+.dark [class*='satoshi-station'],
+.dark .brand-name,
+.dark .font-brand,
+.dark [data-brand-text='true'] {
   font-family: var(--font-brand), 'Exo 2', sans-serif !important;
-  color: #FF523C !important;
+  color: var(--std-orange) !important;
   font-weight: 700 !important;
   letter-spacing: 0.01em !important;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
-  text-shadow: 0 0 1px rgba(255, 82, 60, 0.1) !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) !important;
   white-space: nowrap !important;
 }
 
+/* Enhanced brand styling with subtle effects */
+.dark .brand-text-glow {
+  text-shadow: 0 0 10px rgba(255, 144, 82, 0.3) !important;
+}
+
 /* Minor adjustments for header/footer logo - ensuring consistent branding */
-header .font-brand,
-footer .font-brand {
+.dark header .font-brand,
+.dark footer .font-brand {
   /* These same styles should be used in any instance of the Satoshi Station text */
   position: relative;
   display: inline-block;
   line-height: 1.2;
+  transition: all 0.3s ease;
 }
 
-/* Hero section specific styling - in both light and dark modes */
-section:first-of-type h1 .font-brand,
-section:first-of-type h1 span {
-  font-weight: 600;
-  letter-spacing: 0.01em;
+.dark header .font-brand:hover,
+.dark footer .font-brand:hover {
+  color: var(--std-orange-hover) !important;
+  text-shadow: 0 0 15px rgba(255, 144, 82, 0.4) !important;
+}
+
+/* Hero section specific styling optimized for educational content */
+.dark section:first-of-type h1 .font-brand,
+.dark section:first-of-type h1 span {
+  font-weight: 700;
+  letter-spacing: -0.02em;
   text-transform: none;
   font-feature-settings: "salt", "ss02";
-  font-size: calc(2rem + 2vw);
+  font-size: calc(2.25rem + 2vw);
   line-height: 1.1;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 144, 82, 0.3);
   position: relative;
   display: inline-block;
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
-/* Enhanced sidebar with darker background and subtle design */
+/* Enhanced sidebar with optimized UI for educational content navigation */
 .dark .sidebar {
-  background-color: rgba(15, 18, 25, 0.95); /* slightly transparent for depth */
+  background-color: rgba(15, 23, 42, 0.95); /* Slightly transparent for visual depth */
   box-shadow: inset -1px 0 0 0 var(--border-subtle);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   border-right: 1px solid var(--border-subtle);
+  scrollbar-width: thin;
+  scrollbar-color: var(--std-orange) transparent;
 }
 
-/* Use exact Satoshi Station orange for all active elements with better contrast */
+/* Improved navigation styling for educational pathways */
+.dark .sidebar .nav-group {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.dark .sidebar .nav-group-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--std-orange);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* Use updated orange for all active elements with better contrast */
 .dark .lightning-active,
 .dark .bitcoin-active,
 .dark .active-path {
-  background-color: rgba(255, 82, 60, 0.15);
+  background-color: rgba(255, 144, 82, 0.15);
   border-left: 3px solid var(--std-orange);
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-/* Make the active item text white for better readability */
+/* Better active item text styling for readability in educational content */
 .dark .lightning-active span,
 .dark .bitcoin-active span,
 .dark .active-path span {
@@ -95,95 +147,169 @@ section:first-of-type h1 span {
   font-weight: 500;
 }
 
-/* Enhanced card styling with better shadows, hover effects, and visual depth */
+/* Hover effect for navigation items */
+.dark .nav-item:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* Enhanced card styling with better shadows and visual hierarchy for educational content */
 .dark .card,
 .dark [class*='card'] {
   background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
+  border-radius: 0.75rem;
 }
 
 .dark .card:hover,
 .dark [class*='card']:hover {
   background-color: var(--bg-card-hover);
-  border-color: rgba(255, 82, 60, 0.2);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 82, 60, 0.1);
-  transform: translateY(-2px);
+  border-color: rgba(255, 144, 82, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 144, 82, 0.15);
+  transform: translateY(-3px);
 }
 
-/* Better checkbox visibility using Satoshi Station orange */
+/* Educational cards - special styling for learning modules */
+.dark .learning-card {
+  position: relative;
+  z-index: 1;
+  background-image:
+    radial-gradient(circle at top right, rgba(255, 144, 82, 0.1), transparent 250px);
+}
+
+/* Different card variants for different learning paths */
+.dark .bitcoin-card {
+  background-image:
+    radial-gradient(circle at top right, rgba(255, 144, 82, 0.1), transparent 250px);
+}
+
+.dark .lightning-card {
+  background-image:
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent 250px);
+}
+
+.dark .beginner-card {
+  background-image:
+    radial-gradient(circle at top right, rgba(34, 197, 94, 0.1), transparent 250px);
+}
+
+.dark .advanced-card {
+  background-image:
+    radial-gradient(circle at top right, rgba(239, 68, 68, 0.1), transparent 250px);
+}
+
+/* Better checkboxes for educational content interaction - enhanced for better learning paths */
 .dark .verify-checkbox,
 .dark [type="checkbox"] {
-  border-color: rgba(255, 82, 60, 0.5);
+  border-color: rgba(255, 144, 82, 0.5);
   transition: all 0.15s ease;
+  border-radius: 0.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .dark .verify-checkbox:hover,
 .dark [type="checkbox"]:hover {
   border-color: var(--std-orange);
-  box-shadow: 0 0 0 2px rgba(255, 82, 60, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 144, 82, 0.2);
 }
 
 .dark .verify-checkbox:checked,
 .dark [type="checkbox"]:checked {
   background-color: var(--std-orange);
   border-color: var(--std-orange-deep);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
 }
 
-/* Make progress bars use the original orange with gradient for depth */
+/* Learning path progress indicators with improved visual hierarchy */
 .dark .progress,
-.dark [role="progressbar"],
-.dark .progress-bar-lightning,
+.dark [role="progressbar"] {
+  background-color: rgba(30, 41, 59, 0.8); /* Slightly lighter than background */
+  border-radius: 1rem;
+  height: 0.5rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Different color progress bars for different learning topics */
+.dark .progress-bitcoin,
 .dark .progress-bar-bitcoin {
   background: linear-gradient(90deg, var(--std-orange-deep), var(--std-orange));
-  overflow: hidden;
-  height: 8px;
-  border-radius: 4px;
+  border-radius: 1rem;
+  height: 0.5rem;
 }
 
-/* Add subtle animation to progress bars */
-.dark .progress::after,
-.dark [role="progressbar"]::after {
+.dark .progress-lightning,
+.dark .progress-bar-lightning {
+  background: linear-gradient(90deg, #8B5CF6, #A78BFA);
+  border-radius: 1rem;
+  height: 0.5rem;
+}
+
+.dark .progress-beginner {
+  background: linear-gradient(90deg, #059669, #22C55E);
+}
+
+.dark .progress-intermediate {
+  background: linear-gradient(90deg, #D97706, #EAB308);
+}
+
+.dark .progress-advanced {
+  background: linear-gradient(90deg, #DC2626, #EF4444);
+}
+
+/* Enhanced progress bar shine effect */
+.dark .progress[data-value]:not([data-value="0"])::after,
+.dark [role="progressbar"]:not([aria-valuenow="0"])::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  animation: progress-shine 2s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  animation: progress-shine 3s ease-in-out infinite;
 }
 
 @keyframes progress-shine {
   0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  20%, 100% { transform: translateX(100%); }
 }
 
-/* Improve button styling with Satoshi Station orange */
+/* Enhanced button styling optimized for educational content - better feedback and accessibility */
 .dark .btn,
 .dark [class*='btn'],
 .dark button[type="submit"],
 .dark .button {
-  background: var(--std-orange);
+  background: linear-gradient(180deg, var(--std-orange) 0%, var(--std-orange-deep) 100%);
   border: none;
   color: white;
-  font-weight: 500;
-  box-shadow: 0 2px 8px rgba(255, 82, 60, 0.4);
-  transition: all 0.2s ease;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(255, 144, 82, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   outline: none;
   position: relative;
   overflow: hidden;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  padding: 0.625rem 1.25rem;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .dark .btn:hover,
 .dark [class*='btn']:hover,
 .dark button[type="submit"]:hover,
 .dark .button:hover {
-  background: var(--std-orange-hover);
-  box-shadow: 0 4px 12px rgba(255, 82, 60, 0.6);
-  transform: translateY(-1px);
+  background: linear-gradient(180deg, var(--std-orange-hover) 0%, var(--std-orange) 100%);
+  box-shadow: 0 6px 15px rgba(255, 144, 82, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
 .dark .btn:active,
@@ -191,11 +317,21 @@ section:first-of-type h1 span {
 .dark button[type="submit"]:active,
 .dark .button:active {
   background: var(--std-orange-deep);
-  transform: translateY(1px);
-  box-shadow: 0 2px 4px rgba(255, 82, 60, 0.4);
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(255, 144, 82, 0.4), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.1s;
 }
 
-/* Add subtle ripple effect to buttons */
+.dark .btn:focus-visible,
+.dark [class*='btn']:focus-visible,
+.dark button[type="submit"]:focus-visible,
+.dark .button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+/* Enhanced ripple effect for better tactile feedback */
 .dark .btn::after,
 .dark [class*='btn']::after {
   content: '';
@@ -211,132 +347,291 @@ section:first-of-type h1 span {
   transform-origin: 50% 50%;
 }
 
-.dark .btn:focus::after,
-.dark [class*='btn']:focus::after {
-  animation: ripple 0.5s ease-out;
+.dark .btn:active::after,
+.dark [class*='btn']:active::after {
+  animation: ripple 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes ripple {
   0% {
     transform: scale(0, 0);
-    opacity: 0.5;
+    opacity: 0.8;
   }
   100% {
-    transform: scale(20, 20);
+    transform: scale(25, 25);
     opacity: 0;
   }
 }
 
-/* Enhance code block styling with better background and highlights */
-.dark pre {
-  background-color: rgba(15, 18, 25, 0.8);
+/* Secondary button variant */
+.dark .btn-secondary,
+.dark .button-secondary {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
-  margin: 1.5rem 0;
-  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark .btn-secondary:hover,
+.dark .button-secondary:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.07) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Ghost button variant */
+.dark .btn-ghost,
+.dark .button-ghost {
+  background: transparent;
+  color: var(--std-orange);
+  border: 1px solid transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.dark .btn-ghost:hover,
+.dark .button-ghost:hover {
+  background: rgba(255, 144, 82, 0.1);
+  box-shadow: none;
+}
+
+/* Educational content specific buttons */
+.dark .btn-beginner {
+  background: linear-gradient(180deg, var(--std-green) 0%, #059669 100%);
+  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+}
+
+.dark .btn-beginner:hover {
+  background: linear-gradient(180deg, #22C55E 0%, #059669 100%);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+
+.dark .btn-advanced {
+  background: linear-gradient(180deg, var(--std-red) 0%, #DC2626 100%);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
+}
+
+.dark .btn-advanced:hover {
+  background: linear-gradient(180deg, #F87171 0%, #DC2626 100%);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Enhanced code block styling for educational content - better readability and information hierarchy */
+.dark pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 0.75rem;
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  position: relative;
+  overflow: auto;
+}
+
+/* Language indicator for code blocks */
+.dark pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  background-color: var(--std-orange);
+  color: white;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0 0 0.375rem 0.375rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Code highlighting for better educational content understanding */
+.dark pre .highlight-line {
+  background-color: var(--code-highlight);
+  margin: 0 -1.25rem;
+  padding: 0 1.25rem;
+  border-left: 3px solid var(--std-orange);
 }
 
 .dark code {
   color: var(--std-orange);
   font-weight: 500;
+  font-size: 0.9em;
 }
 
-/* Enhanced scrollbar in dark mode using Satoshi Station orange */
+/* Enhanced scrollbar in dark mode - better accessibility and usability */
 .dark ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: rgba(15, 18, 25, 0.8);
-  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 6px;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 82, 60, 0.5);
-  border-radius: 4px;
+  background: rgba(255, 144, 82, 0.4);
+  border-radius: 6px;
+  border: 2px solid rgba(15, 23, 42, 0.6);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 82, 60, 0.7);
+  background: rgba(255, 144, 82, 0.6);
 }
 
-/* Main header enhancements with glass effect */
+.dark ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Main header enhancements with modern glass effect - better navigation for educational content */
 .dark header {
-  background-color: rgba(15, 18, 25, 0.85);
-  backdrop-filter: blur(12px);
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-/* Enhance header navigation links */
+/* Enhance header navigation links for better content pathways */
 .dark header nav a {
   position: relative;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  margin: 0 0.25rem;
+  font-weight: 500;
 }
 
 .dark header nav a:hover {
   color: var(--std-orange);
+  background-color: rgba(255, 144, 82, 0.1);
+  transform: translateY(-1px);
 }
 
 .dark header nav a.active {
   color: var(--std-orange);
+  font-weight: 600;
 }
 
-.dark header nav a.active::after {
+.dark header nav a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
   height: 2px;
   background-color: var(--std-orange);
-  transform: scaleX(0.8);
-  transition: transform 0.2s ease;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
 }
 
-.dark header nav a.active:hover::after {
-  transform: scaleX(1);
+.dark header nav a:hover::after,
+.dark header nav a.active::after {
+  width: 80%;
 }
 
-/* Status badges with beautiful, contrasted styling */
+/* Enhanced breadcrumb navigation for educational pathways */
+.dark .breadcrumbs {
+  display: flex;
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.dark .breadcrumbs .crumb {
+  display: flex;
+  align-items: center;
+}
+
+.dark .breadcrumbs .crumb:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.5rem;
+  color: var(--text-tertiary);
+}
+
+.dark .breadcrumbs a {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.dark .breadcrumbs a:hover {
+  color: var(--std-orange);
+}
+
+.dark .breadcrumbs .current {
+  color: var(--std-orange);
+  font-weight: 500;
+}
+
+/* Enhanced badges with improved visual hierarchy for educational content */
 .dark .badge,
 .dark [class*='badge'] {
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   position: relative;
-  transition: all 0.2s ease;
-  border-radius: 4px;
+  transition: all 0.3s ease;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
 }
 
 .dark .badge:hover,
 .dark [class*='badge']:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
+/* Learning path badges for better content categorization */
 .dark .badge-beginner {
-  background-color: rgba(46, 204, 113, 0.15);
+  background-color: rgba(34, 197, 94, 0.15);
   color: var(--std-green);
-  border: 1px solid rgba(46, 204, 113, 0.3);
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .dark .badge-intermediate {
-  background-color: rgba(241, 196, 15, 0.15);
+  background-color: rgba(234, 179, 8, 0.15);
   color: var(--std-yellow);
-  border: 1px solid rgba(241, 196, 15, 0.3);
+  border: 1px solid rgba(234, 179, 8, 0.3);
 }
 
 .dark .badge-advanced {
-  background-color: rgba(231, 76, 60, 0.15);
+  background-color: rgba(239, 68, 68, 0.15);
   color: var(--std-red);
-  border: 1px solid rgba(231, 76, 60, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-/* Better navigation indicators with animation */
+.dark .badge-reference {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--std-blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Icon badges for enhanced visual understanding */
+.dark .badge-with-icon {
+  padding-left: 0.5rem;
+}
+
+.dark .badge-with-icon svg {
+  margin-right: 0.375rem;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Better navigation indicators with improved animation */
 .dark .nav-item.active {
   position: relative;
   color: var(--std-orange);
+  font-weight: 500;
 }
 
 .dark .nav-item.active::after {
@@ -347,19 +642,20 @@ section:first-of-type h1 span {
   width: 100%;
   height: 2px;
   background-color: var(--std-orange);
-  animation: navIndicator 0.3s ease-in-out;
+  animation: navIndicator 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes navIndicator {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  from { transform: scaleX(0); transform-origin: left center; }
+  to { transform: scaleX(1); transform-origin: left center; }
 }
 
-/* Add subtle background texture with improved design */
+/* Enhanced main content area for educational content */
 .dark main {
-  background: linear-gradient(to bottom, var(--bg-dark), rgba(23, 28, 38, 0.98));
+  background: radial-gradient(ellipse at top, var(--bg-dark), rgba(15, 23, 42, 0.98) 80%);
   position: relative;
   z-index: 0;
+  overflow-x: hidden;
 }
 
 .dark main::before {
@@ -370,89 +666,251 @@ section:first-of-type h1 span {
   right: 0;
   bottom: 0;
   background-image: url('/images/hex-pattern.svg');
-  background-size: 200px 200px;
-  opacity: 0.04;
+  background-size: 300px 300px;
+  opacity: 0.03;
   z-index: -1;
+  pointer-events: none;
 }
 
-/* Enhanced section links with better interaction */
+/* Enhanced section links for better educational pathways */
 .dark .section-link {
   position: relative;
-  transition: all 0.25s ease;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  margin-bottom: 0.25rem;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.375rem;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
 }
 
 .dark .section-link:hover {
-  background-color: rgba(255, 82, 60, 0.1);
-  transform: translateX(2px);
+  background-color: rgba(255, 144, 82, 0.1);
+  transform: translateX(3px);
 }
 
 .dark .section-link.active {
-  background-color: rgba(255, 82, 60, 0.15);
+  background-color: rgba(255, 144, 82, 0.15);
   color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(255, 144, 82, 0.15);
 }
 
 .dark .section-link.completed {
+  color: var(--text-primary);
+}
+
+.dark .section-link.completed::before {
+  content: '';
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: var(--std-orange);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Educational content component enhancements */
+.dark .learning-module {
+  margin-bottom: 3rem;
+}
+
+.dark .module-title {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--std-orange);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.dark .module-title svg {
+  margin-right: 0.75rem;
   color: var(--std-orange);
 }
 
-.dark .section-link.completed::after {
-  content: '✓';
+.dark .module-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Educational content callouts for important information */
+.dark .callout {
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .callout::before {
+  content: '';
   position: absolute;
-  right: 10px;
-  font-size: 0.8rem;
-  color: var(--std-orange);
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-top-left-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
 }
 
-/* Make headings use Poppins font with styling like the old website */
-.dark h1, 
-.dark h2, 
+.dark .callout-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.dark .callout-title svg {
+  margin-right: 0.5rem;
+}
+
+.dark .callout-note {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.dark .callout-note::before {
+  background-color: var(--std-blue);
+}
+
+.dark .callout-warning {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.dark .callout-warning::before {
+  background-color: var(--std-red);
+}
+
+.dark .callout-tip {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.dark .callout-tip::before {
+  background-color: var(--std-green);
+}
+
+.dark .callout-important {
+  background-color: rgba(234, 179, 8, 0.1);
+}
+
+.dark .callout-important::before {
+  background-color: var(--std-yellow);
+}
+
+/* Enhanced heading typography for better educational content readability */
+.dark h1,
+.dark h2,
 .dark h3,
 .dark h4,
 .dark h5,
 .dark h6 {
   font-family: var(--font-display), Poppins, sans-serif;
-  color: var(--std-orange);
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-top: 1.5em;
+  margin-top: 1.75em;
   margin-bottom: 0.75em;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+/* Primary headings for distinct sections */
+.dark h1 {
+  color: var(--std-orange);
+  font-size: 2.5rem;
+  margin-top: 1em;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
-/* Style all section headers with orange for consistency */
-.dark [class*='lightning'] h1,
-.dark [class*='lightning'] h2,
-.dark [class*='lightning'] h3,
+/* Secondary headings for subsections */
+.dark h2 {
+  font-size: 1.875rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Subtle accent for h2 headings */
+.dark h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--std-orange);
+  border-radius: 1.5px;
+}
+
+/* Tertiary headings for topics */
+.dark h3 {
+  font-size: 1.5rem;
+  color: var(--std-orange);
+}
+
+/* Quaternary headings for subtopics */
+.dark h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Consistent heading colors across learning paths */
 .dark [class*='bitcoin'] h1,
 .dark [class*='bitcoin'] h2,
 .dark [class*='bitcoin'] h3 {
   color: var(--std-orange);
 }
 
-/* Enhanced hero section typography to match the old website style */
+.dark [class*='lightning'] h1,
+.dark [class*='lightning'] h2,
+.dark [class*='lightning'] h3 {
+  color: var(--std-purple);
+}
+
+/* Enhanced hero section typography optimized for educational websites */
 .dark h1.page-title,
 .dark .hero-title,
 .dark h1[class*='hero'],
-.dark [class*='hero'] h1,
-.dark section h1 {
+.dark [class*='hero'] h1 {
   font-family: var(--font-display), Poppins, sans-serif;
   color: white;
   font-size: 3.75rem;
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.025em;
-  text-shadow: 0 0 15px rgba(255, 82, 60, 0.4);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  max-width: 850px;
 }
 
-/* Specific styling for the homepage hero section */
+/* Hero title accent */
+.dark h1.page-title::after,
+.dark .hero-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.75rem;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--std-orange), var(--std-orange-deep));
+  border-radius: 2px;
+}
+
+/* Homepage-specific hero styling */
 .dark section:first-of-type h1 {
   text-align: center;
   font-size: 4rem;
+  background: linear-gradient(120deg, #ffffff 0%, #f8f9fa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .dark section:first-of-type h1 span {
@@ -463,76 +921,93 @@ section:first-of-type h1 span {
   letter-spacing: -0.03em;
   position: relative;
   font-weight: 600;
+  background: linear-gradient(90deg, var(--std-orange), var(--std-orange-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .dark section:first-of-type h1 span::after {
   content: '';
   position: absolute;
-  bottom: -0.25rem;
+  bottom: -0.375rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
+  width: 140px;
   height: 4px;
-  background-color: var(--std-orange);
+  background: linear-gradient(90deg, var(--std-orange-deep), var(--std-orange));
   border-radius: 2px;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
-.dark h1.page-title > span,
-.dark .hero-title > span,
-.dark [class*='hero'] h1 > span {
+/* Highlighted spans in titles */
+.dark h1 > span.highlight,
+.dark .hero-title > span.highlight,
+.dark [class*='hero'] h1 > span.highlight {
   color: var(--std-orange);
   position: relative;
   display: inline-block;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
 
-.dark h1.page-title::after,
-.dark .hero-title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -12px;
-  width: 80px;
-  height: 4px;
-  background: var(--std-orange);
-  border-radius: 2px;
-}
-
-/* Subtitle/lead paragraph styling */
+/* Enhanced subtitle/lead paragraph styling for better educational content intro */
 .dark .hero-subtitle,
 .dark [class*='hero'] p {
-  font-family: var(--font-sans), Inter, sans-serif;
-  font-size: 1.25rem;
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
+  font-size: 1.35rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   font-weight: 400;
-  max-width: 650px;
-  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.01em;
 }
 
-/* Improve links and interactive elements */
+/* Improved links and interactive elements for better navigation */
 .dark a:not([class]) {
   color: var(--std-orange);
   text-decoration: none;
   position: relative;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  border-bottom: 1px dotted rgba(255, 144, 82, 0.4);
+  padding-bottom: 1px;
 }
 
-.dark a:not([class])::after {
+.dark a:not([class]):hover {
+  color: var(--std-orange-hover);
+  border-bottom: 1px solid rgba(255, 144, 82, 0.7);
+}
+
+.dark a:not([class]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Animated links for special cases */
+.dark a.animated-link {
+  position: relative;
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+
+.dark a.animated-link::after {
   content: '';
   position: absolute;
   width: 100%;
-  height: 1px;
+  height: 2px;
   bottom: 0;
   left: 0;
   background-color: var(--std-orange);
   transform: scaleX(0);
   transform-origin: bottom right;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dark a:not([class]):hover::after {
+.dark a.animated-link:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }

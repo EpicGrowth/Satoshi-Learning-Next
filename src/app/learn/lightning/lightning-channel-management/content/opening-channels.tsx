@@ -1,5 +1,5 @@
-import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+'use client';
+
 import {
   Link,
   ShieldCheck,
@@ -15,12 +15,15 @@ import {
   Layers,
   Database,
 } from 'lucide-react';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
-import SatoshiQuote from '@/components/learn/shared/components/satoshi-quote';
+import { ModuleLayout } from '@/components/learn/shared/module-layout';
+import { ModuleContent } from '@/components/learn/shared/module-content';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
+import SatoshiQuote from '@/components/learn/shared/satoshi-quote';
 
 export default function OpeningChannels() {
   return (
-    <ModuleContent
+    <ModuleLayout>
+      <ModuleContent
       moduleId="lightning-channel-management"
       moduleTitle="Opening Channels"
       moduleDescription="Learn to open Lightning channels"
@@ -1006,6 +1009,7 @@ export default function OpeningChannels() {
           />
         </div>
       </div>
-    </ModuleContent>
+      </ModuleContent>
+    </ModuleLayout>
   );
 }

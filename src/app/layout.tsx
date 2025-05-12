@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { fontSans, fontMono, fontDisplay, fontBrand } from './fonts';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { DarkModeEnhancer } from '@/components/theme/dark-mode-enhancer';
-import { Background } from '@/components/ui/background';
+import { EnhancedBackground } from '@/components/ui/enhanced-background';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { LearningProgressProvider } from '@/contexts/learning-progress-context';
@@ -34,15 +34,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html 
-      lang="en" 
-      suppressHydrationWarning 
+    <html
+      lang="en"
+      suppressHydrationWarning
       className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable} ${fontBrand.variable}`}
     >
       <head>
         {/* Add direct CSS links for more reliable loading */}
         <link rel="stylesheet" href="/css-fix.css" />
         <link rel="stylesheet" href="/styles/dark-mode-enhancements.css" />
+        <link rel="stylesheet" href="/styles/logo-effects.css" />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <ThemeProvider
@@ -52,7 +53,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <DarkModeEnhancer />
-          <Background />
+          <EnhancedBackground />
           <div className="relative flex min-h-screen flex-col">
             <Header />
             <LearningProgressProvider>

@@ -1,46 +1,27 @@
-import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+'use client';
+
 import { Link } from 'lucide-react';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
+import { ModuleLayout } from '@/components/learn/shared/module-layout';
+import { ModuleContent } from '@/components/learn/shared/module-content';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
 import { Card } from '@/components/ui/card';
-import { SubSectionContent } from '@/components/learn/shared/components/sub-section-content';
-import SatoshiQuote from '@/components/learn/shared/components/satoshi-quote';
+import SatoshiQuote from '@/components/learn/shared/satoshi-quote';
 
 export default function ChannelCapacity() {
-  console.log('Rendering ChannelCapacity component');
-
-  // Add a debug message to the window
-  React.useEffect(() => {
-    console.log('ChannelCapacity component mounted');
-
-    // Add a debug message to the window
-    const debugElement = document.createElement('div');
-    debugElement.style.position = 'fixed';
-    debugElement.style.top = '5px';
-    debugElement.style.right = '5px';
-    debugElement.style.background = 'green';
-    debugElement.style.color = 'white';
-    debugElement.style.padding = '5px';
-    debugElement.style.zIndex = '9999';
-    debugElement.textContent = 'Channel Capacity Component Loaded';
-    document.body.appendChild(debugElement);
-
-    return () => {
-      document.body.removeChild(debugElement);
-    };
-  }, []);
   return (
-    <ModuleContent
-      moduleId="lightning-channel-management"
-      moduleTitle="Channel Capacity"
-      moduleDescription="Understanding and optimizing Lightning channel capacity"
-      difficulty="Intermediate"
-      icon={Link}
-    >
-      <div className="space-y-8">
-        {/* A Note from Satoshi */}
-        <div className="bg-muted/50 p-6 rounded-lg border border-border/50">
-          <h2 className="text-xl font-bold mb-4">A Note from Satoshi</h2>
+    <ModuleLayout>
+      <ModuleContent
+        moduleId="lightning-channel-management"
+        sectionId="channel-capacity"
+        moduleTitle="Channel Capacity"
+        moduleDescription="Understanding and optimizing Lightning channel capacity"
+        difficulty="Intermediate"
+        icon={Link}
+      >
+        <div className="space-y-8">
+          {/* A Note from Satoshi */}
+          <div className="bg-muted/50 p-6 rounded-lg border border-border/50">
+            <h2 className="text-xl font-bold mb-4">A Note from Satoshi</h2>
 
           <div className="prose dark:prose-invert max-w-none">
             <p>
@@ -757,6 +738,7 @@ lncli listchannels | jq -r '.channels[] |
           />
         </div>
       </div>
-    </ModuleContent>
+      </ModuleContent>
+    </ModuleLayout>
   );
 }

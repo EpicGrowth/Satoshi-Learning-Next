@@ -15,8 +15,10 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
+        brand:
+          "border-[var(--primary-light)]/20 bg-[var(--primary-light)]/10 text-[var(--primary-light)] hover:bg-[var(--primary-light)]/20",
         bitcoin:
-          "border-bitcoin-orange/20 bg-bitcoin-orange/10 text-bitcoin-orange hover:bg-bitcoin-orange/20",
+          "border-[var(--primary-light)]/20 bg-[var(--primary-light)]/10 text-[var(--primary-light)] hover:bg-[var(--primary-light)]/20",
         lightning:
           "border-lightning-purple/20 bg-lightning-purple/10 text-lightning-purple hover:bg-lightning-purple/20",
       },

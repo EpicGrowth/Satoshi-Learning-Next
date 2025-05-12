@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+import { ModuleContent } from '@/components/learn/shared/module-content';
 import { Server } from 'lucide-react';
 
 const BackupsContent = () => (

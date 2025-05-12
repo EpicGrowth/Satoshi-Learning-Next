@@ -17,19 +17,37 @@ export default function SectionContent() {
   const currentModule = modules.find((m) => m.id === moduleId);
   const currentSection = currentModule?.sections.find((s) => s.id === sectionId);
   
-  // Try to dynamically import the specific content component if it exists
+  // Check for special implemented content sections
   useEffect(() => {
     // This checks if we're running in the browser environment
     if (typeof window !== 'undefined') {
       try {
-        // Mark special implemented content sections as available
+        // Handle redirects for available specific content
         if (path === 'bitcoin' && moduleId === 'bitcoin-fundamentals' && sectionId === 'what-is-bitcoin') {
           setIsContentAvailable(true);
           router.push(`/learn/${path}/${moduleId.replace('bitcoin-', '')}/${sectionId}`);
+        }
+        // Handle Lightning content which is organized differently
+        else if (path === 'lightning') {
+          // For Lightning, look in the module's content folder
+          const availableLightningContent = [
+            'channel-balancing', 'channel-capacity', 'closing-channels', 'opening-channels',  // channel management
+            'backups', 'basic-configuration', 'channel-management', 'maintenance-tasks',
+            'monitoring', 'node-setup', 'security-setup',  // node operations
+            'htlc-deep-dive', 'multipath-payments', 'routing', 'security-practices',
+            'submarine-swaps', 'watchtowers'  // advanced concepts
+          ];
+
+          if (availableLightningContent.includes(sectionId)) {
+            setIsContentAvailable(true);
+          } else {
+            setIsContentAvailable(false);
+          }
         } else {
           setIsContentAvailable(false);
         }
       } catch (error) {
+        console.error("Error checking content availability:", error);
         setIsContentAvailable(false);
       }
     }
@@ -67,10 +85,47 @@ export default function SectionContent() {
     );
   }
 
-  // If specific implementation exists, render it
-  const ContentComponent = dynamic(() => import(`../../content/${path}/${moduleId}/${sectionId}`), {
-    ssr: false,
-  });
+  // Handle content paths based on what's available in the repository
+  // Note: The way content is organized has changed, so we need to handle different paths
+  let ContentComponent;
+
+  try {
+    // Specific handling for different module types
+    if (path === 'lightning') {
+      // Lightning content may be in the module directory under content folder
+      ContentComponent = dynamic(() =>
+        import(`../../../${path}/${moduleId}/content/${sectionId}`).catch(() => {
+          console.log('Could not load lightning content for', sectionId);
+          return Promise.resolve(() => (
+            <div className="bg-muted p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-2">Content loading error</h3>
+              <p>The content for this section couldn't be loaded. Please try another section.</p>
+            </div>
+          ));
+        }), {
+        ssr: false,
+        loading: () => <p>Loading content...</p>
+      });
+    } else {
+      // Default fallback for other paths
+      ContentComponent = () => (
+        <div className="prose prose-lg dark:prose-invert max-w-none">
+          <p className="text-lg mb-6">{currentSection.description}</p>
+          <div className="bg-muted p-6 rounded-lg">
+            <h3 className="text-xl font-semibold mb-2">Content not yet available</h3>
+            <p>The full content for this section is being prepared.</p>
+          </div>
+        </div>
+      );
+    }
+  } catch (error) {
+    ContentComponent = () => (
+      <div className="bg-muted p-6 rounded-lg">
+        <h3 className="text-xl font-semibold mb-2">Content error</h3>
+        <p>There was an error loading this content. Please try another section.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-8">

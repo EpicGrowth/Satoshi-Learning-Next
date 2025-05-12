@@ -1,8 +1,8 @@
 import React from 'react';
-import { ModuleContent } from '@/components/learn/shared/components/module-content';
+import { ModuleContent } from '@/components/learn/shared/module-content';
 import { Link, ArrowLeftRight, BarChart2, Settings, AlertCircle, Signal, FileCode, Workflow, RefreshCw, Layers, Eye, Clock, Shield, Zap } from 'lucide-react';
-import VerifyCheckbox from '@/components/learn/shared/components/verify-checkbox';
-import SatoshiQuote from '@/components/learn/shared/components/satoshi-quote';
+import VerifyCheckbox from '@/components/learn/shared/verify-checkbox';
+import SatoshiQuote from '@/components/learn/shared/satoshi-quote';
 
 export default function ChannelManagement() {
   return (

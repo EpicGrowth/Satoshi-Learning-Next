@@ -64,9 +64,9 @@ export default function LightningLearningPath() {
     'Discover advanced concepts like watchtowers and atomic swaps.'
   ];
 
-  const primaryColorClass = 'text-purple-600'; 
-  const borderColorClass = 'border-purple-500/20';
-  const bgColorClass = 'bg-purple-50 dark:bg-purple-900/20';
+  const primaryColorClass = 'text-lightning-purple'; 
+  const borderColorClass = 'border-lightning-purple/20';
+  const bgColorClass = 'bg-lightning-purple/5';
 
   return (
     <div className="container py-8 space-y-8">
@@ -81,7 +81,7 @@ export default function LightningLearningPath() {
         </div>
         <div className="flex items-center gap-2">
           {!isPathComplete && nextSectionUrl && (
-            <Button asChild className="bg-purple-600 hover:bg-purple-700 text-white"> 
+            <Button asChild className="bg-lightning-purple hover:bg-lightning-purple/80 text-white"> 
               <Link href={nextSectionUrl} className="flex items-center gap-2">
                 <PlayCircle className="h-4 w-4" />
                 Continue Learning

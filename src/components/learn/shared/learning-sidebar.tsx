@@ -92,9 +92,13 @@ export function LearningSidebar({
     const isActive = currentModule === module.id && currentSection === section.id;
     const { isComplete, locked } = calculateSectionInfo(module.id, section.id);
     
-    // Determine theme colors
-    const activeColor = pathPrefix === 'bitcoin' ? 'text-bitcoin-orange bg-bitcoin-orange/5' : 'text-lightning-purple bg-lightning-purple/5';
-    const completedColor = pathPrefix === 'bitcoin' ? 'text-bitcoin-orange' : 'text-lightning-purple';
+    // Determine theme colors using our standardized CSS variables
+    const activeColor = pathPrefix === 'bitcoin' 
+      ? 'text-[var(--primary-light)] bg-[var(--primary-light)]/5' 
+      : 'text-lightning-purple bg-lightning-purple/5';
+    const completedColor = pathPrefix === 'bitcoin' 
+      ? 'text-[var(--primary-light)]' 
+      : 'text-lightning-purple';
 
     return (
       <Link
@@ -207,11 +211,11 @@ export function LearningSidebar({
               
               // Different styling based on light/dark mode is handled by Tailwind's dark class
               const backgroundColor = pathPrefix === 'bitcoin' 
-                ? 'bg-bitcoin-orange/5 dark:bg-bitcoin-orange/10' 
+                ? 'bg-[var(--primary-light)]/5 dark:bg-[var(--primary-light)]/10' 
                 : 'bg-lightning-purple/5 dark:bg-lightning-purple/10';
                 
               const progressBarColor = pathPrefix === 'bitcoin' 
-                ? 'bg-bitcoin-orange' 
+                ? 'bg-[var(--primary-light)]' 
                 : 'bg-lightning-purple';
                 
               const badgeColor = getDifficultyColor(module.difficulty);
@@ -232,7 +236,7 @@ export function LearningSidebar({
                     <div className="flex flex-col space-y-1">
                       <div className="flex items-center">
                         {pathPrefix === 'bitcoin' ? (
-                          <span className="text-bitcoin-orange mr-2">₿</span>
+                          <span className="text-[var(--primary-light)] mr-2">₿</span>
                         ) : (
                           <span className="text-lightning-purple mr-2">⚡</span>
                         )}

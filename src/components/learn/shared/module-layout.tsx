@@ -82,8 +82,11 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
 
   return (
     <div className="container max-w-3xl py-8">
-          {/* Module navigation */}
-          <div className="mb-8 flex items-center justify-between">
+          {/* Content */}
+          {children}
+          
+          {/* Module navigation - moved to bottom */}
+          <div className="mt-12 flex items-center justify-between border-t border-border/40 pt-8">
             <Button
               variant="ghost"
               className={cn(
@@ -118,9 +121,6 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
-
-          {/* Content */}
-          {children}
     </div>
   );
 }

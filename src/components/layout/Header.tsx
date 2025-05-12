@@ -31,18 +31,34 @@ export function Header() {
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-      isScrolled ? 'backdrop-blur-md bg-background/80 border-b border-border/40 supports-[backdrop-filter]:bg-background/60' : ''
+      isScrolled ? 'backdrop-blur-md bg-background/90 border-b border-border/30 supports-[backdrop-filter]:bg-background/80 shadow-sm' : ''
     }`}>
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <Bitcoin className="h-7 w-7 text-bitcoin-orange transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-2xl md:text-3xl font-brand whitespace-nowrap" style={{color: '#FF523C', fontWeight: 700, letterSpacing: '0.01em', textShadow: '0 0 1px rgba(255, 82, 60, 0.1)'}}>Satoshi Station</span>
+        <div className="flex h-16 items-center justify-between gap-8">
+          <Link href="/" className="flex items-center space-x-1 group relative overflow-hidden py-2 flex-shrink-0">
+            {/* Clean, standardized brand styling */}
+            <div className="absolute -inset-1 bg-bitcoin-orange/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative flex items-center">
+              <div className="relative z-10 mr-1.5 transition-all duration-300 group-hover:translate-y-[-2px]">
+                <div className="relative rounded-full p-1.5 bg-bitcoin-orange/10">
+                  <Bitcoin className="h-5 w-5 text-bitcoin-orange" />
+                </div>
+              </div>
+              <div className="relative z-10">
+                <span className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-bold" 
+                  style={{
+                    fontFamily: "'Exo 2', sans-serif", 
+                    letterSpacing: '0.02em'
+                  }}>
+                  Satoshi Station
+                </span>
+              </div>
+            </div>
           </Link>
           
-          <nav className="flex items-center space-x-10">
+          <nav className="flex items-center space-x-3 md:space-x-6">
             {/* Desktop navigation */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-8 mr-2">
               {navigationItems.map((item) => {
                 const basePath = '/learn/' + pathname.split('/')[2]; // get /learn/bitcoin or /learn/lightning
                 const isActive = item.href.includes(basePath) || pathname === item.href;
@@ -72,17 +88,17 @@ export function Header() {
                 type="text"
                 placeholder="Search..."
                 className="w-64 pl-10 pr-4 py-2 rounded-md border border-border/40 bg-background/50 backdrop-blur-sm 
-                         text-sm focus:border-primary/50 focus:ring-primary/50 transition-all duration-200"
+                         text-sm focus:border-bitcoin-orange/30 focus:ring-bitcoin-orange/20 transition-all duration-200"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             </div>
             
             {/* Action buttons */}
             <Button 
               variant="default"
               size="sm"
-              className="bg-bitcoin-orange text-white hover:bg-bitcoin-hover hidden lg:inline-flex
-                       transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-bitcoin-orange/20"
+              className="bg-[#F7931A] text-white hover:bg-[#E87D18] hidden lg:inline-flex ml-2
+                       transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-[#F7931A]/15"
               asChild
             >
               <Link href="/learn/bitcoin">
@@ -101,10 +117,12 @@ export function Header() {
             </a>
             
             {/* Theme toggle */}
-            <ThemeToggle />
+            <div className="ml-1">
+              <ThemeToggle />
+            </div>
             
             {/* Mobile menu button */}
-            <div className="lg:hidden">
+            <div className="lg:hidden ml-1">
               <MobileNav />
             </div>
           </nav>

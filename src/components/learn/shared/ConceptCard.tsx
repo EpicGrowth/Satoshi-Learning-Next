@@ -18,7 +18,7 @@ export function ConceptCard({
 }: ConceptCardProps) {
   const difficultyColor = {
     Beginner: 'bg-green-500',
-    Intermediate: 'bg-yellow-500',
+    Intermediate: 'bg-bitcoin-orange',
     Advanced: 'bg-red-500'
   }[difficulty];
 
