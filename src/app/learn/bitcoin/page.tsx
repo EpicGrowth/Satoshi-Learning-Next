@@ -41,9 +41,8 @@ export default function BitcoinLearningPath() {
 
     const firstSection = module.sections[0];
     if (firstSection) {
-      // Extract the module part by removing the 'bitcoin-' prefix
-      const pathSegment = moduleId.replace('bitcoin-', '');
-      router.push(`/learn/bitcoin/${pathSegment}/${firstSection.id}`);
+      // Use the full module ID for consistent routing
+      router.push(`/learn/bitcoin/${moduleId}/${firstSection.id}`);
     }
   };
 

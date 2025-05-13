@@ -38,12 +38,10 @@ export default function LightningLearningPath() {
     if (!module) return;
     if (isDynamicallyLocked) return;
 
-    // Extract the module part from the moduleId by removing the 'lightning-' prefix
-    const pathSegment = moduleId.replace('lightning-', '');
-    
     const firstSection = module.sections[0];
     if (firstSection) {
-      router.push(`/learn/lightning/${pathSegment}/${firstSection.id}`);
+      // Use the full module ID for consistent routing
+      router.push(`/learn/lightning/${moduleId}/${firstSection.id}`);
     }
   };
 

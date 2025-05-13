@@ -22,10 +22,10 @@ export default function SectionContent() {
     // This checks if we're running in the browser environment
     if (typeof window !== 'undefined') {
       try {
-        // Handle redirects for available specific content
+        // Handle available specific content
         if (path === 'bitcoin' && moduleId === 'bitcoin-fundamentals' && sectionId === 'what-is-bitcoin') {
           setIsContentAvailable(true);
-          router.push(`/learn/${path}/${moduleId.replace('bitcoin-', '')}/${sectionId}`);
+          // Removed redirect that was causing routing inconsistencies between environments
         }
         // Handle Lightning content which is organized differently
         else if (path === 'lightning') {
