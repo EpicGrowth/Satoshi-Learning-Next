@@ -94,26 +94,44 @@ export default function SectionContent() {
     if (path === 'bitcoin' || path === 'lightning') {
       // Determine correct path patterns based on module path
       const contentPaths = [
-        // Direct path first - most likely to match in the current structure
+        // Direct import of a page component with the proper folder structure (common pattern in the repo)
+        `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/${sectionId}/page`,
+        
+        // Direct path using module with prefix
+        `../../../${path}/${moduleId}/${sectionId}/page`,
+        
+        // Try alternative content directory structure
         `../../../${path}/${moduleId}/content/${sectionId}`,
+        
         // Alternative path without prefix in module folder name
         `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/content/${sectionId}`,
-        // Page-based structure (used by some Lightning modules)
-        `../../../${path}/${moduleId}/${sectionId}/page`,
-        // Fallback direct page path for Lightning direct content
+        
+        // Fallback direct page path
         `../../../${path}/${sectionId}/page`
       ];
       
-      // Lightning-specific paths
-      if (path === 'lightning') {
+      // Add path-specific extra content paths
+      if (path === 'bitcoin') {
+        // Add Bitcoin-specific paths for better content discovery
+        contentPaths.unshift(
+          // Special case for bitcoin fundamentals - most common pattern
+          `@/app/learn/bitcoin/bitcoin-fundamentals/${sectionId}/page`,
+          // Special case for other bitcoin modules
+          `@/app/learn/bitcoin/bitcoin-economics/${sectionId}/page`,
+          `@/app/learn/bitcoin/bitcoin-technical/${sectionId}/page`
+        );
+      } else if (path === 'lightning') {
         // Add Lightning-specific paths for better content discovery
-        contentPaths.push(
-          // Special case for lightning node operations
-          `../../../${path}/lightning-node-operations/content/${sectionId}`,
-          // Special case for lightning channel management
-          `../../../${path}/lightning-channel-management/content/${sectionId}`,
+        contentPaths.unshift(
           // Special case for lightning fundamentals
-          `../../../${path}/lightning-fundamentals/${sectionId}/page`
+          `@/app/learn/lightning/lightning-fundamentals/${sectionId}/page`,
+          // Special case for lightning node operations
+          `@/app/learn/lightning/lightning-node-operations/${sectionId}/page`,
+          // Special case for lightning channel management
+          `@/app/learn/lightning/lightning-channel-management/${sectionId}/page`,
+          // Special case for lightning content folders
+          `../../../${path}/lightning-node-operations/content/${sectionId}`,
+          `../../../${path}/lightning-channel-management/content/${sectionId}`
         );
       }
       
