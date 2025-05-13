@@ -90,29 +90,41 @@ export default function SectionContent() {
   let ContentComponent;
 
   try {
-    // Specific handling for different module types
-    if (path === 'lightning') {
-      // Lightning content may be in the module directory under content folder
-      ContentComponent = dynamic(() =>
-        import(`../../../${path}/${moduleId}/content/${sectionId}`).catch(() => {
-          console.log('Could not load lightning content for', sectionId);
-          return Promise.resolve(() => (
-            <div className="bg-muted p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Content loading error</h3>
-              <p>The content for this section couldn't be loaded. Please try another section.</p>
-            </div>
-          ));
-        }), {
+    // Try to load content dynamically for both paths
+    if (path === 'bitcoin' || path === 'lightning') {
+      // First attempt to load from the module's content directory
+      ContentComponent = dynamic(() => 
+        import(`../../../${path}/${moduleId}/content/${sectionId}`)
+          .catch(() => {
+            console.log(`Could not load ${path} content from primary path for`, sectionId);
+            
+            // Second attempt: try alternative path structure
+            return import(`@/app/learn/${path}/${moduleId.replace(path + '-', '')}/content/${sectionId}`)
+              .catch((secondError) => {
+                console.log(`Could not load ${path} content from secondary path either:`, secondError);
+                
+                // Final fallback
+                return Promise.resolve(() => (
+                  <div className="prose prose-lg dark:prose-invert max-w-none">
+                    <p className="text-lg mb-6">{currentSection.description}</p>
+                    <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
+                      <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
+                      <p>The full content for this section is being prepared.</p>
+                    </div>
+                  </div>
+                ));
+              });
+          }), {
         ssr: false,
-        loading: () => <p>Loading content...</p>
+        loading: () => <p className="py-4">Loading content...</p>
       });
     } else {
-      // Default fallback for other paths
+      // Fallback for unknown paths
       ContentComponent = () => (
         <div className="prose prose-lg dark:prose-invert max-w-none">
           <p className="text-lg mb-6">{currentSection.description}</p>
-          <div className="bg-muted p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-2">Content not yet available</h3>
+          <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
+            <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
             <p>The full content for this section is being prepared.</p>
           </div>
         </div>

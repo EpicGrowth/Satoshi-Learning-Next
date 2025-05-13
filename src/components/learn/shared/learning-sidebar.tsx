@@ -47,7 +47,7 @@ export function LearningSidebar({
       case 'beginner':
         return 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30';
       case 'intermediate':
-        return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
+        return 'bg-bitcoin-orange/20 text-bitcoin-orange border-bitcoin-orange/30';
       case 'advanced':
         return 'bg-red-500/20 text-red-500 border-red-500/30';
       default:
@@ -165,7 +165,7 @@ export function LearningSidebar({
                   variant={difficultyFilter === 'intermediate' ? 'default' : 'outline'}
                   className={cn(
                     'cursor-pointer',
-                    difficultyFilter === 'intermediate' ? 'bg-amber-500 hover:bg-amber-600' : 'border-amber-500/20 text-amber-500'
+                    difficultyFilter === 'intermediate' ? 'bg-bitcoin-orange hover:bg-bitcoin-orange/90' : 'border-bitcoin-orange/20 text-bitcoin-orange'
                   )}
                   onClick={() => {
                     setDifficultyFilter('intermediate');

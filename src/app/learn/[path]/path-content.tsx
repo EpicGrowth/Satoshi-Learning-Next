@@ -38,7 +38,7 @@ export default function PathContent() {
             <div className="mt-4">
               <span className={`px-3 py-1 rounded-full text-sm ${
                 module.difficulty === 'Beginner' ? 'bg-emerald-500/20 text-emerald-500' :
-                module.difficulty === 'Intermediate' ? 'bg-amber-500/20 text-amber-500' :
+                module.difficulty === 'Intermediate' ? 'bg-bitcoin-orange/20 text-bitcoin-orange' :
                 'bg-red-500/20 text-red-500'
               }`}>
                 {module.difficulty}
