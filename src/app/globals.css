@@ -45,7 +45,7 @@
 
     /* Learning path colors */
     --beginner: #16A34A;       /* Green for beginner content */
-    --intermediate: #CA8A04;   /* Amber for intermediate content */
+    --intermediate: #F7931A;   /* Bitcoin orange for intermediate content (standardized) */
     --advanced: #DC2626;       /* Red for advanced content */
     --reference: #2563EB;      /* Blue for reference content */
 

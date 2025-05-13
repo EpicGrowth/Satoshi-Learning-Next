@@ -73,7 +73,7 @@ export default function SectionContent() {
           
           {/* This demonstrates our brand styling adherence */}
           <p className="mb-6">
-            Welcome to <span className="font-brand whitespace-nowrap" style={{color: '#FF523C', fontWeight: 700, letterSpacing: '0.01em', textShadow: '0 0 1px rgba(255, 82, 60, 0.1)'}}>Satoshi Station</span>'s learning content. This section will be populated with the appropriate learning materials.
+            Welcome to <span className="font-brand whitespace-nowrap" style={{color: '#F7931A', fontWeight: 700, letterSpacing: '0.01em', textShadow: '0 0 1px rgba(247, 147, 26, 0.1)'}}>Satoshi Station</span>'s learning content. This section will be populated with the appropriate learning materials.
           </p>
           
           <div className="bg-muted p-6 rounded-lg">
@@ -90,33 +90,82 @@ export default function SectionContent() {
   let ContentComponent;
 
   try {
-    // Try to load content dynamically for both paths
+    // Specialized loading logic for different content structures
     if (path === 'bitcoin' || path === 'lightning') {
-      // First attempt to load from the module's content directory
-      ContentComponent = dynamic(() => 
-        import(`../../../${path}/${moduleId}/content/${sectionId}`)
-          .catch(() => {
-            console.log(`Could not load ${path} content from primary path for`, sectionId);
+      // Determine correct path patterns based on module path
+      const contentPaths = [
+        // Direct path first - most likely to match in the current structure
+        `../../../${path}/${moduleId}/content/${sectionId}`,
+        // Alternative path without prefix in module folder name
+        `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/content/${sectionId}`,
+        // Page-based structure (used by some Lightning modules)
+        `../../../${path}/${moduleId}/${sectionId}/page`,
+        // Fallback direct page path for Lightning direct content
+        `../../../${path}/${sectionId}/page`
+      ];
+      
+      // Lightning-specific paths
+      if (path === 'lightning') {
+        // Add Lightning-specific paths for better content discovery
+        contentPaths.push(
+          // Special case for lightning node operations
+          `../../../${path}/lightning-node-operations/content/${sectionId}`,
+          // Special case for lightning channel management
+          `../../../${path}/lightning-channel-management/content/${sectionId}`,
+          // Special case for lightning fundamentals
+          `../../../${path}/lightning-fundamentals/${sectionId}/page`
+        );
+      }
+      
+      // Create dynamic component with cascading import attempts
+      ContentComponent = dynamic(() => {
+        // Start with the first path
+        let importPromise = import(contentPaths[0])
+          .catch(error => {
+            console.log(`Could not load content from path: ${contentPaths[0]}`, error);
             
-            // Second attempt: try alternative path structure
-            return import(`@/app/learn/${path}/${moduleId.replace(path + '-', '')}/content/${sectionId}`)
-              .catch((secondError) => {
-                console.log(`Could not load ${path} content from secondary path either:`, secondError);
-                
-                // Final fallback
-                return Promise.resolve(() => (
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p className="text-lg mb-6">{currentSection.description}</p>
-                    <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
-                      <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
-                      <p>The full content for this section is being prepared.</p>
-                    </div>
-                  </div>
-                ));
+            // Try each remaining path in sequence using a chain of .catch handlers
+            let chainedPromise: Promise<any> = Promise.reject(error);
+            
+            for (const contentPath of contentPaths.slice(1)) {
+              chainedPromise = chainedPromise.catch(err => {
+                console.log(`Trying alternate path: ${contentPath}`);
+                return import(contentPath);
               });
-          }), {
+            }
+            
+            return chainedPromise;
+          })
+          .catch(finalError => {
+            // All paths failed, return a fallback component
+            console.log(`All content loading attempts failed for ${path}/${moduleId}/${sectionId}`, finalError);
+            
+            return Promise.resolve(() => (
+              <div className="prose prose-lg dark:prose-invert max-w-none">
+                <p className="text-lg mb-6">{currentSection.description}</p>
+                <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
+                  <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
+                  <p>The full content for this section is being prepared.</p>
+                  <details className="mt-4">
+                    <summary className="text-sm text-muted-foreground cursor-pointer">Technical Details</summary>
+                    <p className="text-xs mt-2 text-muted-foreground">Path: {path}/{moduleId}/{sectionId}</p>
+                  </details>
+                </div>
+              </div>
+            ));
+          });
+          
+        return importPromise;
+      }, {
         ssr: false,
-        loading: () => <p className="py-4">Loading content...</p>
+        loading: () => (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-pulse flex flex-col items-center">
+              <div className="h-4 w-24 bg-muted rounded mb-2.5"></div>
+              <div className="h-2 w-16 bg-muted/50 rounded"></div>
+            </div>
+          </div>
+        )
       });
     } else {
       // Fallback for unknown paths
@@ -132,8 +181,8 @@ export default function SectionContent() {
     }
   } catch (error) {
     ContentComponent = () => (
-      <div className="bg-muted p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2">Content error</h3>
+      <div className="bg-muted p-6 rounded-lg border border-red-500/20">
+        <h3 className="text-xl font-semibold mb-2 text-red-500">Content error</h3>
         <p>There was an error loading this content. Please try another section.</p>
       </div>
     );
