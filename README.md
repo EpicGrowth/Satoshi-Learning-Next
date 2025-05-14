@@ -166,6 +166,58 @@ The learning path system has the following key components:
 - Security Best Practices
 - Wallet Development
 
+## Page Structure
+
+### Core Pages
+- `/` - Homepage with learning path overview and features
+- `/learn` - Learning paths overview
+- `/resources` - Developer resources and documentation links
+
+### Bitcoin Learning Path (`/learn/bitcoin/`)
+1. **Bitcoin Fundamentals**
+   - `/bitcoin-fundamentals/what-is-bitcoin`
+   - `/bitcoin-fundamentals/the-blockchain`
+   - `/bitcoin-fundamentals/private-keys-wallets`
+   - `/bitcoin-fundamentals/making-transactions`
+
+2. **Bitcoin Economics**
+   - `/bitcoin-economics/bitcoin-economics`
+   - `/bitcoin-economics/economic-impact`
+   - `/bitcoin-economics/game-theory`
+   - `/bitcoin-economics/market-dynamics`
+   - `/bitcoin-economics/monetary-policy`
+
+3. **Bitcoin Technical**
+   - `/bitcoin-technical/mining-consensus`
+   - `/bitcoin-technical/network-architecture`
+   - `/bitcoin-technical/protocol-updates`
+   - `/bitcoin-technical/script-language`
+
+### Lightning Network Path (`/learn/lightning/`)
+1. **Lightning Fundamentals**
+   - `/lightning-fundamentals/what-is-lightning`
+   - `/lightning-fundamentals/payment-channels`
+   - `/lightning-fundamentals/htlc`
+   - `/lightning-fundamentals/network-topology`
+   - `/lightning-fundamentals/onion-routing`
+   - `/lightning-fundamentals/how-lightning-works`
+
+2. **Channel Management**
+   - `/lightning-channel-management/opening-channels`
+   - `/lightning-channel-management/channel-capacity`
+   - `/lightning-channel-management/channel-balancing`
+   - `/lightning-channel-management/closing-channels`
+
+3. **Node Operations**
+   - `/lightning-node-operations/autopilot`
+   - `/lightning-node-operations/backup-strategies`
+
+4. **Advanced Concepts**
+   - `/lightning-advanced/htlc-deep-dive`
+   - `/lightning-advanced/multipath`
+   - `/lightning-advanced/submarine`
+   - `/lightning-advanced/watchtowers`
+
 ## Implementation Details
 
 ### Core Components

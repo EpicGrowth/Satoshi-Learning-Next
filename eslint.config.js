@@ -1,3 +1,4 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   extends: ['next/core-web-vitals'],
   rules: {
@@ -8,5 +9,10 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     '@next/next/no-css-tags': 'warn',
     '@typescript-eslint/no-empty-interface': 'off'
-  }
+  },
+  ignorePatterns: ['node_modules/**', '.next/**', 'out/**'],
+  parserOptions: {
+    project: './tsconfig.json'
+  },
+  root: true
 };

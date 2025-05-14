@@ -18,23 +18,55 @@ Learning Path (Bitcoin/Lightning)
 ### Paths
 
 There are two main learning paths:
-1. **Bitcoin Path** - Covers Bitcoin fundamentals, using Bitcoin-orange theming
+1. **Bitcoin Path** - Covers Bitcoin fundamentals through advanced topics, using Bitcoin-orange theming
 2. **Lightning Network Path** - Covers Lightning Network topics, using Lightning-purple theming
 
-### Modules
+### Bitcoin Path Structure
 
-Each path contains multiple modules that group related content:
-- **Bitcoin Modules**: Bitcoin Basics, Blockchain Technology, Mining & Consensus, etc.
-- **Lightning Modules**: Lightning Fundamentals, Payment Channels, Routing, etc.
+1. **Bitcoin Fundamentals** (Beginner)
+   - What is Bitcoin (`/bitcoin-fundamentals/what-is-bitcoin`)
+   - The Blockchain (`/bitcoin-fundamentals/the-blockchain`)
+   - Private Keys & Wallets (`/bitcoin-fundamentals/private-keys-wallets`)
+   - Making Transactions (`/bitcoin-fundamentals/making-transactions`)
 
-Modules track overall completion percentage based on verified sections.
+2. **Bitcoin Economics** (Intermediate)
+   - Bitcoin Economics Overview (`/bitcoin-economics/bitcoin-economics`)
+   - Economic Impact (`/bitcoin-economics/economic-impact`)
+   - Game Theory (`/bitcoin-economics/game-theory`)
+   - Market Dynamics (`/bitcoin-economics/market-dynamics`)
+   - Monetary Policy (`/bitcoin-economics/monetary-policy`)
 
-### Sections
+3. **Bitcoin Technical** (Advanced)
+   - Mining & Consensus (`/bitcoin-technical/mining-consensus`)
+   - Network Architecture (`/bitcoin-technical/network-architecture`)
+   - Protocol Updates (`/bitcoin-technical/protocol-updates`)
+   - Script Language (`/bitcoin-technical/script-language`)
 
-Sections are individual lessons within modules. Each section contains:
-- Educational content (text, images, code examples)
-- Interactive examples (when applicable)
-- Verification checkboxes at key learning points
+### Lightning Path Structure
+
+1. **Lightning Fundamentals** (Beginner)
+   - What is Lightning (`/lightning-fundamentals/what-is-lightning`)
+   - Payment Channels (`/lightning-fundamentals/payment-channels`)
+   - HTLCs (`/lightning-fundamentals/htlc`)
+   - Network Topology (`/lightning-fundamentals/network-topology`)
+   - Onion Routing (`/lightning-fundamentals/onion-routing`)
+   - How Lightning Works (`/lightning-fundamentals/how-lightning-works`)
+
+2. **Channel Management** (Intermediate)
+   - Opening Channels (`/lightning-channel-management/opening-channels`)
+   - Channel Capacity (`/lightning-channel-management/channel-capacity`)
+   - Channel Balancing (`/lightning-channel-management/channel-balancing`)
+   - Closing Channels (`/lightning-channel-management/closing-channels`)
+
+3. **Node Operations** (Intermediate)
+   - Autopilot (`/lightning-node-operations/autopilot`)
+   - Backup Strategies (`/lightning-node-operations/backup-strategies`)
+
+4. **Advanced Concepts** (Advanced)
+   - HTLC Deep Dive (`/lightning-advanced/htlc-deep-dive`)
+   - Multipath Payments (`/lightning-advanced/multipath`)
+   - Submarine Swaps (`/lightning-advanced/submarine`)
+   - Watchtowers (`/lightning-advanced/watchtowers`)
 
 ## Verification Checkpoint System
 
@@ -121,6 +153,7 @@ interface LearningProgressContextType {
 2. **Path Overview**:
    - Path landing pages show module completion status
    - Visual indicators highlight completed, in-progress, and locked modules
+   - Progress percentage displayed for each module card
 
 ## Learning Sidebar Implementation
 
@@ -169,6 +202,36 @@ interface LearningPathSidebarProps {
    - Lightning path uses `--lightning-purple` (#9C27B0) as primary color
    - These colors are applied to progress bars, icons, and interactive elements
 
+### Module Definition
+
+Each module is defined in `learning-modules.ts` with:
+- Unique ID with appropriate prefix (bitcoin- or lightning-)
+- Title and description
+- Difficulty level
+- List of sections with their own IDs and metadata
+- Prerequisites (if any)
+
+### Client Components
+
+All learning path components are client components (use 'client' directive) to enable:
+- Interactive progress tracking
+- Dynamic module unlocking
+- Progress persistence
+- Smooth navigation between sections
+
+### URL Structure
+
+URLs follow a consistent pattern:
+- `/learn/[path]/[module]/[section]`
+- Module IDs in URLs have prefixes stripped for cleaner URLs
+- Internal code handles prefix normalization
+
+### Static Generation
+
+- All learning paths and sections are statically generated at build time
+- Dynamic content fetching happens client-side after initial load
+- Progress tracking runs entirely client-side
+
 ## Development Guidelines
 
 When extending or modifying the learning path system:
@@ -192,3 +255,5 @@ When extending or modifying the learning path system:
    - Maintain consistent styling with the original sats.sv site
    - Use the defined color variables for Bitcoin/Lightning paths
    - Test both light and dark mode appearances
+
+This document serves as the authoritative reference for the learning path system implementation.

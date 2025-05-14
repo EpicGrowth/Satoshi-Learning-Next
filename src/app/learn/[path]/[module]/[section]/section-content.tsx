@@ -4,6 +4,12 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { bitcoinModules, lightningModules } from '@/config/learning-modules';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+
+// Import direct content components
+import WhatIsBitcoinContent from '@/components/learn/content/bitcoin/what-is-bitcoin';
+import { Card } from '@/components/ui/card';
+import { Bitcoin, Shield, Database, Lock, Network, FileText, Lightbulb, Zap } from 'lucide-react';
 
 export default function SectionContent() {
   const params = useParams();
@@ -11,11 +17,17 @@ export default function SectionContent() {
   const path = params.path as string;
   const moduleId = params.module as string;
   const sectionId = params.section as string;
-  const [isContentAvailable, setIsContentAvailable] = useState(false);
 
   const modules = path === 'bitcoin' ? bitcoinModules : lightningModules;
   const currentModule = modules.find((m) => m.id === moduleId);
   const currentSection = currentModule?.sections.find((s) => s.id === sectionId);
+  
+  // Map of direct content components
+  const directContentMap: Record<string, Record<string, React.ComponentType>> = {
+    'bitcoin': {
+      'what-is-bitcoin': WhatIsBitcoinContent,
+    }
+  };
   
   // Check for special implemented content sections
   useEffect(() => {

@@ -1,29 +1,32 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone', // For containerized deployment to Cloud Run
+  output: 'standalone',
   images: {
     domains: ['sats.sv', 'staging.sats.sv'],
     formats: ['image/avif', 'image/webp'],
   },
-  trailingSlash: true, // Add trailing slashes to all URLs for better compatibility
+  trailingSlash: true,
   
-  // ESLint configuration - ignore errors during build
+  // ESLint configuration
   eslint: {
-    // Warning instead of error during build
     ignoreDuringBuilds: true,
   },
   
-  // TypeScript configuration - ignore errors during build
+  // TypeScript configuration
   typescript: {
-    // Warning instead of error during build
     ignoreBuildErrors: true,
   },
   
-  // Additional experimental features can be added here
+  // Additional features
   experimental: {
-    // Server components are enabled by default in Next.js 13+
+    serverActions: {
+      bodySizeLimit: '2mb'
+    }
   },
+  
+  // External packages that can be used by Server Components
+  serverExternalPackages: []
 };
 
 module.exports = nextConfig;

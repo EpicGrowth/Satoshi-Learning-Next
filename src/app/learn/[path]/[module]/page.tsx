@@ -8,12 +8,16 @@ export function generateStaticParams() {
   
   // Add Bitcoin modules
   for (const module of bitcoinModules) {
-    params.push({ path: 'bitcoin', module: module.id });
+    // Handle both prefixed and unprefixed module IDs
+    const moduleId = module.id.replace('bitcoin-', '');
+    params.push({ path: 'bitcoin', module: moduleId });
   }
   
   // Add Lightning modules
   for (const module of lightningModules) {
-    params.push({ path: 'lightning', module: module.id });
+    // Handle both prefixed and unprefixed module IDs
+    const moduleId = module.id.replace('lightning-', '');
+    params.push({ path: 'lightning', module: moduleId });
   }
   
   return params;

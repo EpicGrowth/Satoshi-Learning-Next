@@ -33,20 +33,22 @@ export function ModuleContent({
 }: ModuleContentProps) {
   const { updateSectionProgress, getSectionProgress, markSectionComplete, getModuleProgress } = useLearningProgress();
 
-  // Determine the path type based on the module ID prefix
-  // Handle both prefixed and non-prefixed module IDs
-  const pathType: 'bitcoin' | 'lightning' = 
-    moduleId.startsWith('lightning-') || (moduleId === 'fundamentals' && sectionId?.includes('lightning'))
-      ? 'lightning'
-      : 'bitcoin';
-  
-  // If we're using an old non-prefixed moduleId, construct the new prefixed version
-  const normalizedModuleId = moduleId.includes('-') ? moduleId : `${pathType}-${moduleId}`;
-  const progress = getSectionProgress(pathType, normalizedModuleId, sectionId);
-  
-  // Determine theme colors based on path type
+  // Determine if we're using prefixed or unprefixed module IDs
+  const pathType: 'bitcoin' | 'lightning' = moduleId.includes('lightning') ? 'lightning' : 'bitcoin';
   const isLightning = pathType === 'lightning';
   
+  // Normalize the module ID by ensuring it has the correct prefix
+  const normalizedModuleId = moduleId.includes('-') ? 
+    moduleId : 
+    `${pathType}-${moduleId}`;
+
+  const progress = getSectionProgress(pathType, normalizedModuleId, sectionId);
+
+  // Theme colors based on path type
+  const themeColor = isLightning ? 
+    'bg-lightning text-lightning-foreground' : 
+    'bg-bitcoin text-bitcoin-foreground';
+
   const getDifficultyColor = (diff: Difficulty) => {
     switch (diff.toLowerCase()) {
       case 'beginner':

@@ -17,27 +17,77 @@ SatoshiStationNext is a Next.js application built with:
 ```
 /
 ├── public/                 # Static assets like images
-├── scripts/                # Utility scripts for maintenance
+├── scripts/               # Utility scripts for maintenance
 ├── src/
-│   ├── app/                # Next.js App Router pages
-│   │   ├── learn/          # Learning paths
+│   ├── app/              # Next.js App Router pages
+│   │   ├── page.tsx     # Homepage
+│   │   ├── learn/       # Learning paths
 │   │   │   ├── bitcoin/    # Bitcoin learning path
-│   │   │   └── lightning/  # Lightning learning path
-│   ├── components/         # React components
-│   │   ├── layout/         # Layout components
-│   │   ├── learn/          # Learning-specific components
+│   │   │   │   ├── bitcoin-fundamentals/
+│   │   │   │   │   ├── what-is-bitcoin/
+│   │   │   │   │   ├── the-blockchain/
+│   │   │   │   │   ├── private-keys-wallets/
+│   │   │   │   │   └── making-transactions/
+│   │   │   │   ├── bitcoin-economics/
+│   │   │   │   │   ├── bitcoin-economics/
+│   │   │   │   │   ├── economic-impact/
+│   │   │   │   │   ├── game-theory/
+│   │   │   │   │   ├── market-dynamics/
+│   │   │   │   │   └── monetary-policy/
+│   │   │   │   └── bitcoin-technical/
+│   │   │   │       ├── mining-consensus/
+│   │   │   │       ├── network-architecture/
+│   │   │   │       ├── protocol-updates/
+│   │   │   │       └── script-language/
+│   │   │   └── lightning/   # Lightning learning path
+│   │   │       ├── lightning-fundamentals/
+│   │   │       │   ├── what-is-lightning/
+│   │   │       │   ├── payment-channels/
+│   │   │       │   ├── htlc/
+│   │   │       │   ├── network-topology/
+│   │   │       │   ├── onion-routing/
+│   │   │       │   └── how-lightning-works/
+│   │   │       ├── lightning-channel-management/
+│   │   │       │   ├── opening-channels/
+│   │   │       │   ├── channel-capacity/
+│   │   │       │   ├── channel-balancing/
+│   │   │       │   └── closing-channels/
+│   │   │       ├── lightning-node-operations/
+│   │   │       │   ├── autopilot/
+│   │   │       │   └── backup-strategies/
+│   │   │       └── lightning-advanced/
+│   │   │           ├── htlc-deep-dive/
+│   │   │           ├── multipath/
+│   │   │           ├── submarine/
+│   │   │           └── watchtowers/
+│   ├── components/       # React components
+│   │   ├── layout/      # Layout components
+│   │   ├── learn/       # Learning-specific components
 │   │   │   ├── bitcoin/    # Bitcoin-specific components
 │   │   │   ├── lightning/  # Lightning-specific components
 │   │   │   └── shared/     # Shared learning components
-│   │   └── ui/             # UI components
-│   ├── config/             # Configuration files
-│   ├── contexts/           # React contexts
-│   ├── hooks/              # Custom React hooks
-│   ├── lib/                # Utility functions
-│   ├── styles/             # Global styles
-│   └── types/              # TypeScript type definitions
-└── tailwind.config.js      # Tailwind configuration
-```
+│   │   └── ui/          # UI components
+│   ├── config/          # Configuration files
+│   ├── contexts/        # React contexts
+│   ├── lib/            # Utility functions
+│   └── types/          # TypeScript types
+└── docs/              # Documentation
+
+### Route Structure
+
+Each learning path follows this routing pattern:
+
+1. **Path Overview**:
+   - /learn/bitcoin
+   - /learn/lightning
+
+2. **Module Pages**:
+   - /learn/[path]/[module]
+   Example: /learn/bitcoin/bitcoin-fundamentals
+
+3. **Section Pages**:
+   - /learn/[path]/[module]/[section]
+   Example: /learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin
 
 ## Naming Conventions
 

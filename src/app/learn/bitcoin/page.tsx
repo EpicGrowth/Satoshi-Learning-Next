@@ -19,17 +19,18 @@ export default function BitcoinLearningPath() {
 
   if (!isPathComplete) {
     for (const module of bitcoinModules) {
+      const moduleId = module.id.includes('-') ? module.id : `bitcoin-${module.id}`;
       for (const section of module.sections) {
-        const isLocked = isSectionLocked('bitcoin', module.id, section.id);
-        const isCompleted = !!progress.bitcoin?.[module.id]?.completedSections?.[section.id]?.completedAt;
+        const isLocked = isSectionLocked('bitcoin', moduleId, section.id);
+        const isCompleted = !!progress.bitcoin?.[moduleId]?.completedSections?.[section.id]?.completedAt;
         if (!isLocked && !isCompleted) {
-          // Extract the module part by removing the 'bitcoin-' prefix
-          const pathSegment = module.id.replace('bitcoin-', '');
-          nextSectionUrl = `/learn/bitcoin/${pathSegment}/${section.id}`;
-          break; 
+          // Use the module ID without the prefix in the URL
+          const urlModuleId = moduleId.replace('bitcoin-', '');
+          nextSectionUrl = `/learn/bitcoin/${urlModuleId}/${section.id}`;
+          break;
         }
       }
-      if (nextSectionUrl) break; 
+      if (nextSectionUrl) break;
     }
   }
 

@@ -4,15 +4,15 @@ import ContentRedirect from './content-redirect';
 
 // This function is required for static site generation with dynamic routes
 export function generateStaticParams() {
-  // Generate all combinations of path, module, and section
   const params = [];
   
   // Add Bitcoin module sections
   for (const module of bitcoinModules) {
+    const moduleId = module.id.replace('bitcoin-', '');
     for (const section of module.sections) {
       params.push({ 
         path: 'bitcoin', 
-        module: module.id,
+        module: moduleId,
         section: section.id 
       });
     }
@@ -20,10 +20,11 @@ export function generateStaticParams() {
   
   // Add Lightning module sections
   for (const module of lightningModules) {
+    const moduleId = module.id.replace('lightning-', '');
     for (const section of module.sections) {
       params.push({ 
         path: 'lightning', 
-        module: module.id,
+        module: moduleId,
         section: section.id 
       });
     }

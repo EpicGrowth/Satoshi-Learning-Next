@@ -19,28 +19,29 @@ export default function LightningLearningPath() {
 
   if (!isPathComplete) {
     for (const module of lightningModules) {
+      const moduleId = module.id.includes('-') ? module.id : `lightning-${module.id}`;
       for (const section of module.sections) {
-        const isLocked = isSectionLocked('lightning', module.id, section.id);
-        const isCompleted = !!progress.lightning?.[module.id]?.completedSections?.[section.id]?.completedAt;
+        const isLocked = isSectionLocked('lightning', moduleId, section.id);
+        const isCompleted = !!progress.lightning?.[moduleId]?.completedSections?.[section.id]?.completedAt;
         if (!isLocked && !isCompleted) {
-          // Extract the module part by removing the 'lightning-' prefix
-          const pathSegment = module.id.replace('lightning-', '');
-          nextSectionUrl = `/learn/lightning/${pathSegment}/${section.id}`;
-          break; 
+          // Use the module ID without the prefix in the URL
+          const urlModuleId = moduleId.replace('lightning-', '');
+          nextSectionUrl = `/learn/lightning/${urlModuleId}/${section.id}`;
+          break;
         }
       }
-      if (nextSectionUrl) break; 
+      if (nextSectionUrl) break;
     }
   }
 
   const handleModuleClick = (moduleId: string, isDynamicallyLocked: boolean) => {
     const module = lightningModules.find(m => m.id === moduleId);
     if (!module) return;
+
     if (isDynamicallyLocked) return;
 
     const firstSection = module.sections[0];
     if (firstSection) {
-      // Use the full module ID for consistent routing
       router.push(`/learn/lightning/${moduleId}/${firstSection.id}`);
     }
   };
