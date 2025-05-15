@@ -1,20 +1,20 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { UserProgress, ModuleProgress, SectionProgress } from '@/types/progress';
 import { bitcoinModules, lightningModules } from '@/config/learning-modules';
 
-// Debounce helper
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
-  let timeout: NodeJS.Timeout;
-  return function executedFunction(...args: Parameters<T>) {
-    const later = () => {
-      clearTimeout(timeout);
+// Debounce helper with proper cleanup
+function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null = null;
+  
+  return (...args: Parameters<T>) => {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
       func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  } as T;
+      timeout = null;
+    }, wait);
+  };
 }
 
 interface LearningProgressContextType {
@@ -38,13 +38,18 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Debounced save function - will only execute after 1 second of no changes
-  const debouncedSave = useCallback(
-    debounce((data: UserProgress) => {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('satoshi-station-progress', JSON.stringify(data));
-      }
-    }, 1000),
+  // Memoize the debounced save function
+  const debouncedSave = useMemo(
+    () =>
+      debounce((data: UserProgress) => {
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('satoshi-station-progress', JSON.stringify(data));
+          } catch (error) {
+            console.error('Failed to save learning progress:', error);
+          }
+        }
+      }, 1000),
     []
   );
 
@@ -63,11 +68,17 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     }
   }, []);
 
-  // Save progress to localStorage whenever it changes, but debounced
+  // Save progress to localStorage whenever it changes, with cleanup
   useEffect(() => {
-    if (isLoaded) {
+    let isMounted = true;
+
+    if (isLoaded && isMounted) {
       debouncedSave(progress);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [progress, isLoaded, debouncedSave]);
 
   const updateSectionProgress = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string, stepId: string) => {
