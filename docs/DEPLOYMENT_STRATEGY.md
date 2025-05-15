@@ -1,124 +1,105 @@
-# Satoshi Station Next.js Migration Deployment Strategy
+# Deployment Strategy
 
-This document outlines the comprehensive strategy for deploying the Next.js migration of the original sats.sv website.
+## Overview
 
-## Repository and Domain Structure
+SatoshiStationNext uses a cloud-based deployment strategy with Google Cloud Platform (GCP) and CloudFlare for optimal performance and reliability.
 
-Our deployment is structured around two separate repositories and domains:
+## Infrastructure
 
-1. **Staging Environment**:
-   - Repository: [Satoshi-Learning-Next](https://github.com/EpicGrowth/Satoshi-Learning-Next) (this repository)
-   - Domain: `staging.sats.sv`
-   - Google Cloud Run Service: `sats-web-staging`
-   - Purpose: Testing and validating changes before production deployment
+- **Primary Hosting**: Google Cloud Storage
+- **CDN**: CloudFlare
+- **CI/CD**: GitHub Actions
+- **DNS**: CloudFlare DNS
+- **SSL**: CloudFlare SSL/TLS
 
-2. **Production Environment**:
-   - Repository: [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path)
-   - Domains: `sats.sv` and `www.sats.sv`
-   - Google Cloud Run Service: `sats-web`
-   - Purpose: Live production site
+## Deployment Process
 
-## Pre-Deployment Checklist
+### 1. Build Process
 
-- [ ] All "Satoshi Station" text uses Exo 2 font (weight 700) with #FF523C orange color
-- [ ] Dark mode enhancements are functional and match the original site's aesthetic
-- [ ] Learning path navigation and progress tracking work properly
-- [ ] All interactive elements function correctly
-- [ ] Responsive design verified on mobile and desktop
-- [ ] Key pages load correctly and match original site's content
-- [ ] Deployment GitHub Actions workflows are configured correctly
+```bash
+# Production build
+npm run build
 
-## Backup Strategy
+# Export static files
+npm run export
+```
 
-### Creating a Full Backup of the Original Site
+### 2. Automated Deployment
 
-Before deploying the Next.js migration, we'll create a complete backup of the original production site:
+The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
+- Building the application
+- Running tests
+- Optimizing assets
+- Uploading to Google Cloud Storage
+- Invalidating CloudFlare cache
 
-1. Execute the GitHub Action workflow: `backup-original-site.yml`
-2. This will create a timestamped backup in the `sats-sv-backups` bucket
-3. The backup will contain all static assets, HTML files, and content from the original site
-4. A metadata file will be included with the backup date and reason
+### 3. Monitoring
 
-### Accessing the Backup
+- Web Vitals tracking via Google Analytics
+- Error tracking via Sentry
+- Performance monitoring via CloudFlare
+- Uptime monitoring via UptimeRobot
 
-If needed, the backup can be accessed via:
-- Google Cloud Console: https://console.cloud.google.com/storage/browser/sats-sv-backups
-- Command line: `gsutil ls gs://sats-sv-backups/`
+## Rollback Procedure
 
-## Phased Deployment Approach
+1. Access Google Cloud Console
+2. Select previous deployment version
+3. Update load balancer configuration
+4. Invalidate CloudFlare cache
 
-### Phase 1: Development Repository and Staging Environment
+## Security Measures
 
-1. Push Next.js migration to development repository:
-   ```bash
-   git remote add epic-dev https://github.com/EpicGrowth/Satoshi-Learning-Next.git
-   git push epic-dev main
-   ```
+- HTTPS enforcement
+- Content Security Policy (CSP)
+- CloudFlare WAF rules
+- Regular security audits
+- Automated vulnerability scanning
 
-2. GitHub Actions will deploy to the staging bucket: `sats-sv-staging`
+## Performance Optimization
 
-3. Test staging environment thoroughly:
-   - Verify all pages load correctly
-   - Test all interactive elements (progress tracking, navigation)
-   - Verify typography: Exo 2 font (weight 700) for all "Satoshi Station" text
-   - Test on multiple browsers and devices
-   - Verify both light and dark mode
+1. **CDN Configuration**
+   - Asset caching rules
+   - Browser caching policies
+   - Compression settings
 
-### Phase 2: Limited Production Testing (DNS not switched)
+2. **Image Optimization**
+   - Next.js Image component
+   - WebP format usage
+   - Responsive images
 
-1. Deploy to production bucket but don't switch DNS:
-   ```bash
-   git remote add epic-prod https://github.com/Epic-Growth/Satoshi-Learning-Path.git
-   git push epic-prod main:production
-   ```
+3. **Code Optimization**
+   - Code splitting
+   - Tree shaking
+   - Bundle analysis
 
-2. Test production deployment directly via the bucket URL:
-   - URL format: `https://storage.googleapis.com/sats-sv-static/index.html`
-   - This tests the production environment without affecting live users
+## Environment Configuration
 
-### Phase 3: Full Production Deployment
+### Production
+- Domain: https://sats.sv
+- GCP Project: satoshi-station-prod
+- Storage Bucket: sats-sv-static
 
-1. Schedule a deployment window with minimal traffic
-2. Switch DNS to point to the new production deployment
-3. Monitor for any issues or errors
+### Staging
+- Domain: https://staging.sats.sv
+- GCP Project: satoshi-station-staging
+- Storage Bucket: sats-sv-staging
 
-## Rollback Plan
+## Monitoring and Alerts
 
-If critical issues are detected after deployment, implement the following rollback procedure:
+- Uptime monitoring
+- Performance alerts
+- Error rate thresholds
+- Traffic anomaly detection
 
-### Quick Rollback (DNS Reversion)
+## Disaster Recovery
 
-1. Revert DNS settings to point back to the original deployment
-2. This is the fastest method to restore service
+1. **Backup Strategy**
+   - Daily GCP bucket snapshots
+   - Weekly configuration backups
+   - Monthly full system backups
 
-### Full Rollback (Content Restoration)
-
-1. Restore the backup from the `sats-sv-backups` bucket to the production bucket:
-   ```bash
-   gsutil -m cp -r gs://sats-sv-backups/[BACKUP_FOLDER]/* gs://sats-sv-static/
-   ```
-
-2. Verify the rollback is complete and the site is functioning correctly
-
-## Post-Deployment Monitoring
-
-After deployment, closely monitor:
-
-1. Google Analytics for any unusual patterns
-2. Error logs in Google Cloud
-3. Performance metrics
-4. User feedback
-
-## Contact Information
-
-In case of deployment issues, contact:
-- Primary: [Your Name/Team]
-- Secondary: [Backup Contact]
-
-## Success Criteria
-
-The deployment is considered successful when:
-1. All pages load correctly on sats.sv
-2. Typography requirements are met (Exo 2 font, weight 700, #FF523C orange color)
-3. No increase in error rates compared to previous deployment
-4. User progress tracking functions correctly
+2. **Recovery Procedures**
+   - Load balancer failover
+   - DNS failover
+   - Content restoration
+   - Configuration restoration

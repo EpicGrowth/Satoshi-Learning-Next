@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { 
   Bitcoin, Zap, Shield, ArrowRight, Book, Code, 
   Database, Lock, Network, Wallet, Hash, Layers,
-  ChevronRight, Play, Terminal, FileCode, Gift
+  ChevronRight, Play, Terminal, FileCode, Github, MessageSquare, Gift
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,13 +12,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Link from 'next/link';
-import { BlockchainBackground } from '@/components/animations/BlockchainBackground';
-import dynamic from 'next/dynamic';
-
-const LightningNetwork = dynamic(
-  () => import('@/components/learn/shared/lightning-network').then(mod => mod.LightningNetwork),
-  { ssr: false, loading: () => <p>Loading Visualization...</p> }
-);
+import { HoneycombBackground } from '@/components/animations/HoneycombBackground';
+import { LightningNetwork } from '@/components/learn/shared/lightning-network';
 
 type Stat = {
   number: string;
@@ -209,7 +204,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Extended background for the entire page */}
-      <BlockchainBackground fullHeight={true} />
+      <HoneycombBackground fullHeight={true} />
       
       {/* Enhanced Hero Section */}
       <section className="container relative pt-16 pb-20 md:pt-28 md:pb-40 overflow-hidden">

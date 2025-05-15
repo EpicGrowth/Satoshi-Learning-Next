@@ -1,8 +1,34 @@
-# Satoshi Station Next
+# SatoshiStationNext
 
-Satoshi Station is a comprehensive learning platform for Bitcoin and Lightning Network education. This project is the Next.js migration and redesign of the original Satoshi Learning Path (sats.sv), built with modern web technologies and an improved user experience while maintaining the exact look and feel of the original site.
+An interactive learning platform for Bitcoin and Lightning Network education.
 
-> **IMPORTANT**: This repository deploys to **staging.sats.sv** for testing and validation before changes are promoted to production at **sats.sv**.
+## Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+Visit `http://localhost:3000` to view the application.
+
+## Documentation Structure
+
+- [Development Guide](docs/DEVELOPMENT.md) - Complete development documentation
+- [Technical Documentation](docs/TECHNICAL.md) - Technical architecture and implementation details
+- [Deployment Strategy](docs/DEPLOYMENT_STRATEGY.md) - Deployment procedures and infrastructure
+- [Content Strategy](docs/satoshi-station-content-strategy.md) - Content guidelines and standards
+- [Visual Guidelines](docs/satoshi-station-visual-guidelines-comprehensive.md) - Visual design standards
+- [Learning Path System](docs/LEARN_PATH_SYSTEM.md) - Learning path architecture and management
+- [Post Deployment Verification](docs/POST_DEPLOYMENT_VERIFICATION.md) - Deployment verification procedures
+- [Content Style Guide](docs/satoshi-station-content-style-guide-comprehensive.md) - Comprehensive content guidelines
+- [Editorial Workflow](docs/satoshi-station-editorial-workflow.md) - Content creation and review process
+- [Audience Personas](docs/satoshi-station-audience-personas.md) - Target audience definitions
+- [Measurement Framework](docs/satoshi-station-measurement-framework.md) - Analytics and success metrics
+- [Color & Typography](docs/COLOR-TYPOGRAPHY-UPDATE.md) - Design system specifications
+- [Voice Application Guide](docs/satoshi-station-voice-application-guide.md) - Brand voice guidelines
+- [Crisis Plan](docs/satoshi-station-crisis-plan.md) - Incident response procedures
+- [Response Frameworks](docs/satoshi-station-response-frameworks.md) - Communication guidelines
+- [Messaging Architecture](docs/satoshi-station-messaging-architecture.md) - Content organization strategy
 
 ## Project Overview
 
@@ -370,13 +396,11 @@ If you encounter issues with the learning paths or content:
 
 ## Contributing
 
-To contribute to this project:
-
-1. Create a feature branch for your changes
-2. Follow the established naming conventions and code structure
-3. Test thoroughly before submitting pull requests
-4. Include documentation updates in the README for any structural changes
+1. Fork the repository
+2. Create your feature branch
+3. Follow our [Development Guide](docs/DEVELOPMENT.md)
+4. Submit a pull request
 
 ## License
 
-MIT
+MIT License - see LICENSE file for details

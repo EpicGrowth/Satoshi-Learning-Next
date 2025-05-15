@@ -1,3 +1,179 @@
+# Development Guide
+
+## Prerequisites
+
+- Node.js 18.x or higher
+- npm 9.x or higher
+- Git
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-org/SatoshiStationNext.git
+cd SatoshiStationNext
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start development server:
+```bash
+npm run dev
+```
+
+## Project Structure
+
+```
+src/
+├── app/           # Next.js 13+ App Router pages
+├── components/    # Reusable React components
+├── config/        # Configuration files
+├── contexts/      # React Context providers
+├── lib/          # Utility functions
+└── types/        # TypeScript type definitions
+```
+
+## Development Workflow
+
+1. Create feature branch from main
+2. Implement changes following style guide
+3. Write tests for new features
+4. Submit PR for review
+
+## Code Style
+
+- Follow TypeScript best practices
+- Use ES6+ features
+- Follow React hooks guidelines
+- Use Tailwind CSS for styling
+
+## Testing
+
+```bash
+# Run unit tests
+npm run test
+
+# Run e2e tests
+npm run test:e2e
+
+# Run all tests
+npm run test:all
+```
+
+## Building
+
+```bash
+# Production build
+npm run build
+
+# Start production server
+npm start
+```
+
+## Environment Variables
+
+Create a `.env.local` file:
+```
+NEXT_PUBLIC_API_URL=your_api_url
+NEXT_PUBLIC_GA_ID=your_ga_id
+```
+
+## VS Code Setup
+
+Recommended extensions:
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
+- TypeScript + JavaScript
+
+## Debugging
+
+1. Use Chrome DevTools with React Developer Tools
+2. Enable source maps in development
+3. Use VS Code debugger configuration
+
+## Common Issues
+
+1. **Build Failures**
+   - Clear `.next` directory
+   - Delete node_modules and reinstall
+   - Check TypeScript errors
+
+2. **Page Not Updating**
+   - Clear browser cache
+   - Restart dev server
+   - Check file naming
+
+## Git Workflow
+
+1. **Branch Naming**
+   - feature/description
+   - bugfix/description
+   - hotfix/description
+
+2. **Commit Messages**
+   - feat: Add new feature
+   - fix: Fix bug
+   - docs: Update documentation
+   - style: Format code
+   - refactor: Restructure code
+   - test: Add tests
+
+## Performance Guidelines
+
+1. **Code Splitting**
+   - Use dynamic imports
+   - Lazy load components
+   - Optimize images
+
+2. **State Management**
+   - Use React Context wisely
+   - Implement proper memoization
+   - Avoid prop drilling
+
+## Accessibility
+
+1. **Requirements**
+   - WCAG 2.1 compliance
+   - Keyboard navigation
+   - Screen reader support
+
+2. **Testing**
+   - Use axe-core
+   - Regular manual testing
+   - Automated a11y tests
+
+## Documentation
+
+1. **Code Comments**
+   - JSDoc for functions
+   - Inline comments for complex logic
+   - Type documentation
+
+2. **Component Documentation**
+   - Props documentation
+   - Usage examples
+   - Edge cases
+
+## Release Process
+
+1. Update version in package.json
+2. Create changelog entry
+3. Tag release in git
+4. Deploy to staging
+5. Verify changes
+6. Deploy to production
+
+## Support
+
+- GitHub Issues for bugs
+- Discussions for questions
+- Wiki for documentation
+- Slack for team communication
+
 # SatoshiStationNext Development Guide
 
 This document provides comprehensive information about the project structure, architecture, and development conventions used in SatoshiStationNext. It's designed to help developers (both human and AI) understand the codebase quickly and make effective contributions.

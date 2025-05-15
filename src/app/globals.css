@@ -4,119 +4,96 @@
 
 @layer base {
   :root {
-    /* Clean, professional light mode colors with single orange tone */
-    --background: 0 0% 100%;  /* Pure white background for clean look */
-    --foreground: 220 10% 16%;  /* Deep blue-gray for better text contrast */
+    /* Logo color system */
+    --logo-color: #e44c41;
+    --logo-hover: #d43d32;
+    --logo-dark: #c23931;
+    --logo-light: #e86b62;
 
-    --card: 0 0% 100%;  /* Pure white cards */
-    --card-foreground: 220 10% 16%;
-
+    /* Light mode */
+    --background: 0 0% 100%;
+    --foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 16%;
-
-    /* Standardized single orange tone */
-    --primary: 28 90% 54%;  /* HSL for Bitcoin orange F7931A */
+    --popover-foreground: 220 20% 10%;
+    
+    /* Use logo color for primary */
+    --primary: 4 72% 57%;      /* #e44c41 in HSL */
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 14% 96%;  /* Subtle blue-gray for contrast with orange */
-    --secondary-foreground: 220 40% 20%;
-
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 40%;  /* Better contrast for text */
-
-    --accent: 28 30% 94%;  /* Very subtle orange accent background */
-    --accent-foreground: 28 85% 45%;  /* Darker orange for accent text */
-
+    
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 220 20% 15%;
+    
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 20% 40%;
+    
+    --accent: 4 72% 96%;      /* Light version of logo color */
+    --accent-foreground: 220 20% 15%;
+    
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 220 13% 90%;
-    --input: 220 13% 90%;
-    --ring: 28 90% 54%;  /* Match primary */
-
-    --radius: 0.5rem;  /* Consistent radius */
-
-    /* Standardized single orange tone palette */
-    --bitcoin-orange: #F7931A;  /* Official Bitcoin orange */
-    --primary-light: #F7931A;   /* Use Bitcoin orange as standard */
-    --primary-dark: #E87D18;    /* Slightly deeper shade */
-    --primary-hover: #E87D18;   /* Same as dark for consistency */
-    --primary-contrast: #FFFFFF; /* Pure white for maximum contrast */
+    
+    --border: 220 20% 92%;
+    --input: 220 20% 92%;
+    --ring: 4 72% 57%;        /* Match logo color */
+    
+    --radius: 0.5rem;
 
     /* Learning path colors */
-    --beginner: #16A34A;       /* Green for beginner content */
-    --intermediate: #F7931A;   /* Bitcoin orange for intermediate content (standardized) */
-    --advanced: #DC2626;       /* Red for advanced content */
-    --reference: #2563EB;      /* Blue for reference content */
+    --beginner: #15803D;
+    --intermediate: #e44c41;  /* Use logo color */
+    --advanced: #B91C1C;
+    --reference: #1D4ED8;
 
-    /* Use Next.js imported fonts */
-    --font-sans: var(--font-sans);
-    --font-mono: var(--font-mono);
-    --font-display: var(--font-display);
-    --font-brand: var(--font-brand);
-
-    /* Code syntax highlighting colors */
-    --prose-code: theme(colors.code.keyword);
-    --prose-code-bg: theme(colors.code.bg/10);
+    /* Interactive elements */
+    --selection-bg: rgba(228, 76, 65, 0.2);
+    --focus-ring: rgba(228, 76, 65, 0.4);
   }
 
   .dark {
-    /* Clean, professional dark mode colors with single orange tone */
-    --background: 225 25% 10%;  /* Rich dark background - better contrast */
-    --foreground: 0 0% 98%;  /* Clean white for text */
-
-    --card: 225 25% 13%;  /* Slightly lighter card background */
-    --card-foreground: 0 0% 98%;
-
-    --popover: 225 25% 13%;
-    --popover-foreground: 0 0% 98%;
-
-    /* Standardized single orange tone */
-    --primary: 28 90% 54%;  /* HSL for Bitcoin orange F7931A */
+    /* Dark mode */
+    --background: 220 20% 9%;
+    --foreground: 0 0% 95%;
+    --card: 220 20% 11%;
+    --card-foreground: 0 0% 95%;
+    --popover: 220 20% 11%;
+    --popover-foreground: 0 0% 95%;
+    
+    --primary: 4 72% 57%;      /* Keep logo color in dark mode */
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 225 25% 16%;  /* Slightly lighter secondary */
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 225 25% 16%;
-    --muted-foreground: 215 20% 75%;  /* Better contrast for text */
-
-    --accent: 28 90% 25%;  /* Deep orange accent background */
-    --accent-foreground: 28 90% 65%;  /* Lighter orange for accent text */
-
-    --destructive: 0 70% 50%;  /* More visible destructive */
+    
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 20% 65%;
+    
+    --accent: 4 72% 16%;      /* Dark version of logo color */
+    --accent-foreground: 0 0% 95%;
+    
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
+    
+    --border: 220 20% 16%;
+    --input: 220 20% 16%;
+    --ring: 4 72% 57%;        /* Match logo color */
 
-    --border: 225 25% 16%;  /* Slightly visible borders */
-    --input: 225 25% 16%;
-    --ring: 28 90% 54%;  /* Match primary */
+    /* Learning path colors - adjusted for dark mode */
+    --beginner: #22C55E;
+    --intermediate: #e44c41;  /* Keep logo color */
+    --advanced: #EF4444;
+    --reference: #3B82F6;
 
-    /* Standardized single orange tone */
-    --bitcoin-orange: #F7931A;  /* Official Bitcoin orange */
-    --primary-light: #F7931A;   /* Use Bitcoin orange as standard */
-    --primary-dark: #E87D18;    /* Slightly deeper shade */
-    --primary-hover: #E87D18;   /* Same as dark for consistency */
-    --primary-contrast: #FFFFFF; /* Pure white for maximum contrast */
-
-    /* Learning path colors - better visibility in dark mode */
-    --beginner: #22C55E;       /* Brighter green for dark mode */
-    --intermediate: #EAB308;   /* Brighter amber for dark mode */
-    --advanced: #EF4444;       /* Brighter red for dark mode */
-    --reference: #3B82F6;      /* Brighter blue for dark mode */
-
-    /* Additional theme variables for easier dark mode styling */
-    --sidebar-bg: 222 47% 6%;  /* Slightly darker for sidebar */
-    --card-hover: 222 42% 14%;  /* Slightly lighter for card hover */
-    --input-active: 217 33% 20%; /* Active input color */
-    --code-highlight: 12 80% 20%; /* Code highlight background */
-
-    --prose-code: theme(colors.code.string);
-    --prose-code-bg: theme(colors.code.bg/95);
+    /* Interactive elements */
+    --selection-bg: rgba(228, 76, 65, 0.3);
+    --focus-ring: rgba(228, 76, 65, 0.5);
   }
 
+  /* Base styles */
   html, body {
-    overflow-x: hidden; /* Fix horizontal overflow */
-    max-width: 100vw; /* Prevent horizontal scrollbar */
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   body {
@@ -126,118 +103,121 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Headings with original styling */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold tracking-tight;
-  }
-
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl;
-  }
-
-  /* Better link styling */
-  a {
-    @apply transition-colors duration-200;
-  }
-
-  /* Fix any overflow causing elements */
-  .container {
-    @apply px-4 mx-auto;
-    max-width: 1200px; /* Match original max width */
-  }
-
-  /* Ensure fullbleed elements don't create scrollbars - from original site */
-  .fullbleed {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-  }
-
-  /* Refined scrollbar styling */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--muted));
-    border-radius: 8px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 40%);
-    border-radius: 8px;
-    border: 2.5px solid hsl(var(--muted));
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary) / 60%);
-  }
-
-  /* Custom selection styling */
+  /* Text selection */
   ::selection {
-    background-color: hsl(var(--primary) / 30%);
-    color: hsl(var(--primary-foreground));
+    background-color: var(--selection-bg);
+    color: var(--foreground);
   }
 
-  /* Improved code block styling */
-  pre {
-    @apply p-4 rounded-lg my-4 overflow-x-auto bg-code-bg text-code-text;
+  /* Interactive elements */
+  .btn-primary,
+  button[type="submit"] {
+    background: linear-gradient(180deg, var(--logo-color) 0%, var(--logo-dark) 100%);
+    color: white;
+    box-shadow: 0 2px 10px rgba(228, 76, 65, 0.3);
+    transition: all 0.2s ease;
   }
 
-  pre code {
-    @apply font-mono text-sm border-none bg-transparent p-0;
+  .btn-primary:hover,
+  button[type="submit"]:hover {
+    background: linear-gradient(180deg, var(--logo-hover) 0%, var(--logo-color) 100%);
+    box-shadow: 0 4px 15px rgba(228, 76, 65, 0.4);
   }
 
-  code {
-    @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded-md;
+  /* Links */
+  a:not([class]) {
+    color: var(--logo-color);
+    transition: color 0.2s ease;
   }
 
-  /* Verify UI specific styles */
-  .verify-input {
-    @apply font-mono;
+  a:not([class]):hover {
+    color: var(--logo-hover);
   }
 
-  /* Custom content containers */
-  .content-wrapper {
-    @apply max-w-none prose prose-lg dark:prose-invert 
-      prose-headings:text-foreground prose-headings:font-bold prose-headings:tracking-tight
-      prose-p:text-foreground/90
-      prose-a:text-bitcoin-orange prose-a:font-medium prose-a:no-underline hover:prose-a:underline
-      prose-strong:text-foreground prose-strong:font-semibold
-      prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md
-      prose-code:text-sm prose-code:font-medium prose-code:before:content-none prose-code:after:content-none;
+  /* Focus states */
+  *:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Enhanced Responsive Typography */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 
-  /* Match original media query breakpoints */
-  @media (max-width: 640px) {
-    .content-wrapper {
-      @apply prose-base;
-    }
-
-    h1 {
-      @apply text-3xl;
-    }
-
-    h2 {
-      @apply text-2xl;
-    }
-
-    h3 {
-      @apply text-xl;
-    }
+  .text-pretty {
+    text-wrap: pretty;
   }
+}
+
+/* Responsive Container Widths */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 1400px;
+}
+
+/* Improved Link Accessibility */
+a:focus-visible {
+  @apply outline-2 outline-offset-2;
+  outline-color: var(--bitcoin-orange);
+}
+
+/* Focus States for Interactive Elements */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-2 outline-offset-2 ring-2;
+  outline-color: var(--bitcoin-orange);
+  ring-color: rgb(247, 147, 26, 0.2);
+}
+
+/* Enhanced Mobile Navigation */
+@media (max-width: 768px) {
+  .mobile-nav-open {
+    @apply overflow-hidden;
+  }
+
+  .mobile-nav-content {
+    @apply max-h-[calc(100vh-4rem)] overflow-y-auto;
+  }
+}
+
+/* Smooth Transitions */
+.transition-all {
+  @apply duration-200 ease-in-out;
+}
+
+/* Brand Text Enhancement */
+[data-brand-text="true"] {
+  @apply font-display text-bitcoin-orange font-bold tracking-tight;
+}
+
+/* High Contrast Dark Mode Text */
+.dark .high-contrast-text {
+  @apply text-gray-100;
+}
+
+/* Active Navigation Indicator */
+.nav-link-active {
+  @apply relative text-bitcoin-orange font-semibold;
+}
+
+.nav-link-active::after {
+  content: '';
+  @apply absolute -bottom-1 left-0 w-full h-0.5 bg-bitcoin-orange rounded-full;
 }
 
 @layer components {
@@ -395,4 +375,50 @@
   50% {
     opacity: 0.5;
   }
+}
+
+/* Hero Section Mobile Optimization */
+.hero-section {
+  @apply px-4 sm:px-6 lg:px-8;
+  max-width: 100%;
+}
+
+.hero-content {
+  @apply mx-auto max-w-[90%] sm:max-w-[85%] md:max-w-[80%];
+}
+
+/* Mobile Content Padding */
+.content-section {
+  @apply px-4 sm:px-6 md:px-8;
+}
+
+/* Improved Mobile Navigation */
+@media (max-width: 768px) {
+  .main-content {
+    @apply px-4 sm:px-6;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .mobile-nav-content {
+    @apply max-h-[calc(100vh-4rem)] overflow-y-auto;
+  }
+}
+
+/* Smooth transitions for theme changes */
+:root {
+  --transition-duration: 200ms;
+}
+
+.transition-colors,
+.transition-bg {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--transition-duration);
+}
+
+/* Enhanced focus styles */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }

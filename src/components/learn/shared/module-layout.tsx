@@ -81,7 +81,7 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   };
 
   return (
-    <div className="container max-w-3xl py-8">
+    <div className="container max-w-5xl py-8">
           {/* Content */}
           {children}
           

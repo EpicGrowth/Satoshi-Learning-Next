@@ -128,9 +128,9 @@ export function ModuleContent({
       )}
 
       <Card className="relative border-border/50">
-        <ScrollArea className="h-[calc(100vh-15rem)] rounded-md border-border/50">
-          <div className="p-6">{children}</div>
-        </ScrollArea>
+        <div className="p-8 space-y-6">
+          {children}
+        </div>
       </Card>
     </div>
   );

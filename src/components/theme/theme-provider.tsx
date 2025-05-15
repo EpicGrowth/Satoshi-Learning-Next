@@ -19,7 +19,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: "dark",
   setTheme: () => null,
 };
 
@@ -27,30 +27,21 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
+  defaultTheme = "dark",
   storageKey = "satoshi-station-theme",
-  enableSystem = true,
+  enableSystem = false,
   disableTransitionOnChange = false,
-  attribute = "data-theme",
+  attribute = "class",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage?.getItem(storageKey) as Theme) || defaultTheme
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
-
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else if (enableSystem) {
-      setTheme("system");
-    }
 
     root.classList.remove("light", "dark");
-
-    if (disableTransitionOnChange) {
-      root.classList.add("disable-transitions");
-    }
 
     if (theme === "system" && enableSystem) {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -59,53 +50,17 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
-      root.style.setProperty(attribute, systemTheme);
-
-      if (disableTransitionOnChange) {
-        setTimeout(() => {
-          root.classList.remove("disable-transitions");
-        }, 0);
-      }
-
       return;
     }
 
     root.classList.add(theme);
-    root.style.setProperty(attribute, theme);
-
-    if (disableTransitionOnChange) {
-      setTimeout(() => {
-        root.classList.remove("disable-transitions");
-      }, 0);
-    }
-  }, [theme, disableTransitionOnChange, enableSystem, attribute, storageKey]);
-
-  useEffect(() => {
-    if (!enableSystem) {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleChange = () => {
-      if (theme === "system") {
-        document.documentElement.classList.remove("light", "dark");
-        document.documentElement.classList.add(
-          mediaQuery.matches ? "dark" : "light"
-        );
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [enableSystem, theme]);
+  }, [theme, enableSystem]);
 
   const value = {
     theme,
-    setTheme: (newTheme: Theme) => {
-      localStorage.setItem(storageKey, newTheme);
-      setTheme(newTheme);
+    setTheme: (theme: Theme) => {
+      localStorage?.setItem(storageKey, theme);
+      setTheme(theme);
     },
   };
 

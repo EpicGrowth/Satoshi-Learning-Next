@@ -2,9 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   theme: {
     container: {
@@ -21,13 +22,17 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        'code-bg': "hsl(var(--muted))",
+        'code-text': "hsl(var(--muted-foreground))",
+        'bitcoin-orange': "#e44c41",  // Logo color
+        'bitcoin-hover': '#d43d32',   // Darker version for hover
+        'bitcoin-dark': '#c23931',    // Even darker version
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#e44c41", // Logo color
           foreground: "hsl(var(--primary-foreground))",
-          light: "var(--primary-light)",
-          dark: "var(--primary-dark)",
-          hover: "var(--primary-hover)",
-          contrast: "var(--primary-contrast)",
+          hover: "#d43d32", // Darker version for hover states
+          light: "#e86b62", // Lighter version
+          dark: "#c83932", // Darker version
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -52,61 +57,12 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-          hover: "var(--card-hover)",
         },
-        // Official Bitcoin branding colors - standardized
-        bitcoin: {
-          orange: "#F7931A", // Official Bitcoin orange
-          deep: "#E87D18",   // Slightly deeper shade for hover states
-          hover: "#E87D18", // Hover state
-          light: "rgba(247, 147, 26, 0.1)", // Very light orange for backgrounds
-          dark: "#D26A00",   // Darker shade for contrast
-        },
-        // Standard brand colors available across the application
-        brand: {
-          light: "var(--primary-light)",
-          dark: "var(--primary-dark)",
-          hover: "var(--primary-hover)",
-          gradient: "linear-gradient(90deg, var(--primary-light) 0%, var(--primary-dark) 100%)",
-        },
-        // Learning path color system
-        learning: {
-          beginner: "var(--beginner)",
-          intermediate: "var(--intermediate)",
-          advanced: "var(--advanced)",
-          reference: "var(--reference)",
-        },
-        // Lightning colors - enhanced for better visibility
-        lightning: {
-          purple: "#9B59B6", // Standard purple
-          deep: "#8E44AD",
-          blue: "#3B82F6", // Brighter blue
-          yellow: "#EAB308", // Brighter yellow
-          green: "#22C55E", // Brighter green
-          red: "#EF4444", // Brighter red
-          light: "#D6BCFF",
-          dark: "#6C3483",
-        },
-        // Enhanced code syntax highlighting colors
-        code: {
-          bg: "#1A1A1A",
-          text: "#E6E6E6", // Slightly brighter for better readability
-          comment: "#6B9955", // Slightly adjusted green
-          string: "#CE9178",
-          keyword: "#569CD6",
-          function: "#DCDCAA",
-          variable: "#9CDCFE",
-          highlight: "var(--code-highlight)",
-        },
-        // Educational content specific colors
-        education: {
-          highlight: "#FBBF24", // Amber highlight for important concepts
-          note: "#3B82F6",      // Blue for notes
-          warning: "#DC2626",   // Red for warnings
-          success: "#16A34A",   // Green for success
-          examples: "#8B5CF6",  // Purple for examples
-          exercise: "#F97316",  // Orange for exercises
-        }
+        // Learning path specific colors
+        beginner: "#15803D",
+        intermediate: "#d43d32", // Match logo color
+        advanced: "#B91C1C",
+        reference: "#1D4ED8",
       },
       borderRadius: {
         lg: "var(--radius)",
