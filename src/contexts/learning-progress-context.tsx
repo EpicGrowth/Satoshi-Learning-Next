@@ -1,8 +1,21 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { UserProgress, ModuleProgress, SectionProgress } from '@/types/progress';
 import { bitcoinModules, lightningModules } from '@/config/learning-modules';
+
+// Debounce helper
+function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
+  let timeout: NodeJS.Timeout;
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  } as T;
+}
 
 interface LearningProgressContextType {
   progress: UserProgress;
@@ -25,6 +38,16 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Debounced save function - will only execute after 1 second of no changes
+  const debouncedSave = useCallback(
+    debounce((data: UserProgress) => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('satoshi-station-progress', JSON.stringify(data));
+      }
+    }, 1000),
+    []
+  );
+
   // Load progress from localStorage on initial render
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -40,12 +63,12 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     }
   }, []);
 
-  // Save progress to localStorage whenever it changes
+  // Save progress to localStorage whenever it changes, but debounced
   useEffect(() => {
-    if (isLoaded && typeof window !== 'undefined') {
-      localStorage.setItem('satoshi-station-progress', JSON.stringify(progress));
+    if (isLoaded) {
+      debouncedSave(progress);
     }
-  }, [progress, isLoaded]);
+  }, [progress, isLoaded, debouncedSave]);
 
   const updateSectionProgress = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string, stepId: string) => {
     setProgress((prev) => {
