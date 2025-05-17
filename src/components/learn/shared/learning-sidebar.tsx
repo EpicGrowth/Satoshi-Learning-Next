@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 // Remove ScrollArea import as it's causing update loops
-import { Check, ChevronDown, ChevronRight, Lock } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, ChevronRight, Lock } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useLearningProgress } from '@/contexts/learning-progress-context';
 import { LearningModule, Section } from '@/types/learning';
 
@@ -24,6 +25,7 @@ export function LearningSidebar({
   onModuleSelect,
   showDifficultyFilter = true 
 }: LearningSidebarProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(Boolean);
   const currentModule = pathSegments[pathSegments.indexOf(pathPrefix) + 1] || '';
@@ -88,9 +90,28 @@ export function LearningSidebar({
     };
   };
 
+  // Find the next incomplete section
+  const findNextIncompleteSection = () => {
+    for (const module of modules) {
+      for (const section of module.sections) {
+        const { progress, locked } = calculateSectionInfo(module.id, section.id);
+        if (!locked && progress < 100) {
+          return { moduleId: module.id, sectionId: section.id };
+        }
+      }
+    }
+    return null;
+  };
+
+  const handleSectionComplete = () => {
+    router.push(`/learn/${pathPrefix}`);
+  };
+
   const renderSection = (module: LearningModule, section: Section) => {
     const isActive = currentModule === module.id && currentSection === section.id;
-    const { isComplete, locked } = calculateSectionInfo(module.id, section.id);
+    const { isComplete, locked, progress } = calculateSectionInfo(module.id, section.id);
+    const nextIncomplete = findNextIncompleteSection();
+    const isNextSection = nextIncomplete?.moduleId === module.id && nextIncomplete?.sectionId === section.id;
     
     // Determine theme colors using our standardized CSS variables
     const activeColor = pathPrefix === 'bitcoin' 
@@ -112,6 +133,9 @@ export function LearningSidebar({
         onClick={(e) => {
           if (locked) {
             e.preventDefault();
+          } else if (progress === 100) {
+            e.preventDefault();
+            handleSectionComplete();
           } else {
             handleModuleClick(module.id, section.id);
           }
@@ -121,12 +145,15 @@ export function LearningSidebar({
           <Check className={`h-3.5 w-3.5 mr-2 ${completedColor}`} />
         ) : locked ? (
           <Lock className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+        ) : isNextSection ? (
+          <ArrowRight className="h-3.5 w-3.5 mr-2 text-emerald-500" />
         ) : (
           <div className="w-3.5 h-3.5 mr-2" />
         )}
         <span className={cn(
           'text-sm',
-          isActive && 'font-medium'
+          isActive && 'font-medium',
+          isNextSection && 'text-emerald-500'
         )}>
           {section.title}
         </span>
