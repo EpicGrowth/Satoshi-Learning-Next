@@ -41,9 +41,6 @@ export default function RootLayout({
     >
       <head>
         {/* Add direct CSS links for more reliable loading */}
-        <link rel="stylesheet" href="/css-fix.css" />
-        <link rel="stylesheet" href="/styles/dark-mode-enhancements.css" />
-        <link rel="stylesheet" href="/styles/logo-effects.css" />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <ThemeProvider

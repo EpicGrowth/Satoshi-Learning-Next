@@ -139,7 +139,7 @@ export function MobileNav() {
                 </Button>
               </div>
               
-              <nav className="flex flex-col space-y-1">
+              <nav className="flex flex-col space-y-1 mobile-nav-content">
                 {navigationItems.map((section) => {
                   // For simple links without dropdown
                   if (!section.items) {

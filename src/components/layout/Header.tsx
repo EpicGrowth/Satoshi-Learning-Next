@@ -51,7 +51,7 @@ export function Header() {
                 </div>
               </div>
               <div className="relative z-10">
-                <span className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-bold brand-text" 
+                <span className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-bold brand-text break-all" 
                   data-brand-text="true">
                   Satoshi Station
                 </span>
@@ -59,8 +59,8 @@ export function Header() {
             </div>
           </Link>
           
-          <nav className="flex items-center space-x-3 md:space-x-6" role="navigation">
-            <div className="hidden lg:flex items-center space-x-8 mr-2">
+          <nav className="flex items-center space-x-3 md:space-x-6 flex-wrap" role="navigation">
+            <div className="hidden lg:flex items-center space-x-8 mr-2 flex-wrap">
               {navigationItems.map((item) => {
                 const basePath = '/learn/' + pathname.split('/')[2];
                 const isActive = item.href.includes(basePath) || pathname === item.href;

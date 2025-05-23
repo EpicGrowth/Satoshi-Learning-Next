@@ -41,8 +41,8 @@ export function Callout({ type, title, children, className }: CalloutProps) {
       <div className="flex items-start">
         <Icon className="mr-3 mt-1 h-5 w-5 flex-shrink-0" />
         <div className="flex-1">
-          {title && <h5 className="font-semibold mb-1">{title}</h5>}
-          <div className="text-sm">{children}</div>
+          {title && <h5 className="font-semibold mb-1 break-words">{title}</h5>}
+          <div className="text-sm break-words">{children}</div>
         </div>
       </div>
     </div>
