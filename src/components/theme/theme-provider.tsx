@@ -34,9 +34,25 @@ export function ThemeProvider({
   attribute = "class",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage?.getItem(storageKey) as Theme) || defaultTheme
-  );
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+
+  useEffect(() => {
+    let storedTheme: Theme | null = null;
+    try {
+      storedTheme = localStorage.getItem(storageKey) as Theme | null;
+    } catch (e) {
+      console.error("Failed to read theme from localStorage", e);
+    }
+
+    if (storedTheme) {
+      setTheme(storedTheme);
+    } else if (enableSystem) { // Check enableSystem before using window.matchMedia
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      setTheme(systemTheme);
+    }
+    // If no stored theme and system preference is not enabled/applicable, 
+    // it will remain the defaultTheme set in useState.
+  }, [storageKey, defaultTheme, enableSystem]); // Add enableSystem to dependency array
 
   useEffect(() => {
     const root = window.document.documentElement;

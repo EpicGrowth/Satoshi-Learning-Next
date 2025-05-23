@@ -114,7 +114,7 @@ export function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-slate-900 p-6 shadow-xl lg:hidden"
+              className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-background p-6 shadow-xl lg:hidden"
             >
               <div className="flex items-center justify-between mb-8">
                 <Link 
