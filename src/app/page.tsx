@@ -319,7 +319,7 @@ export default function Home() {
           </div>
 
           <Tabs defaultValue="bitcoin" className="w-full">
-            <TabsList className="mb-10 flex w-full justify-center gap-4 bg-transparent">
+            <TabsList className="mb-10 flex w-full justify-center gap-4 bg-transparent flex-wrap">
               {learningPaths.map((path) => (
                 <TabsTrigger
                   key={path.title}
