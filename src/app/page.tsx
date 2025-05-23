@@ -201,6 +201,7 @@ const learningPaths: LearningPath[] = [
 ];
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState("bitcoin");
   return (
     <div className="flex flex-col">
       {/* Extended background for the entire page */}
@@ -318,7 +319,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Tabs defaultValue="bitcoin" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="mb-10 flex w-full justify-center gap-4 bg-transparent flex-wrap h-auto">
               {learningPaths.map((path) => (
                 <TabsTrigger
