@@ -347,7 +347,7 @@ export default function Home() {
               <TabsContent 
                 key={path.title} 
                 value={path.title.toLowerCase().split(' ')[0]}
-                className="mt-0 animate-in fade-in-50 duration-300"
+                className="mt-0"
               >
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                   {path.features.map((feature) => (
