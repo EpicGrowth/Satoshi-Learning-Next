@@ -31,11 +31,13 @@ export function DarkModeEnhancer() {
   return (
     <>
       {/* Import the dark mode enhancements CSS */}
+      {/*
       <link 
         rel="stylesheet" 
         href="/styles/dark-mode-enhancements.css" 
         precedence="high"
       />
+      */}
     </>
   );
 }
