@@ -81,7 +81,7 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     };
   }, [progress, isLoaded, debouncedSave]);
 
-  const updateSectionProgress = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string, stepId: string) => {
+  const updateSectionProgress = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string, stepId: string) => {
     setProgress((prev) => {
       const moduleProgress = prev[type][moduleId] || {
         id: moduleId,
@@ -123,9 +123,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         lastActiveModule: { type, moduleId, sectionId }
       };
     });
-  };
+  }, []);
 
-  const markSectionComplete = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => {
+  const markSectionComplete = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => {
     setProgress((prev) => {
       // Check if the module or section path is valid in the current progress state
       if (!prev[type] || !prev[type][moduleId] || !prev[type][moduleId].completedSections || !prev[type][moduleId].completedSections[sectionId]) {
@@ -182,9 +182,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         },
       };
     });
-  };
+  }, []);
 
-  const isSectionLocked = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): boolean => {
+  const isSectionLocked = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): boolean => {
     const modules = type === 'bitcoin' ? bitcoinModules : lightningModules;
     const module = modules.find(m => m.id === moduleId);
     if (!module) return true;
@@ -205,9 +205,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
 
     const previousSection = module.sections[sectionIndex - 1];
     return !progress[type][moduleId]?.completedSections[previousSection.id]?.completedAt;
-  };
+  }, [progress]);
 
-  const getSectionProgress = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): number => {
+  const getSectionProgress = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): number => {
     const sectionProgress = progress[type][moduleId]?.completedSections[sectionId];
     if (!sectionProgress) return 0;
     
@@ -222,17 +222,17 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     
     const totalSteps = section.checkboxCount || 1;
     return Math.round((sectionProgress.completedSteps.length / totalSteps) * 100);
-  };
+  }, [progress]);
 
-  const getModuleProgress = (type: 'bitcoin' | 'lightning', moduleId: string): ModuleProgress | undefined => {
+  const getModuleProgress = useCallback((type: 'bitcoin' | 'lightning', moduleId: string): ModuleProgress | undefined => {
     return progress[type][moduleId];
-  };
+  }, [progress]);
 
-  const updateSkillLevel = (level: 'beginner' | 'intermediate' | 'advanced') => {
+  const updateSkillLevel = useCallback((level: 'beginner' | 'intermediate' | 'advanced') => {
     setProgress(prev => ({ ...prev, skillLevel: level }));
-  };
+  }, []);
 
-  const resetProgress = (type?: 'bitcoin' | 'lightning') => {
+  const resetProgress = useCallback((type?: 'bitcoin' | 'lightning') => {
     if (type) {
       setProgress(prev => ({
         ...prev,
@@ -245,7 +245,7 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         skillLevel: 'beginner'
       });
     }
-  };
+  }, []);
 
   return (
     <LearningProgressContext.Provider
