@@ -6,9 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BitcoinSidebar } from '@/components/learn/bitcoin/bitcoin-sidebar';
-import { LightningSidebar } from '@/components/learn/lightning/lightning-sidebar';
-import ErrorBoundary from '@/components/layout/ErrorBoundary';
+// Removed BitcoinSidebar, LightningSidebar, ErrorBoundary imports
 
 // Navigation structure
 const navigationItems = [
@@ -57,8 +55,7 @@ export function MobileNav() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const pathname = usePathname();
 
-  const isOnBitcoinPath = pathname.startsWith('/learn/bitcoin');
-  const isOnLightningPath = pathname.startsWith('/learn/lightning');
+  // Removed isOnBitcoinPath and isOnLightningPath
 
   // Close the mobile menu when navigating
   useEffect(() => {
@@ -248,26 +245,7 @@ export function MobileNav() {
                   );
                 })}
 
-                {/* CONDITIONAL LEARNING PATH SIDEBAR SECTION */}
-                {(isOnBitcoinPath || isOnLightningPath) && (
-                  <div className="mt-4 pt-4 border-t border-border/50">
-                    <h4 className="px-3 py-2 text-sm font-semibold text-muted-foreground tracking-wider">
-                      {isOnBitcoinPath ? 'BITCOIN MODULES' : 'LIGHTNING MODULES'}
-                    </h4>
-                    <div className="px-0"> {/* bitcoin-sidebar and lightning-sidebar have their own padding */}
-                      {isOnBitcoinPath && (
-                        <ErrorBoundary fallbackMessage="Error loading Bitcoin learning modules. Please try again.">
-                          <BitcoinSidebar />
-                        </ErrorBoundary>
-                      )}
-                      {isOnLightningPath && (
-                        <ErrorBoundary fallbackMessage="Error loading Lightning learning modules. Please try again.">
-                          <LightningSidebar />
-                        </ErrorBoundary>
-                      )}
-                    </div>
-                  </div>
-                )}
+                {/* CONDITIONAL LEARNING PATH SIDEBAR SECTION - REMOVED */}
               </nav>
               
               {/* Start Learning Button */}
