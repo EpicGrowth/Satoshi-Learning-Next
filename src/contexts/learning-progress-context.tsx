@@ -127,31 +127,59 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
 
   const markSectionComplete = (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => {
     setProgress((prev) => {
-      const moduleProgress = prev[type][moduleId];
-      if (!moduleProgress?.completedSections[sectionId]) return prev;
+      // Check if the module or section path is valid in the current progress state
+      if (!prev[type] || !prev[type][moduleId] || !prev[type][moduleId].completedSections || !prev[type][moduleId].completedSections[sectionId]) {
+        console.warn(`Attempted to mark section complete for an uninitialized or invalid path: ${type}/${moduleId}/${sectionId}`);
+        // It's possible the section was started but not yet in completedSections if updateSectionProgress wasn't called first.
+        // For robustness, let's try to initialize it if the module exists but section doesn't.
+        if (prev[type]?.[moduleId] && !prev[type][moduleId].completedSections[sectionId]) {
+          // Fall-through to allow initialization logic, or handle more gracefully.
+          // For now, this path will be caught by the deep copy logic if prev[type][moduleId] is truthy.
+        } else if (!prev[type]?.[moduleId]) {
+           // If module itself doesn't exist, something is wrong, return prev.
+          return prev;
+        }
+      }
+      
+      // Deep clone the specific module progress to ensure immutability.
+      // Ensure moduleProgress itself exists before cloning.
+      const originalModuleProgress = prev[type][moduleId];
+      if (!originalModuleProgress) {
+          console.warn(`Module progress not found for ${type}/${moduleId} during markSectionComplete.`);
+          return prev; // Should not happen if path check above is robust
+      }
+      const updatedModuleProgress = JSON.parse(JSON.stringify(originalModuleProgress));
 
-      moduleProgress.completedSections[sectionId].completedAt = new Date().toISOString();
-      moduleProgress.completedSections[sectionId].progress = 100;
+      // Ensure completedSections and the specific section exist in the cloned object
+      updatedModuleProgress.completedSections = updatedModuleProgress.completedSections || {};
+      updatedModuleProgress.completedSections[sectionId] = updatedModuleProgress.completedSections[sectionId] || {
+        id: sectionId,
+        progress: 0,
+        completedSteps: [], // Assuming steps are not relevant for just marking complete
+        startedAt: new Date().toISOString() // Or use existing startedAt if available
+      };
+      
+      // Now update the cloned section
+      updatedModuleProgress.completedSections[sectionId].completedAt = new Date().toISOString();
+      updatedModuleProgress.completedSections[sectionId].progress = 100;
 
-      // Check if all sections are complete
-      const allSections = type === 'bitcoin'
-        ? bitcoinModules.find(m => m.id === moduleId)?.sections || []
-        : lightningModules.find(m => m.id === moduleId)?.sections || [];
-
-      const allComplete = allSections.every(section => 
-        moduleProgress.completedSections[section.id]?.completedAt
-      );
-
-      if (allComplete) {
-        moduleProgress.completedAt = new Date().toISOString();
+      // Check if all sections in this module are complete using the module configuration
+      const moduleConfig = (type === 'bitcoin' ? bitcoinModules : lightningModules).find(m => m.id === moduleId);
+      if (moduleConfig && moduleConfig.sections) { // Ensure moduleConfig and sections exist
+        const allSectionsComplete = moduleConfig.sections.every(
+          section => updatedModuleProgress.completedSections[section.id]?.progress === 100
+        );
+        if (allSectionsComplete) {
+          updatedModuleProgress.completedAt = new Date().toISOString();
+        }
       }
 
       return {
         ...prev,
         [type]: {
           ...prev[type],
-          [moduleId]: moduleProgress
-        }
+          [moduleId]: updatedModuleProgress, // Use the deep-copied and updated module
+        },
       };
     });
   };
