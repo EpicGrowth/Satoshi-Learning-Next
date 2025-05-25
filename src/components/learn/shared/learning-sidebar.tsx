@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -71,16 +71,13 @@ export function LearningSidebar({
     );
   };
 
-  const handleModuleClick = (moduleId: string, sectionId: string) => {
-    if (onModuleSelect) {
+  const handleModuleClick = useCallback((moduleId: string, sectionId: string) => {
+    if (onModuleSelect) { // 'onModuleSelect' is a prop
       onModuleSelect(moduleId, sectionId);
     }
-  };
+  }, [onModuleSelect]);
 
-  // Memoize section calculation to prevent render loops
-  const calculateSectionInfo = (moduleId: string, sectionId: string) => {
-    // We're explicitly not adding this function to any dependency arrays
-    // to prevent infinite render loops
+  const calculateSectionInfo = useCallback((moduleId: string, sectionId: string) => {
     const progress = getSectionProgress(pathPrefix, moduleId, sectionId);
     const isLocked = isSectionLocked(pathPrefix, moduleId, sectionId);
     return {
@@ -88,11 +85,10 @@ export function LearningSidebar({
       isComplete: progress === 100,
       locked: isLocked
     };
-  };
+  }, [getSectionProgress, isSectionLocked, pathPrefix]);
 
-  // Find the next incomplete section
-  const findNextIncompleteSection = () => {
-    for (const module of modules) {
+  const findNextIncompleteSection = useCallback(() => {
+    for (const module of modules) { // 'modules' is a prop
       for (const section of module.sections) {
         const { progress, locked } = calculateSectionInfo(module.id, section.id);
         if (!locked && progress < 100) {
@@ -101,13 +97,13 @@ export function LearningSidebar({
       }
     }
     return null;
-  };
-
-  const handleSectionComplete = () => {
+  }, [modules, calculateSectionInfo]); // Depends on modules prop and memoized calculateSectionInfo
+  
+  const handleSectionComplete = useCallback(() => {
     router.push(`/learn/${pathPrefix}`);
-  };
+  }, [router, pathPrefix]);
 
-  const renderSection = (module: LearningModule, section: Section) => {
+  const renderSection = useCallback((module: LearningModule, section: Section) => {
     const isActive = currentModule === module.id && currentSection === section.id;
     const { isComplete, locked, progress } = calculateSectionInfo(module.id, section.id);
     const nextIncomplete = findNextIncompleteSection();
@@ -159,7 +155,15 @@ export function LearningSidebar({
         </span>
       </Link>
     );
-  };
+  }, [
+    currentModule, 
+    currentSection, 
+    pathPrefix, 
+    calculateSectionInfo, 
+    findNextIncompleteSection, 
+    handleSectionComplete, 
+    handleModuleClick 
+  ]);
 
   return (
     <>
