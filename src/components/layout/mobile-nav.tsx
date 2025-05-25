@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BitcoinSidebar } from '@/components/learn/bitcoin/bitcoin-sidebar';
+import { LightningSidebar } from '@/components/learn/lightning/lightning-sidebar';
 
 // Navigation structure
 const navigationItems = [
@@ -53,6 +55,9 @@ export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
   const pathname = usePathname();
+
+  const isOnBitcoinPath = pathname.startsWith('/learn/bitcoin');
+  const isOnLightningPath = pathname.startsWith('/learn/lightning');
 
   // Close the mobile menu when navigating
   useEffect(() => {
@@ -241,6 +246,19 @@ export function MobileNav() {
                     </div>
                   );
                 })}
+
+                {/* CONDITIONAL LEARNING PATH SIDEBAR SECTION */}
+                {(isOnBitcoinPath || isOnLightningPath) && (
+                  <div className="mt-4 pt-4 border-t border-border/50">
+                    <h4 className="px-3 py-2 text-sm font-semibold text-muted-foreground tracking-wider">
+                      {isOnBitcoinPath ? 'BITCOIN MODULES' : 'LIGHTNING MODULES'}
+                    </h4>
+                    <div className="px-0"> {/* bitcoin-sidebar and lightning-sidebar have their own padding */}
+                      {isOnBitcoinPath && <BitcoinSidebar />}
+                      {isOnLightningPath && <LightningSidebar />}
+                    </div>
+                  </div>
+                )}
               </nav>
               
               {/* Start Learning Button */}
@@ -249,7 +267,7 @@ export function MobileNav() {
                   className="w-full bg-bitcoin-orange hover:bg-bitcoin-orange/90 text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
                   asChild
                 >
-                  <Link href="/learn/bitcoin/bitcoin-basics/what-is-bitcoin">
+                  <Link href="/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin">
                     <Bitcoin className="mr-2 h-4 w-4" aria-hidden="true" />
                     Start Learning
                   </Link>

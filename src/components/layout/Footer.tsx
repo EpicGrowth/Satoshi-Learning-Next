@@ -5,26 +5,24 @@ import { Separator } from '@/components/ui/separator';
 
 const footerLinks = {
   bitcoinLearning: [
-    { name: 'What is Bitcoin', href: '/learn/bitcoin/bitcoin-basics/what-is-bitcoin' },
-    { name: 'Keys & Wallets', href: '/learn/bitcoin/bitcoin-basics/private-keys-wallets' },
-    { name: 'Bitcoin Network', href: '/learn/bitcoin/bitcoin-basics/bitcoin-network' },
-    { name: 'Transactions', href: '/learn/bitcoin/transactions' },
-    { name: 'Mining', href: '/learn/bitcoin/mining' },
-    { name: 'Node Setup', href: '/learn/bitcoin/node-setup' },
+    { name: 'What is Bitcoin?', href: '/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin' },
+    { name: 'The Blockchain', href: '/learn/bitcoin/bitcoin-fundamentals/the-blockchain' },
+    { name: 'Private Keys & Wallets', href: '/learn/bitcoin/bitcoin-fundamentals/private-keys-wallets' },
+    { name: 'Making Transactions', href: '/learn/bitcoin/bitcoin-fundamentals/making-transactions' },
+    { name: 'Mining & Consensus', href: '/learn/bitcoin/bitcoin-technical/mining-consensus' },
   ],
   lightningLearning: [
-    { name: 'Fundamentals', href: '/learn/lightning/fundamentals' },
-    { name: 'Lightning Channels', href: '/learn/lightning/channels' },
-    { name: 'Routing & Pathfinding', href: '/learn/lightning/routing' },
-    { name: 'Node Management', href: '/learn/lightning/node-management' },
+    { name: 'Fundamentals', href: '/learn/lightning/lightning-fundamentals/what-is-lightning' },
+    { name: 'Lightning Channels', href: '/learn/lightning/lightning-channel-management/opening-channels' },
+    { name: 'Routing & Pathfinding', href: '/learn/lightning/lightning-routing-operations/path-finding' },
+    { name: 'Node Management', href: '/learn/lightning/lightning-node-operations/node-setup' },
     { name: 'Channel Management', href: '/learn/lightning/channel-management' },
-    { name: 'Applications', href: '/learn/lightning/applications' },
   ],
   resources: [
     { name: 'Technical Resources', href: '/resources' },
     { name: 'Contact Explorer', href: '/contact-explorer' },
-    { name: 'Developer Tools', href: '/resources/developer-tools' },
-    { name: 'Node Dashboard', href: '/resources/node-dashboard' },
+    { name: 'Developer Tools', href: '/resources' },
+    { name: 'Node Dashboard', href: '/resources' },
     { 
       name: 'Mempool Explorer',
       href: 'https://mempool.space',
