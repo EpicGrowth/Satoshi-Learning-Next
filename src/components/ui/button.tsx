@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 border-0",
+          "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md border-0",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-[var(--primary-light)]/10 hover:text-[var(--primary-light)]",
         link: "text-[var(--primary-light)] underline-offset-4 hover:underline",
         // Standard branded button style with gradient background
-        primary: "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 border-0",
+        primary: "bg-gradient-to-r from-[var(--primary-light)] to-[var(--primary-dark)] text-white shadow hover:shadow-md border-0",
       },
       size: {
         default: "h-9 px-4 py-2",
