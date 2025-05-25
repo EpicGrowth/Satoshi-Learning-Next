@@ -16,7 +16,9 @@ export default function LightningLearningLayout({
       <div className="flex-1 lg:grid lg:grid-cols-[300px_1fr] xl:grid-cols-[350px_1fr]">
         {/* This aside is the desktop sidebar, already correctly configured */}
         <aside className="fixed left-0 top-14 hidden h-[calc(100vh-3.5rem)] w-[300px] border-r lg:sticky lg:block xl:w-[350px]">
-          <LightningSidebar />
+          <ErrorBoundary fallbackMessage="Error displaying the Lightning navigation menu.">
+            <LightningSidebar />
+          </ErrorBoundary>
         </aside>
 
         <main className="w-full pt-[3.5rem] lg:pt-0">
