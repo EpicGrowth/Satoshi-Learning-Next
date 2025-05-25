@@ -8,6 +8,7 @@ import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home } f
 import { motion, AnimatePresence } from 'framer-motion';
 import { BitcoinSidebar } from '@/components/learn/bitcoin/bitcoin-sidebar';
 import { LightningSidebar } from '@/components/learn/lightning/lightning-sidebar';
+import ErrorBoundary from '@/components/layout/ErrorBoundary';
 
 // Navigation structure
 const navigationItems = [
@@ -119,7 +120,7 @@ export function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-background p-6 shadow-xl lg:hidden"
+              className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-background p-6 shadow-xl lg:hidden flex flex-col"
             >
               <div className="flex items-center justify-between mb-8">
                 <Link 
@@ -144,7 +145,7 @@ export function MobileNav() {
                 </Button>
               </div>
               
-              <nav className="flex flex-col space-y-1 mobile-nav-content">
+              <nav className="flex flex-col space-y-1 mobile-nav-content flex-1 overflow-y-auto">
                 {navigationItems.map((section) => {
                   // For simple links without dropdown
                   if (!section.items) {
@@ -254,8 +255,16 @@ export function MobileNav() {
                       {isOnBitcoinPath ? 'BITCOIN MODULES' : 'LIGHTNING MODULES'}
                     </h4>
                     <div className="px-0"> {/* bitcoin-sidebar and lightning-sidebar have their own padding */}
-                      {isOnBitcoinPath && <BitcoinSidebar />}
-                      {isOnLightningPath && <LightningSidebar />}
+                      {isOnBitcoinPath && (
+                        <ErrorBoundary fallbackMessage="Error loading Bitcoin learning modules. Please try again.">
+                          <BitcoinSidebar />
+                        </ErrorBoundary>
+                      )}
+                      {isOnLightningPath && (
+                        <ErrorBoundary fallbackMessage="Error loading Lightning learning modules. Please try again.">
+                          <LightningSidebar />
+                        </ErrorBoundary>
+                      )}
                     </div>
                   </div>
                 )}
