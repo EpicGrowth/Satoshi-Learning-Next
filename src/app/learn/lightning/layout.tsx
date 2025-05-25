@@ -1,6 +1,7 @@
 'use client';
 
 import { LightningSidebar } from '@/components/learn/lightning/lightning-sidebar';
+import ErrorBoundary from '@/components/layout/ErrorBoundary'; // Added import
 // Removed: import { MobileNav } from '@/components/learn/shared/mobile-nav';
 
 export default function LightningLearningLayout({
@@ -20,7 +21,9 @@ export default function LightningLearningLayout({
 
         <main className="w-full pt-[3.5rem] lg:pt-0">
           <div className="mx-auto max-w-4xl space-y-8 px-4 py-6 lg:px-8 lg:py-8">
-            {children}
+            <ErrorBoundary fallbackMessage="There was an error loading the content for this Lightning learning page. Please try again or contact support if the issue persists.">
+              {children}
+            </ErrorBoundary>
           </div>
         </main>
       </div>
