@@ -63,38 +63,32 @@ const bitcoinPath: Feature[] = [
     icon: Book,
     title: 'Bitcoin Basics',
     description: 'Start your journey by understanding what Bitcoin is and why it matters.',
-    href: '/learn/bitcoin/bitcoin-basics/what-is-bitcoin',
+    href: '/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin',
     badge: 'Start Here'
   },
   {
     icon: Wallet,
     title: 'Keys & Wallets',
     description: 'Learn how cryptographic keys secure your bitcoin and how wallets work.',
-    href: '/learn/bitcoin/bitcoin-basics/private-keys-wallets',
+    href: '/learn/bitcoin/bitcoin-fundamentals/private-keys-wallets',
   },
   {
     icon: Network,
-    title: 'Bitcoin Network',
+    title: 'The Blockchain',
     description: 'Understand how the peer-to-peer network maintains global consensus.',
-    href: '/learn/bitcoin/bitcoin-basics/bitcoin-network',
+    href: '/learn/bitcoin/bitcoin-fundamentals/the-blockchain',
   },
   {
     icon: Hash,
-    title: 'Mining & Proof-of-Work',
+    title: 'Mining & Consensus',
     description: 'Discover how miners secure the network through computational work.',
-    href: '/learn/bitcoin/mining',
+    href: '/learn/bitcoin/bitcoin-technical/mining-consensus',
   },
   {
     icon: Layers,
-    title: 'Transactions',
+    title: 'Making Transactions',
     description: 'Learn how Bitcoin transactions are constructed, signed, and verified.',
-    href: '/learn/bitcoin/transactions',
-  },
-  {
-    icon: Lock,
-    title: 'Security',
-    description: 'Best practices for securing your Bitcoin and avoiding common pitfalls.',
-    href: '/learn/bitcoin/security',
+    href: '/learn/bitcoin/bitcoin-fundamentals/making-transactions',
   },
 ];
 
@@ -103,79 +97,20 @@ const lightningPath: Feature[] = [
     icon: Zap,
     title: 'Lightning Fundamentals',
     description: 'Learn the basics of the Lightning Network as a Bitcoin scaling solution.',
-    href: '/learn/lightning/fundamentals',
+    href: '/learn/lightning/lightning-fundamentals/what-is-lightning',
     badge: 'Start Here'
   },
   {
     icon: Terminal,
     title: 'Payment Channels',
     description: "Understanding how Lightning's payment channels enable instant transactions.",
-    href: '/learn/lightning/channels'
+    href: '/learn/lightning/lightning-fundamentals/payment-channels'
   },
   {
     icon: Network,
     title: 'Routing & Pathfinding',
     description: 'How payments find their way through the Lightning Network.',
-    href: '/learn/lightning/routing'
-  },
-  {
-    icon: Code,
-    title: 'Implementations',
-    description: 'Learn about LND, c-lightning, Eclair and other Lightning implementations.',
-    href: '/learn/lightning/implementations'
-  },
-  {
-    icon: FileCode,
-    title: 'Applications',
-    description: 'Discover real-world applications built on the Lightning Network.',
-    href: '/learn/lightning/applications'
-  },
-  {
-    icon: Gift,
-    title: 'LNURL & Lightning Address',
-    description: 'Simplifying the Lightning user experience with modern standards.',
-    href: '/learn/lightning/lnurl'
-  },
-];
-
-const developerPath: Feature[] = [
-  {
-    icon: Code,
-    title: 'Development Basics',
-    description: 'Get started with Bitcoin development and essential concepts.',
-    href: '/learn/development/basics',
-    badge: 'Start Here'
-  },
-  {
-    icon: Terminal,
-    title: 'Bitcoin RPC',
-    description: 'Learn to interact with Bitcoin Core using the RPC interface.',
-    href: '/learn/development/bitcoin-rpc',
-  },
-  {
-    icon: Network,
-    title: 'Lightning Development',
-    description: 'Building applications that leverage the Lightning Network.',
-    href: '/learn/development/lightning-dev',
-  },
-  {
-    icon: Layers,
-    title: 'Smart Contracts',
-    description: "Explore Bitcoin's native smart contracting capabilities.",
-    href: '/learn/development/bitcoin-scripts',
-  },
-  {
-    icon: Lock,
-    title: 'Security Best Practices',
-    description: 'Essential security considerations for Bitcoin developers.',
-    href: '/learn/development/security',
-  },
-  {
-    icon: Wallet,
-    title: 'Wallet Development',
-    description: 'Learn how to build Bitcoin and Lightning wallets.',
-    href: '/learn/development/wallet-dev',
-    badge: 'Coming Soon'
+    href: '/learn/lightning/lightning-routing-operations/path-finding'
   },
 ];
 
@@ -191,12 +126,6 @@ const learningPaths: LearningPath[] = [
     description: 'Master the second layer that enables instant Bitcoin transactions',
     icon: Zap,
     features: lightningPath,
-  },
-  {
-    title: 'Developer Resources',
-    description: 'Build applications using Bitcoin and Lightning Network protocols',
-    icon: Code,
-    features: developerPath,
   },
 ];
 
@@ -258,7 +187,7 @@ export default function Home() {
               className="gap-2 text-base font-medium px-8 py-6 bg-[#F7931A] hover:bg-[#E87D18] hover:shadow-lg hover:shadow-[#F7931A]/20 transition-all duration-300 hover:-translate-y-1 text-white"
               asChild
             >
-              <Link href="/learn/bitcoin/bitcoin-basics/what-is-bitcoin">
+              <Link href="/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin">
                 Start Learning
                 <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
@@ -446,7 +375,7 @@ export default function Home() {
                     className="bg-white text-bitcoin-orange hover:bg-white border-white shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 px-8 py-6 text-base font-medium"
                     asChild
                   >
-                    <Link href="/learn/bitcoin/bitcoin-basics/what-is-bitcoin">
+                    <Link href="/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin">
                       Start Learning
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
