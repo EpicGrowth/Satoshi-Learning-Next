@@ -49,15 +49,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <DarkModeEnhancer />
-          <EnhancedBackground />
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <LearningProgressProvider>
+          <LearningProgressProvider>
+            <DarkModeEnhancer />
+            <EnhancedBackground />
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
               <main className="flex-1">{children}</main>
-            </LearningProgressProvider>
-            <Footer />
-          </div>
+              <Footer />
+            </div>
+          </LearningProgressProvider>
         </ThemeProvider>
       </body>
     </html>
