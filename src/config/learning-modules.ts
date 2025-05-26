@@ -15,7 +15,7 @@ export const bitcoinModules: LearningModule[] = [
         title: 'What is Bitcoin?',
         description: 'Introduction to Bitcoin',
         difficulty: 'Beginner',
-        checkboxCount: 1,
+        checkboxCount: 3,
       },
       {
         id: 'the-blockchain',
