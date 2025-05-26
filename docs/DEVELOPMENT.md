@@ -1,27 +1,87 @@
 # Development Guide
 
+## Repository Strategy
+
+SatoshiStationNext uses a dual-repository strategy:
+
+1. **Development & Staging** (staging.sats.sv)
+   - Repository: [Satoshi-Learning-Next](https://github.com/EpicGrowth/Satoshi-Learning-Next)
+   - All development work happens here
+   - Automatic deployment to staging environment
+
+2. **Production** (sats.sv)
+   - Repository: [Satoshi-Learning-Path](https://github.com/Epic-Growth/Satoshi-Learning-Path)
+   - Deployments via PR approval only
+   - Changes promoted from staging
+
+See [Repository Strategy](./REPOSITORY_STRATEGY.md) for detailed documentation.
+
 ## Prerequisites
 
 - Node.js 18.x or higher
 - npm 9.x or higher
 - Git
+- VS Code (recommended)
 
 ## Getting Started
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-org/SatoshiStationNext.git
-cd SatoshiStationNext
-```
+1. Clone both repositories:
 
-2. Install dependencies:
 ```bash
+# Clone repositories
+git clone https://github.com/EpicGrowth/Satoshi-Learning-Next.git sats-next
+git clone https://github.com/Epic-Growth/Satoshi-Learning-Path.git sats-production
+
+# Set up staging repository for development
+cd sats-next
 npm install
+git remote add production https://github.com/Epic-Growth/Satoshi-Learning-Path.git
+
+# Set up production repository
+cd ../sats-production
+npm install
+git remote add staging https://github.com/EpicGrowth/Satoshi-Learning-Next.git
 ```
 
-3. Start development server:
+2. Open VS Code Workspace:
+   - Open `sats-production/SatoshiStationNext.code-workspace`
+   - This will load both repositories in a multi-root workspace
+
+3. Start development server (in staging repo):
 ```bash
+cd sats-next
 npm run dev
+```
+
+## Development Workflow
+
+1. **Feature Development** (in staging repo):
+```bash
+# Create feature branch
+git checkout -b feature/your-feature-name
+
+# Make changes and commit
+git add .
+git commit -m "feat: your feature description"
+
+# Push to staging repo
+git push origin feature/your-feature-name
+
+# Create PR to staging main branch
+```
+
+2. **Testing in Staging**:
+   - PR merges deploy to staging.sats.sv
+   - Test thoroughly in staging environment
+   - Get stakeholder approval
+
+3. **Promotion to Production**:
+```bash
+# In production repo
+cd sats-production
+./scripts/promote-to-production.sh v1.x.x
+
+# Review and merge the created PR
 ```
 
 ## Project Structure

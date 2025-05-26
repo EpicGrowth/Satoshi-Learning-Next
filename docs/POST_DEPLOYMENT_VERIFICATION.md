@@ -1,89 +1,127 @@
 # Post-Deployment Verification Checklist
 
-Use this document to verify all aspects of the Satoshi Station Next.js migration after deployment.
+This checklist should be used to verify deployments in both staging and production environments.
 
-## Typography and Branding Verification
+## Environment Information
 
-- [ ] **Satoshi Station Logo/Text in Header**:
-  - Uses Exo 2 font with weight 700
-  - Color matches #FF523C exactly
-  - Text does not wrap (whitespace-nowrap applied)
-  - Letter-spacing and text-shadow match specifications
+### Staging Environment
+- URL: `staging.sats.sv`
+- Region: us-central1
+- Service: sats-web-staging
 
-- [ ] **Satoshi Station Text in Hero Section**:
-  - Uses Exo 2 font with weight 700
-  - Color matches #FF523C exactly
-  - Text does not wrap
-  - Styling consistent with header
+### Production Environment
+- URL: `sats.sv`
+- Region: europe-west1
+- Service: sats-web-production
 
-- [ ] **Satoshi Station Text in Footer**:
-  - Consistent with header and hero section styling
-  - Same font, weight, and color
+## Deployment Verification
 
-## Functional Verification
+- [ ] **Cloud Run Service**:
+  - [ ] Correct service is deployed (staging or production)
+  - [ ] Region is correct for environment
+  - [ ] Memory and CPU limits are correct
+  - [ ] Min/max instances are correct
 
-- [ ] **Dark Mode**:
-  - Toggling between light/dark works
-  - Dark mode colors match original site
-  - All elements have proper contrast
+- [ ] **Domain Configuration**:
+  - [ ] Domain resolves to correct Cloud Run service
+  - [ ] SSL certificate is valid
+  - [ ] Cloudflare proxy status is correct
 
-- [ ] **Learning Paths**:
-  - Bitcoin learning path loads correctly
-  - Lightning learning path loads correctly
-  - Navigation between modules works
+- [ ] **Environment Variables**:
+  - [ ] DEPLOY_ENV is set correctly ('staging' or 'production')
+  - [ ] All required environment variables are present
 
-- [ ] **Progress Tracking**:
-  - Checkboxes can be toggled
-  - Progress is saved between page refreshes
-  - Progress percentage updates correctly
+## Application Verification
 
-- [ ] **Navigation**:
-  - Sidebar navigation expands/collapses correctly
-  - Links to all sections work properly
-  - Breadcrumbs show correctly
+- [ ] **Typography and Branding Verification**:
+  - [ ] **Satoshi Station Logo/Text in Header**:
+    - Uses Exo 2 font with weight 700
+    - Color matches #FF523C exactly
+    - Text does not wrap (whitespace-nowrap applied)
+    - Letter-spacing and text-shadow match specifications
 
-## Responsive Design
+  - [ ] **Satoshi Station Text in Hero Section**:
+    - Uses Exo 2 font with weight 700
+    - Color matches #FF523C exactly
+    - Text does not wrap
+    - Styling consistent with header
 
-- [ ] **Mobile View** (< 640px):
-  - All content readable and accessible
-  - Navigation collapses properly
-  - No horizontal scrolling needed
+  - [ ] **Satoshi Station Text in Footer**:
+    - Consistent with header and hero section styling
+    - Same font, weight, and color
 
-- [ ] **Tablet View** (640px - 1024px):
-  - Layout adjusts appropriately
-  - Typography scales correctly
+- [ ] **Functional Verification**:
+  - [ ] **Dark Mode**:
+    - Toggling between light/dark works
+    - Dark mode colors match original site
+    - All elements have proper contrast
 
-- [ ] **Desktop View** (> 1024px):
-  - Layout uses space efficiently
-  - All UI elements properly sized
+  - [ ] **Learning Paths**:
+    - Bitcoin learning path loads correctly
+    - Lightning learning path loads correctly
+    - Navigation between modules works
 
-## Performance Checks
+  - [ ] **Progress Tracking**:
+    - Checkboxes can be toggled
+    - Progress is saved between page refreshes
+    - Progress percentage updates correctly
 
-- [ ] **Page Load Speed**:
-  - Initial page load < 3 seconds
-  - Page transitions smooth
+  - [ ] **Navigation**:
+    - Sidebar navigation expands/collapses correctly
+    - Links to all sections work properly
+    - Breadcrumbs show correctly
 
-- [ ] **Console Errors**:
-  - No JavaScript errors in console
-  - No 404 resource errors
+- [ ] **Responsive Design**:
+  - [ ] **Mobile View** (< 640px):
+    - All content readable and accessible
+    - Navigation collapses properly
+    - No horizontal scrolling needed
 
-## Platform Compatibility
+  - [ ] **Tablet View** (640px - 1024px):
+    - Layout adjusts appropriately
+    - Typography scales correctly
 
-- [ ] **Browser Testing**:
-  - Chrome
-  - Firefox
-  - Safari
-  - Edge
+  - [ ] **Desktop View** (> 1024px):
+    - Layout uses space efficiently
+    - All UI elements properly sized
 
-## Specific Page Checks
+- [ ] **Performance Checks**:
+  - [ ] **Page Load Speed**:
+    - Initial page load < 3 seconds
+    - Page transitions smooth
 
-- [ ] **Homepage**
-- [ ] **Bitcoin Learning Path Overview**
-- [ ] **Lightning Learning Path Overview**
-- [ ] **At least one module from each learning path**
+  - [ ] **Console Errors**:
+    - No JavaScript errors in console
+    - No 404 resource errors
 
-## Final Check
+  - [ ] **Browser Testing**:
+    - Chrome
+    - Firefox
+    - Safari
+    - Edge
 
-- [ ] Take screenshots of key pages for documentation
-- [ ] Compare with original site screenshots to verify visual consistency
-- [ ] Document any minor issues for future sprints
+## Cross-Environment Testing
+
+- [ ] **Feature Parity**:
+  - [ ] All features working in staging also work in production
+  - [ ] No staging-only features visible in production
+  - [ ] No development routes accessible
+
+- [ ] **Performance Testing**:
+  - [ ] Load times comparable between environments
+  - [ ] No region-specific performance issues
+  - [ ] CDN caching working correctly
+
+## Rollback Preparation
+
+- [ ] Previous deployment revision noted: ____________
+- [ ] Rollback procedure reviewed
+- [ ] Team notified of deployment
+- [ ] Monitoring alerts configured
+
+## Post-Deployment Monitoring (24h)
+
+- [ ] Error rates normal
+- [ ] Response times stable
+- [ ] Resource usage within expected range
+- [ ] No unexpected Cloudflare cache misses

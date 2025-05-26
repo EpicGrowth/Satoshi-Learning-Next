@@ -2,11 +2,11 @@
 
 ## Overview
 
-SatoshiStationNext uses a cloud-based deployment strategy with Google Cloud Platform (GCP) and CloudFlare for optimal performance and reliability.
+SatoshiStationNext uses a cloud-based deployment strategy with Google Cloud Platform (GCP) and CloudFlare for optimal performance and reliability. The application is deployed as a standalone Next.js server on Cloud Run.
 
 ## Infrastructure
 
-- **Primary Hosting**: Google Cloud Storage
+- **Primary Hosting**: Google Cloud Run (europe-west1)
 - **CDN**: CloudFlare
 - **CI/CD**: GitHub Actions
 - **DNS**: CloudFlare DNS
@@ -16,21 +16,21 @@ SatoshiStationNext uses a cloud-based deployment strategy with Google Cloud Plat
 
 ### 1. Build Process
 
-```bash
-# Production build
-npm run build
+The application is built using Next.js standalone output mode, which creates a self-contained production server:
 
-# Export static files
-npm run export
+```bash
+# Production build with standalone output
+npm run build
 ```
 
 ### 2. Automated Deployment
 
-The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
-- Building the application
+The GitHub Actions workflow handles:
+
+- Building the application with standalone output
+- Creating a Docker container
 - Running tests
-- Optimizing assets
-- Uploading to Google Cloud Storage
+- Deploying to Cloud Run
 - Invalidating CloudFlare cache
 
 ### 3. Monitoring
@@ -43,9 +43,10 @@ The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
 ## Rollback Procedure
 
 1. Access Google Cloud Console
-2. Select previous deployment version
-3. Update load balancer configuration
-4. Invalidate CloudFlare cache
+2. Navigate to Cloud Run
+3. Select previous revision
+4. "Set as new revision" to rollback
+5. Invalidate CloudFlare cache
 
 ## Security Measures
 
@@ -58,16 +59,24 @@ The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
 ## Performance Optimization
 
 1. **CDN Configuration**
+
    - Asset caching rules
    - Browser caching policies
    - Compression settings
 
-2. **Image Optimization**
+2. **Server Configuration**
+
+   - Automatic scaling
+   - Memory allocation
+   - Instance count management
+
+3. **Image Optimization**
+
    - Next.js Image component
    - WebP format usage
    - Responsive images
 
-3. **Code Optimization**
+4. **Code Optimization**
    - Code splitting
    - Tree shaking
    - Bundle analysis
@@ -75,14 +84,18 @@ The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
 ## Environment Configuration
 
 ### Production
-- Domain: https://sats.sv
-- GCP Project: satoshi-station-prod
-- Storage Bucket: sats-sv-static
+
+- Domain: `https://sats.sv`
+- GCP Project: satoshi-station
+- Cloud Run Service: sats-sv-production
+- Region: europe-west1
 
 ### Staging
-- Domain: https://staging.sats.sv
-- GCP Project: satoshi-station-staging
-- Storage Bucket: sats-sv-staging
+
+- Domain: `https://staging.sats.sv`
+- GCP Project: satoshi-station
+- Cloud Run Service: sats-sv-staging
+- Region: europe-west1
 
 ## Monitoring and Alerts
 
@@ -90,16 +103,17 @@ The GitHub Actions workflow (.github/workflows/deploy.yml) handles:
 - Performance alerts
 - Error rate thresholds
 - Traffic anomaly detection
+- Cloud Run metrics monitoring
 
 ## Disaster Recovery
 
 1. **Backup Strategy**
-   - Daily GCP bucket snapshots
-   - Weekly configuration backups
+
+   - Container image versioning
+   - Configuration backups
    - Monthly full system backups
 
 2. **Recovery Procedures**
-   - Load balancer failover
-   - DNS failover
-   - Content restoration
-   - Configuration restoration
+   - Rollback to previous Cloud Run revision
+   - DNS failover procedures
+   - Configuration restoration process

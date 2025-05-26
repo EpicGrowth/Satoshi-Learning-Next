@@ -9,58 +9,77 @@ SatoshiStationNext is built on modern web technologies with a focus on performan
 - **Styling**: Tailwind CSS with custom theming
 - **State Management**: React Context API
 - **Data Persistence**: LocalStorage for progress tracking
-- **Deployment**: Google Cloud Storage with CloudFlare CDN
+- **Deployment**: Google Cloud Run with CloudFlare CDN
 
 ## Implementation Details
 
 ### Core Components
 
 1. **Learning Path System**
+
    - Modular content structure
    - Progress tracking via Context API
    - Verification checkpoints
    - Dynamic navigation
 
 2. **Content Management**
+
    - Markdown-based content
    - Component-based layouts
    - Dynamic imports for code splitting
    - Optimized image handling
 
 3. **Performance Optimizations**
-   - Static page generation
-   - Image optimization pipeline
+
+   - Server-side rendering
+   - Image optimization
    - Code splitting strategies
    - Caching policies
+   - Automatic scaling via Cloud Run
 
 ### Development Workflow
 
 1. **Setup Process**
+
    ```bash
    npm install
    npm run dev
    ```
 
 2. **Build Process**
+
    ```bash
+   # Creates standalone Next.js server
    npm run build
-   npm run export
+   
+   # Start production server
+   node server.js
    ```
 
 3. **Testing**
+
    - Unit tests: `npm run test`
    - E2E tests: `npm run test:e2e`
    - Visual regression: `npm run test:visual`
 
 ## Security Considerations
 
-1. **Client-Side Security**
+1. **Server-Side Security**
+
+   - Rate limiting
+   - HTTPS enforcement
+   - Server headers configuration
+   - Cloud Run security features
+
+2. **Client-Side Security**
+
    - XSS prevention
    - CSRF protection
    - Content Security Policy
    - Secure localStorage usage
 
-2. **API Security**
+3. **API Security**
+
    - Rate limiting
    - Input validation
    - Error handling
@@ -69,13 +88,15 @@ SatoshiStationNext is built on modern web technologies with a focus on performan
 ## Deployment Strategy
 
 1. **Build Pipeline**
+
    - GitHub Actions automation
-   - Environment-specific builds
+   - Docker containerization
    - Asset optimization
    - Cache management
 
 2. **Infrastructure**
-   - Google Cloud Storage configuration
+
+   - Google Cloud Run configuration
    - CloudFlare CDN setup
    - DNS management
    - SSL/TLS configuration
@@ -83,26 +104,31 @@ SatoshiStationNext is built on modern web technologies with a focus on performan
 ## Monitoring and Maintenance
 
 1. **Performance Monitoring**
+
    - Web Vitals tracking
    - Error reporting
    - User analytics
    - Load testing
+   - Cloud Run metrics
 
 2. **Update Procedures**
+
    - Dependency updates
    - Security patches
    - Feature deployments
-   - Rollback procedures
+   - Container revision management
 
 ## Future Development
 
 1. **Planned Features**
+
    - Enhanced progress tracking
    - Interactive exercises
    - Social learning features
    - Mobile app integration
 
 2. **Technical Debt**
+
    - Component refactoring
    - Test coverage improvement
    - Documentation updates
