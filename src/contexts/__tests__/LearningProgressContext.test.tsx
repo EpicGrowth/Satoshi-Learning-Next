@@ -81,6 +81,12 @@ describe('LearningProgressContext - Bitcoin Path', () => {
     // First, ensure some progress is made (e.g., by completing steps or just starting it)
     // The current markSectionComplete implementation initializes the section if it doesn't exist, 
     // which is helpful. If it required prior progress, we'd add calls to updateSectionProgress here.
+      const stepId = 'step1'; // A generic step ID for initialization
+
+      act(() => {
+        // Initialize the section by updating progress for one step
+        result.current.updateSectionProgress('bitcoin', moduleId, sectionId, stepId); 
+      });
 
     act(() => {
       result.current.markSectionComplete('bitcoin', moduleId, sectionId);
