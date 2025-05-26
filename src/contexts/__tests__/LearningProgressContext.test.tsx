@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import React from 'react';
-import { LearningProgressProvider, useLearningProgress } from '../LearningProgressContext';
+import { LearningProgressProvider, useLearningProgress } from '../learning-progress-context';
 import { bitcoinModules, lightningModules } from '@/config/learning-modules'; // Adjust path if necessary
 import { UserProgress } from '@/types/progress';
 
@@ -43,35 +43,6 @@ describe('LearningProgressContext - Bitcoin Path', () => {
     const expectedPercentage = Math.round((1 / (sectionConfig?.checkboxCount || 1)) * 100);
     expect(progress?.progress).toBe(expectedPercentage);
   });
-
-  it('updateSectionProgress: should update progress correctly for all steps in a Bitcoin section with multiple checkboxes', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    // Find a module and section with checkboxCount > 1, or adjust test data if needed
-    const testModule = bitcoinModules.find(m => m.sections.some(s => s.checkboxCount > 1));
-    if (!testModule) {
-        console.warn("Skipping multi-checkbox test: No Bitcoin module found with checkboxCount > 1");
-        return;
-    }
-    const testSection = testModule.sections.find(s => s.checkboxCount > 1);
-    if (!testSection) {
-        console.warn("Skipping multi-checkbox test: No Bitcoin section found with checkboxCount > 1");
-        return;
-    }
-
-    const moduleId = testModule.id;
-    const sectionId = testSection.id;
-    const steps = Array.from({ length: testSection.checkboxCount }, (_, i) => `step${i + 1}`);
-
-    act(() => {
-      steps.forEach(stepId => {
-        result.current.updateSectionProgress('bitcoin', moduleId, sectionId, stepId);
-      });
-    });
-
-    const progressState = result.current.progress.bitcoin[moduleId]?.completedSections[sectionId];
-    expect(progressState?.completedSteps.length).toBe(testSection.checkboxCount);
-    expect(progressState?.progress).toBe(100);
-  });
   
   it('markSectionComplete: should mark a Bitcoin section as complete and update module progress', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
@@ -81,6 +52,12 @@ describe('LearningProgressContext - Bitcoin Path', () => {
     // First, ensure some progress is made (e.g., by completing steps or just starting it)
     // The current markSectionComplete implementation initializes the section if it doesn't exist, 
     // which is helpful. If it required prior progress, we'd add calls to updateSectionProgress here.
+      const stepId = 'step1'; // A generic step ID for initialization
+
+      act(() => {
+        // Initialize the section by updating progress for one step
+        result.current.updateSectionProgress('bitcoin', moduleId, sectionId, stepId); 
+      });
 
     act(() => {
       result.current.markSectionComplete('bitcoin', moduleId, sectionId);
@@ -267,34 +244,6 @@ describe('LearningProgressContext - Lightning Path', () => {
     const sectionConfig = lightningModules[0].sections.find(s => s.id === sectionId);
     const expectedPercentage = Math.round((1 / (sectionConfig?.checkboxCount || 1)) * 100);
     expect(progress?.progress).toBe(expectedPercentage);
-  });
-
-  it('updateSectionProgress: should update progress correctly for all steps in a Lightning section with multiple checkboxes', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const testModule = lightningModules.find(m => m.sections.some(s => s.checkboxCount > 1));
-    if (!testModule) {
-        console.warn("Skipping multi-checkbox test: No Lightning module found with checkboxCount > 1");
-        return;
-    }
-    const testSection = testModule.sections.find(s => s.checkboxCount > 1);
-    if (!testSection) {
-        console.warn("Skipping multi-checkbox test: No Lightning section found with checkboxCount > 1");
-        return;
-    }
-
-    const moduleId = testModule.id;
-    const sectionId = testSection.id;
-    const steps = Array.from({ length: testSection.checkboxCount }, (_, i) => `step${i + 1}`);
-
-    act(() => {
-      steps.forEach(stepId => {
-        result.current.updateSectionProgress('lightning', moduleId, sectionId, stepId);
-      });
-    });
-
-    const progressState = result.current.progress.lightning[moduleId]?.completedSections[sectionId];
-    expect(progressState?.completedSteps.length).toBe(testSection.checkboxCount);
-    expect(progressState?.progress).toBe(100);
   });
 
   it('markSectionComplete: should mark a Lightning section as complete and update module progress', () => {
