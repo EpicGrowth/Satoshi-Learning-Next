@@ -32,13 +32,7 @@ Visit `http://localhost:3000` to view the application.
 
 ## Project Overview
 
-This project is a faithful recreation of the Satoshi Learning Path (sats.sv) using Next.js, focusing on:
-
-1. **Exact Visual Fidelity**: Matching pixel-perfect UI elements from the original sats.sv site
-2. **Functional Equivalence**: Preserving all learning features including verification checkboxes and progress tracking
-3. **Modern Frontend Architecture**: Implementing with Next.js App Router, React client components, and Tailwind CSS
-
-We're reconstructing the site based on screenshots of the original, ensuring that elements like the Bitcoin-orange and Lightning-purple color schemes, honeycomb background patterns, and component layouts precisely match the original experience.
+Satoshi Station's mission is to ignite a revolution in digital expression and Bitcoin education, empowering creators and championing a decentralized future. Our primary project goal is to develop a launchable, finished version of our interactive learning platform by completing its comprehensive learning path content. This development will be significantly driven by AI tools. A key deliverable will be an advanced learning path that serves as a proof-of-concept, enabling students to learn Bitcoin development through practical programming exercises that connect to real network data (e.g., from an Umbrel setup), thereby demonstrating the platform's core value: learning through building and verifying.
 
 ## Key Features
 
