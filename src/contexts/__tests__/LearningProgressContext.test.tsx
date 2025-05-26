@@ -251,6 +251,13 @@ describe('LearningProgressContext - Lightning Path', () => {
     const moduleId = lightningModules[0].id;
     const sectionId = lightningModules[0].sections[0].id;
 
+      const stepId = 'step1'; // A generic step ID for initialization
+
+      act(() => {
+        // Initialize the section by updating progress for one step
+        result.current.updateSectionProgress('lightning', moduleId, sectionId, stepId); 
+      });
+
     act(() => {
       result.current.markSectionComplete('lightning', moduleId, sectionId);
     });
@@ -542,9 +549,16 @@ describe('LearningProgressContext - Other Functionalities and Edge Cases', () =>
       result.current.updateSectionProgress('bitcoin', 'non-existent-module', 'non-existent-section', 'step1');
     });
     
-    // Expect no error and progress for this invalid path not to be created
-    expect(result.current.progress.bitcoin['non-existent-module']).toBeUndefined();
-    // No specific assertion on error, just that it doesn't crash and state remains clean.
+    const newModuleProgress = result.current.progress.bitcoin['non-existent-module'];
+    expect(newModuleProgress).toBeDefined();
+    expect(newModuleProgress.id).toBe('non-existent-module');
+    expect(newModuleProgress.currentSection).toBe('non-existent-section');
+    
+    const newSectionProgress = newModuleProgress.completedSections['non-existent-section'];
+    expect(newSectionProgress).toBeDefined();
+    expect(newSectionProgress.id).toBe('non-existent-section');
+    expect(newSectionProgress.completedSteps).toContain('step1');
+    expect(newSectionProgress.progress).toBe(100);
   });
 
   it('markSectionComplete: should handle non-existent module/section gracefully', () => {
