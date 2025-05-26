@@ -40,7 +40,7 @@ export const Header: FC = () => {
 			role="banner"
 		>
 			<div className="container px-4 mx-auto max-w-7xl overflow-hidden">
-				<div className="flex h-16 items-center justify-between">
+				<div className="flex h-20 items-center justify-between">
 					<Link
 						href="/"
 						className="flex items-center space-x-1 group relative overflow-hidden py-2 flex-shrink-0"
@@ -98,7 +98,7 @@ export const Header: FC = () => {
 							})}
 						</div>
 
-						<div className="relative hidden lg:flex items-center min-w-[200px] xl:min-w-[256px]">
+						<div className="relative hidden lg:flex items-center min-w-[180px] xl:min-w-[220px]">
 							<Input
 								type="search"
 								placeholder="Search..."
@@ -131,10 +131,6 @@ export const Header: FC = () => {
 						>
 							<Github className="h-5 w-5" aria-hidden="true" />
 						</a>
-
-						<div className="ml-1" aria-label="Toggle theme">
-							<ThemeToggle />
-						</div>
 
 						<div className="lg:hidden">
 							<MobileNav />
