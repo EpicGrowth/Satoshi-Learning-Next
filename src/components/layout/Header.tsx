@@ -6,7 +6,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Bitcoin, Zap, Shield, Menu, Search, Github, Lock, ArrowLeft } from 'lucide-react';
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { SearchIndexItem } from '@/types';
-import { siteConfig } from '@/config/site';
 import SearchResultsPortal from './SearchResultsPortal';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
@@ -286,7 +285,7 @@ export const Header: FC = () => {
 
             {/* Mobile Navigation Menu (Hamburger) */}
 						<div className="md:hidden">
-							<MobileNav navigationItems={navigationItems} />
+							<MobileNav />
 						</div>
 					</nav>
 				</div>

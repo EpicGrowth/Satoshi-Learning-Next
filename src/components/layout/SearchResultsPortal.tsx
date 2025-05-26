@@ -13,7 +13,7 @@ interface SearchResultsPortalProps {
   inputRef: React.RefObject<HTMLElement>; // Can be any element that provides position
   onResultClick: (item: SearchIndexItem) => void;
   isSectionLocked: (
-    topic: string,
+    topic: 'bitcoin' | 'lightning',
     moduleId: string,
     sectionId: string
   ) => boolean;
@@ -104,6 +104,7 @@ const SearchResultsPortal: React.FC<SearchResultsPortalProps> = ({
             item.moduleId,
             item.sectionId
           );
+          console.log('[SearchResultsPortal] Rendering item - ID:', item.id, 'Path:', item.path, 'Title:', item.title);
           return (
             <li key={item.id}>
               <Link

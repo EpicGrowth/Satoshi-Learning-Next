@@ -21,6 +21,8 @@ export default function SectionContent() {
   const modules = path === 'bitcoin' ? bitcoinModules : lightningModules;
   const currentModule = modules.find((m) => m.id === moduleId);
   const currentSection = currentModule?.sections.find((s) => s.id === sectionId);
+
+  const [isContentAvailable, setIsContentAvailable] = useState(false);
   
   // Map of direct content components
   const directContentMap: Record<string, Record<string, React.ComponentType>> = {
@@ -97,131 +99,93 @@ export default function SectionContent() {
     );
   }
 
-  // Handle content paths based on what's available in the repository
-  // Note: The way content is organized has changed, so we need to handle different paths
-  let ContentComponent;
+  // Determine which content component to render
+  let ComponentToRender: React.ComponentType<any>;
 
-  try {
-    // Specialized loading logic for different content structures
-    if (path === 'bitcoin' || path === 'lightning') {
-      // Determine correct path patterns based on module path
-      const contentPaths = [
-        // Direct import of a page component with the proper folder structure (common pattern in the repo)
-        `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/${sectionId}/page`,
-        
-        // Direct path using module with prefix
-        `../../../${path}/${moduleId}/${sectionId}/page`,
-        
-        // Try alternative content directory structure
-        `../../../${path}/${moduleId}/content/${sectionId}`,
-        
-        // Alternative path without prefix in module folder name
-        `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/content/${sectionId}`,
-        
-        // Fallback direct page path
-        `../../../${path}/${sectionId}/page`
-      ];
-      
-      // Add path-specific extra content paths
-      if (path === 'bitcoin') {
-        // Add Bitcoin-specific paths for better content discovery
-        contentPaths.unshift(
-          // Special case for bitcoin fundamentals - most common pattern
-          `@/app/learn/bitcoin/bitcoin-fundamentals/${sectionId}/page`,
-          // Special case for other bitcoin modules
-          `@/app/learn/bitcoin/bitcoin-economics/${sectionId}/page`,
-          `@/app/learn/bitcoin/bitcoin-technical/${sectionId}/page`
-        );
-      } else if (path === 'lightning') {
-        // Add Lightning-specific paths for better content discovery
-        contentPaths.unshift(
-          // Special case for lightning fundamentals
-          `@/app/learn/lightning/lightning-fundamentals/${sectionId}/page`,
-          // Special case for lightning node operations
-          `@/app/learn/lightning/lightning-node-operations/${sectionId}/page`,
-          // Special case for lightning channel management
-          `@/app/learn/lightning/lightning-channel-management/${sectionId}/page`,
-          // Special case for lightning content folders
-          `../../../${path}/lightning-node-operations/content/${sectionId}`,
-          `../../../${path}/lightning-channel-management/content/${sectionId}`
-        );
-      }
-      
-      // Create dynamic component with cascading import attempts
-      ContentComponent = dynamic(() => {
-        // Start with the first path
-        let importPromise = import(contentPaths[0])
-          .catch(error => {
-            console.log(`Could not load content from path: ${contentPaths[0]}`, error);
-            
-            // Try each remaining path in sequence using a chain of .catch handlers
-            let chainedPromise: Promise<any> = Promise.reject(error);
-            
-            for (const contentPath of contentPaths.slice(1)) {
-              chainedPromise = chainedPromise.catch(err => {
-                console.log(`Trying alternate path: ${contentPath}`);
-                return import(contentPath);
-              });
-            }
-            
-            return chainedPromise;
-          })
-          .catch(finalError => {
-            // All paths failed, return a fallback component
-            console.log(`All content loading attempts failed for ${path}/${moduleId}/${sectionId}`, finalError);
-            
-            return Promise.resolve(() => (
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                <p className="text-lg mb-6">{currentSection.description}</p>
-                <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
-                  <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
-                  <p>The full content for this section is being prepared.</p>
-                  <details className="mt-4">
-                    <summary className="text-sm text-muted-foreground cursor-pointer">Technical Details</summary>
-                    <p className="text-xs mt-2 text-muted-foreground">Path: {path}/{moduleId}/{sectionId}</p>
-                  </details>
-                </div>
-              </div>
-            ));
-          });
-          
-        return importPromise;
-      }, {
-        ssr: false,
-        loading: () => (
-          <div className="flex justify-center items-center py-8">
-            <div className="animate-pulse flex flex-col items-center">
-              <div className="h-4 w-24 bg-muted rounded mb-2.5"></div>
-              <div className="h-2 w-16 bg-muted/50 rounded"></div>
-            </div>
-          </div>
-        )
-      });
-    } else {
-      // Fallback for unknown paths
-      ContentComponent = () => (
-        <div className="prose prose-lg dark:prose-invert max-w-none">
-          <p className="text-lg mb-6">{currentSection.description}</p>
-          <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
-            <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
-            <p>The full content for this section is being prepared.</p>
-          </div>
-        </div>
+  if (path === 'bitcoin' && moduleId === 'bitcoin-fundamentals' && sectionId === 'what-is-bitcoin') {
+    ComponentToRender = WhatIsBitcoinContent; // Use the statically imported component
+  } else {
+    // Original dynamic loading logic for other cases where isContentAvailable is true
+    const contentPaths = [
+      // Direct import of a page component with the proper folder structure (common pattern in the repo)
+      `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/${sectionId}/page`,
+      `../../../${path}/${moduleId}/${sectionId}/page`,
+      `../../../${path}/${moduleId}/content/${sectionId}`,
+      `@/app/learn/${path}/${moduleId.replace(`${path}-`, '')}/content/${sectionId}`,
+      `../../../${path}/${sectionId}/page`
+    ];
+    
+    if (path === 'bitcoin') {
+      contentPaths.unshift(
+        `@/app/learn/bitcoin/bitcoin-fundamentals/${sectionId}/page`,
+        `@/app/learn/bitcoin/bitcoin-economics/${sectionId}/page`,
+        `@/app/learn/bitcoin/bitcoin-technical/${sectionId}/page`
+      );
+    } else if (path === 'lightning') {
+      contentPaths.unshift(
+        `@/app/learn/lightning/lightning-fundamentals/${sectionId}/page`,
+        `@/app/learn/lightning/lightning-node-operations/${sectionId}/page`,
+        `@/app/learn/lightning/lightning-channel-management/${sectionId}/page`,
+        `../../../${path}/lightning-node-operations/content/${sectionId}`,
+        `../../../${path}/lightning-channel-management/content/${sectionId}`
       );
     }
-  } catch (error) {
-    ContentComponent = () => (
-      <div className="bg-muted p-6 rounded-lg border border-red-500/20">
-        <h3 className="text-xl font-semibold mb-2 text-red-500">Content error</h3>
-        <p>There was an error loading this content. Please try another section.</p>
+    
+    ComponentToRender = dynamic(() => {
+      let importPromise = import(contentPaths[0])
+        .catch(error => {
+          console.log(`Could not load content from path: ${contentPaths[0]}`, error);
+          let chainedPromise: Promise<any> = Promise.reject(error);
+          for (const contentPath of contentPaths.slice(1)) {
+            chainedPromise = chainedPromise.catch(err => {
+              console.log(`Trying alternate path: ${contentPath}`);
+              return import(contentPath);
+            });
+          }
+          return chainedPromise;
+        })
+        .catch(finalError => {
+          console.log(`All content loading attempts failed for ${path}/${moduleId}/${sectionId}`, finalError);
+          return Promise.resolve(() => (
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <p className="text-lg mb-6">{currentSection.description}</p>
+              <div className="bg-muted p-6 rounded-lg border border-bitcoin-orange/20">
+                <h3 className="text-xl font-semibold mb-2 text-bitcoin-orange">Content not yet available</h3>
+                <p>The full content for this section is being prepared.</p>
+                <details className="mt-4">
+                  <summary className="text-sm text-muted-foreground cursor-pointer">Technical Details</summary>
+                  <p className="text-xs mt-2 text-muted-foreground">Path: {path}/{moduleId}/${sectionId}</p>
+                </details>
+              </div>
+            </div>
+          ));
+        });
+      return importPromise;
+    }, {
+      ssr: false,
+      loading: () => (
+        <div className="flex justify-center items-center py-8">
+          <div className="animate-pulse flex flex-col items-center">
+            <div className="h-4 w-24 bg-muted rounded mb-2.5"></div>
+            <div className="h-2 w-16 bg-muted/50 rounded"></div>
+          </div>
+        </div>
+      )
+    });
+  } // End of if/else for determining ComponentToRender
+
+  if (!ComponentToRender) {
+    // This case should ideally not be hit if the logic above is sound and fallbacks are in place.
+    // However, as a safeguard:
+    console.error(`Content component for ${path}/${moduleId}/${sectionId} could not be determined.`);
+    return (
+      <div className="container mx-auto p-8">
+        <h1 className="mb-6 text-3xl font-bold">Error</h1>
+        <p>Could not load content for this section. Please try again later.</p>
+        {/* Removed the inner div for content error as the main message suffices */}
       </div>
     );
   }
 
-  return (
-    <div className="container mx-auto p-8">
-      <h1 className="mb-6 text-3xl font-bold">{currentSection.title}</h1>
-      <ContentComponent />
-    </div>
-  );
+  return <ComponentToRender />;
 }

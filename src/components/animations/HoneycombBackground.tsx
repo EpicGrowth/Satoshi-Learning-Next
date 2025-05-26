@@ -87,7 +87,7 @@ export function HoneycombBackground({
       />
       
       {/* Very minimal blur overlay for improved contrast with content */}
-      <div className={`absolute inset-0 ${isDarkMode ? 'bg-background/0' : 'bg-background/0'} backdrop-blur-[0.5px]`}></div>
+      <div className={`absolute inset-0 ${isDarkMode ? 'bg-background/0' : 'bg-background/0'}`}></div>
     </div>
   );
 }

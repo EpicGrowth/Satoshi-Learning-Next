@@ -167,6 +167,12 @@ mark {
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--foreground));
   }
+
+  /* Firefox scrollbar styling */
+  html {
+    scrollbar-width: thin; /* Or "auto" for default width */
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--background)); /* thumb-color track-color */
+  }
 }
 
 @layer base {

@@ -31,6 +31,7 @@ type Feature = {
 };
 
 type LearningPath = {
+  id: string; // Added for robust tab identification
   title: string;
   description: string;
   icon: LucideIcon;
@@ -116,12 +117,14 @@ const lightningPath: Feature[] = [
 
 const learningPaths: LearningPath[] = [
   {
+    id: 'bitcoin',
     title: 'Bitcoin Fundamentals',
     description: 'Start with the essentials of Bitcoin and blockchain technology',
     icon: Bitcoin,
     features: bitcoinPath,
   },
   {
+    id: 'lightning',
     title: 'Lightning Network',
     description: 'Master the second layer that enables instant Bitcoin transactions',
     icon: Zap,
@@ -184,7 +187,7 @@ export default function Home() {
           <div className="flex flex-col gap-5 sm:flex-row mt-8 animate-fade-in-up delay-300">
             <Button
               size="lg"
-              className="gap-2 text-base font-medium px-8 py-6 bg-[#F7931A] hover:bg-[#E87D18] hover:shadow-lg hover:shadow-[#F7931A]/20 transition-all duration-300 hover:-translate-y-1 text-white"
+              className="gap-2 text-base font-medium px-8 py-6 bg-bitcoin-orange hover:bg-bitcoin-hover hover:shadow-lg hover:shadow-bitcoin-orange/20 transition-all duration-300 hover:-translate-y-1 text-white"
               asChild
             >
               <Link href="/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin">
@@ -205,9 +208,12 @@ export default function Home() {
             </Button>
           </div>
         </div>
+      </section>
+
 
         {/* Stats with enhanced visuals */}
-        <div className="mx-auto mt-24 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
+        <section className="container relative z-0 -mt-16 md:-mt-24">
+          <div className="mx-auto mt-24 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
           {stats.map((stat) => (
             <Card
               key={stat.label}
@@ -232,9 +238,9 @@ export default function Home() {
       </section>
 
       {/* Enhanced Learning Paths */}
-      <section className="container relative py-20 md:py-28">
-        <div className="absolute inset-0 bg-background/70 backdrop-blur-sm"></div>
-        <div className="mx-auto max-w-[1200px] relative">
+      <section className="container relative z-5 py-20 md:py-28">
+        <div className="absolute inset-0 bg-background/70 pointer-events-none"></div>
+        <div className="mx-auto max-w-[1200px] relative z-10">
           <div className="mb-16 text-center">
             <Badge variant="outline" className="mb-5 px-5 py-2.5 text-base font-medium border-bitcoin-orange/40 text-bitcoin-orange bg-bitcoin-orange/5">
               <Book className="mr-2 h-5 w-5 text-bitcoin-orange" />
@@ -248,11 +254,11 @@ export default function Home() {
           </div>
 
           <Tabs defaultValue="bitcoin" className="w-full">
-            <TabsList className="mb-10 flex w-full justify-center gap-4 bg-transparent flex-wrap h-auto">
+            <TabsList className="relative mb-10 flex w-full justify-center gap-4 bg-transparent flex-wrap h-auto">
               {learningPaths.map((path) => (
                 <TabsTrigger
-                  key={path.title}
-                  value={path.title.toLowerCase().split(' ')[0]}
+                  key={path.id}
+                  value={path.id}
                   className="flex items-center gap-2 rounded-lg border border-transparent bg-muted px-5 py-3 shadow-sm transition-all
                   data-[state=active]:border-bitcoin-orange/30
                   data-[state=active]:bg-gradient-to-r
@@ -269,8 +275,8 @@ export default function Home() {
 
             {learningPaths.map((path) => (
               <TabsContent 
-                key={path.title} 
-                value={path.title.toLowerCase().split(' ')[0]}
+                key={path.id} 
+                value={path.id}
                 className="mt-0"
               >
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -280,7 +286,7 @@ export default function Home() {
                       className="group border-border/40 transition-all duration-300 hover:-translate-y-2 hover:border-bitcoin-orange/40 hover:shadow-lg overflow-hidden"
                     >
                       {/* Subtle gradient overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-bitcoin-orange/10 to-bitcoin-orange/5 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-bitcoin-orange/10 to-bitcoin-orange/5 opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none"></div>
 
                       <div className="flex h-full flex-col justify-between gap-5 p-7 relative">
                         <div className="space-y-5">
@@ -291,7 +297,7 @@ export default function Home() {
                             {feature.badge && (
                               <Badge
                                 variant={feature.badge === 'Start Here' ? 'default' : 'outline'}
-                                className={`${feature.badge === 'Start Here' ? 'bg-[#F7931A] hover:bg-[#E87D18]' : 'border-[#F7931A]/30 text-[#F7931A]'} px-3 py-1 font-medium`}
+                                className={`${feature.badge === 'Start Here' ? 'bg-bitcoin-orange hover:bg-bitcoin-hover' : 'border-bitcoin-orange/30 text-bitcoin-orange'} px-3 py-1 font-medium`}
                               >
                                 {feature.badge}
                               </Badge>

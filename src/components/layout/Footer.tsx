@@ -118,7 +118,7 @@ export function Footer() {
             <h2 className="font-semibold text-base mb-4 text-foreground">Resources</h2>
             <ul className="space-y-3 text-sm">
               {footerLinks.resources.map((link) => (
-                <li key={link.href}>
+                <li key={link.name}>
                   {link.external ? (
                     <a 
                       href={link.href}
