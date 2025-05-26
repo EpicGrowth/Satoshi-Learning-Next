@@ -106,7 +106,7 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         ? bitcoinModules.find(m => m.id === moduleId)?.sections.find(s => s.id === sectionId)?.checkboxCount || 1
         : lightningModules.find(m => m.id === moduleId)?.sections.find(s => s.id === sectionId)?.checkboxCount || 1;
       
-      sectionProgress.progress = (sectionProgress.completedSteps.length / totalSteps) * 100;
+      sectionProgress.progress = Math.round((sectionProgress.completedSteps.length / totalSteps) * 100);
 
       return {
         ...prev,
