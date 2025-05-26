@@ -602,6 +602,12 @@ describe('LearningProgressContext - Other Functionalities and Edge Cases', () =>
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
     const moduleId = bitcoinModules[0].id;
     const sectionId = bitcoinModules[0].sections[0].id;
+      const stepId = 'step1'; // A generic step ID for initialization
+
+      act(() => {
+        // Initialize the section by updating progress for one step
+        result.current.updateSectionProgress('bitcoin', moduleId, sectionId, stepId); 
+      });
 
     act(() => {
       result.current.markSectionComplete('bitcoin', moduleId, sectionId);
