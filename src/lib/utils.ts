@@ -98,3 +98,31 @@ export function getBlockReward(height: number): number {
   // Initial reward in satoshis (50 BTC = 5,000,000,000 satoshis)
   return Math.floor(5000000000 / Math.pow(2, halvings));
 }
+
+/**
+ * Highlights the matching part of a text string with <mark> tags.
+ * @param text The text to search within.
+ * @param query The query string to highlight.
+ * @returns The text with the first match highlighted, or the original text if no match or empty query.
+ */
+export function highlightMatch(text: string, query: string): string {
+  if (!query.trim() || !text) {
+    return text;
+  }
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const startIndex = lowerText.indexOf(lowerQuery);
+
+  if (startIndex === -1) {
+    return text;
+  }
+
+  const endIndex = startIndex + query.length;
+  return (
+    text.substring(0, startIndex) +
+    '<mark>' +
+    text.substring(startIndex, endIndex) +
+    '</mark>' +
+    text.substring(endIndex)
+  );
+}

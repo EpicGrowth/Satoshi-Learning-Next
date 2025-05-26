@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+mark {
+  background-color: hsl(var(--accent)); /* Theme accent color for background */
+  color: #e44c41; /* Site orange for text */
+  padding: 0.1em 0.2em;
+  border-radius: 3px;
+  font-weight: 600; /* Optional: make highlighted text bolder */
+}
+
 @layer base {
   :root {
     /* Logo color system */

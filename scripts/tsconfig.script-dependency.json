@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "outDir": "./temp_compiled_config",
+    "rootDir": "../src"
+  },
+  "include": [
+    "../src/config/learning-modules.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -19,6 +19,7 @@ Visit `http://localhost:3000` to view the application.
 - [Content Strategy](docs/satoshi-station-content-strategy.md) - Content guidelines and standards
 - [Visual Guidelines](docs/satoshi-station-visual-guidelines-comprehensive.md) - Visual design standards
 - [Learning Path System](docs/LEARN_PATH_SYSTEM.md) - Learning path architecture and management
+- [Search Indexing](docs/SEARCH_INDEXING.md) - Search functionality and indexing documentation
 - [Post Deployment Verification](docs/POST_DEPLOYMENT_VERIFICATION.md) - Deployment verification procedures
 - [Content Style Guide](docs/satoshi-station-content-style-guide-comprehensive.md) - Comprehensive content guidelines
 - [Editorial Workflow](docs/satoshi-station-editorial-workflow.md) - Content creation and review process
@@ -358,6 +359,59 @@ The design is based on screenshots of the original sats.sv site, which can be fo
 - `/home/jean-paul/Source/ClaudeCode/Lightning Network _ Satoshi Learning Path (2).png` (Dark mode)
 
 These screenshots serve as the definitive reference for the visual design.
+
+## Search Functionality and Indexing
+
+The website features a search bar that allows users to find content across the learning paths. This search functionality relies on a pre-generated JSON file (`public/search-index.json`) that contains an index of all searchable content.
+
+### Generating the Search Index
+
+A script is provided to automatically generate this `search-index.json` file based on the content in your project.
+
+**1. Content Structure:**
+
+*   The script expects learning content to be in `.mdx` files.
+*   These files should be located under `src/content/`.
+*   The directory structure should follow this pattern:
+    *   `src/content/bitcoin/[module-slug]/[section-slug].mdx`
+    *   `src/content/lightning/[module-slug]/[section-slug].mdx`
+*   Each `.mdx` file must include frontmatter with the following fields:
+    *   `title` (string): The title of the section.
+    *   `description` (string, optional): A brief description of the section.
+    *   `moduleId` (string): A unique identifier for the module (e.g., "btc1", "ln2").
+    *   `sectionId` (string): A unique identifier for the section (e.g., "btc1-1", "ln2-3").
+    *   `moduleOrder` (number): The numerical order of the module within its topic.
+    *   `sectionOrder` (number): The numerical order of the section within its module.
+
+**2. Dependencies:**
+
+Ensure you have the necessary development dependencies installed. If not, run:
+```bash
+npm install -D typescript ts-node glob gray-matter strip-markdown fs-extra remark @types/glob @types/gray-matter @types/strip-markdown @types/fs-extra @types/node
+```
+Or, if using Yarn:
+```bash
+yarn add -D typescript ts-node glob gray-matter strip-markdown fs-extra remark @types/glob @types/gray-matter @types/strip-markdown @types/fs-extra @types/node
+```
+
+**3. Running the Script:**
+
+To generate or update the search index, run the following command from the project root:
+```bash
+npm run build:search-index
+```
+Or, if using Yarn:
+```bash
+yarn build:search-index
+```
+This command executes the `scripts/generate-search-index.ts` script.
+
+**Important Notes:**
+
+*   If the `src/content/` directory does not exist or contains no `.mdx` files, the script will create an empty `public/search-index.json`. This ensures the application can still run but search will yield no results.
+*   You should run this script whenever you add new content, update existing content, or change the frontmatter of your content files to ensure the search index is up-to-date.
+*   Consider adding `npm run build:search-index` to your main `build` script in `package.json` (e.g., `"build": "npm run build:search-index && next build"`) to automate this process during builds.
+
 
 ## Development Status
 
