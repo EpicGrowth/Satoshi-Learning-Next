@@ -80,46 +80,63 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
     router.push(`/learn/${pathType}/${moduleId}/${sectionId}`);
   };
 
+  // Determine theme colors based on path type
+  const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 'var(--lightning-purple)';
+  
   return (
-    <div className="container max-w-5xl py-8">
+    <div className="container max-w-5xl py-4 sm:py-6 md:py-8 px-3 sm:px-4 md:px-6">
           {/* Content */}
-          {children}
+          <div className="prose dark:prose-invert prose-sm sm:prose-base md:prose-lg max-w-none overflow-x-hidden">
+            {children}
+          </div>
           
-          {/* Module navigation - moved to bottom */}
-          <div className="mt-12 flex items-center justify-between border-t border-border/40 pt-8">
-            <Button
-              variant="ghost"
-              className={cn(
-                'flex items-center gap-2',
-                !prev && 'invisible'
-              )}
-              onClick={() => prev && navigate(prev.moduleId, prev.sectionId)}
-              disabled={!prev}
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Previous
-            </Button>
-
-            <div className="text-center">
-              <h4 className="font-medium">{currentModule?.title}</h4>
-              <Progress 
-                value={currentSection ? getSectionProgress(pathType, moduleId, sectionId) : 0} 
-                className="mt-2 w-32"
-              />
+          {/* Module navigation - mobile friendly version */}
+          <div className="mt-8 sm:mt-10 md:mt-12 border-t border-border/40 pt-6 sm:pt-8">
+            {/* Progress indicator - more visible on mobile */}
+            <div className="mb-4 text-center">
+              <h4 className="font-medium text-sm sm:text-base">{currentModule?.title}</h4>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <Progress 
+                  value={currentSection ? getSectionProgress(pathType, moduleId, sectionId) : 0} 
+                  className="h-2 w-32 sm:w-40"
+                  indicatorClassName={`bg-[${primaryColor}]`}
+                />
+                <span className="text-xs text-muted-foreground">
+                  {Math.round(currentSection ? getSectionProgress(pathType, moduleId, sectionId) : 0)}%
+                </span>
+              </div>
             </div>
+            
+            {/* Navigation buttons */}
+            <div className="flex items-center justify-between">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  'flex items-center gap-1 sm:gap-2 px-2 sm:px-3',
+                  !prev && 'invisible'
+                )}
+                onClick={() => prev && navigate(prev.moduleId, prev.sectionId)}
+                disabled={!prev}
+              >
+                <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden xs:inline">Previous</span>
+              </Button>
 
-            <Button
-              variant="ghost"
-              className={cn(
-                'flex items-center gap-2',
-                !next && 'invisible'
-              )}
-              onClick={() => next && navigate(next.moduleId, next.sectionId)}
-              disabled={!next}
-            >
-              Next
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  'flex items-center gap-1 sm:gap-2 px-2 sm:px-3',
+                  !next && 'invisible'
+                )}
+                onClick={() => next && navigate(next.moduleId, next.sectionId)}
+                disabled={!next}
+              >
+                <span className="hidden xs:inline">Next</span>
+                <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+            </div>
           </div>
     </div>
   );

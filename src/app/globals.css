@@ -194,6 +194,28 @@ mark {
   .text-pretty {
     text-wrap: pretty;
   }
+  
+  /* Mobile content overflow protection */
+  .mobile-safe {
+    max-width: 100%;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Responsive images for mobile */
+  .img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Mobile-friendly code blocks */
+  .mobile-code {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Responsive Container Widths */
