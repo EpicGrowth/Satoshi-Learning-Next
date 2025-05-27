@@ -6,7 +6,20 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home } from 'lucide-react';
 
-// Navigation structure
+// Import learning modules for accurate navigation
+import { bitcoinModules, lightningModules } from '@/config/learning-modules';
+
+// Generate navigation items dynamically from learning modules
+const generateLearningItems = (modules: any[], pathPrefix: string) => {
+  return modules.map(module => ({
+    title: module.title,
+    href: module.sections && module.sections.length > 0 
+      ? `/learn/${pathPrefix}/${module.id}/${module.sections[0].id}`
+      : `/learn/${pathPrefix}/${module.id}`,
+  }));
+};
+
+// Navigation structure with dynamically generated learning paths
 const navigationItems = [
   {
     title: 'Home',
@@ -17,40 +30,30 @@ const navigationItems = [
     title: 'Bitcoin Learning',
     icon: Bitcoin,
     path: '/learn/bitcoin',
-    items: [
-      { title: 'What is Bitcoin', href: '/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin' },
-      { title: 'The Blockchain', href: '/learn/bitcoin/bitcoin-fundamentals/the-blockchain' },
-      { title: 'Keys & Wallets', href: '/learn/bitcoin/bitcoin-fundamentals/private-keys-wallets' },
-      { title: 'Making Transactions', href: '/learn/bitcoin/bitcoin-fundamentals/making-transactions' },
-    ],
+    items: generateLearningItems(bitcoinModules, 'bitcoin'),
   },
   {
     title: 'Lightning Learning',
     icon: Zap,
     path: '/learn/lightning',
-    items: [
-      { title: 'Fundamentals', href: '/learn/lightning/fundamentals/what-is-lightning' },
-      { title: 'Node Operations', href: '/learn/lightning/node-operations/node-setup' },
-      { title: 'Channel Management', href: '/learn/lightning/channel-management/opening-channels' },
-      { title: 'Routing Operations', href: '/learn/lightning/routing-operations/path-finding' },
-      { title: 'Security', href: '/learn/lightning/security/node-security' },
-    ],
+    items: generateLearningItems(lightningModules, 'lightning'),
   },
   {
     title: 'Resources',
     icon: FileText,
-    href: '/technical-resources',
+    href: '/resources',
   },
   {
     title: 'Explorer',
     icon: Search,
-    href: '/contact-explorer',
+    href: '/explorer',
   },
 ];
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
 
   // Close the mobile menu when navigating
@@ -89,18 +92,39 @@ export function MobileNav() {
           {/* Menu panel */}
           <div className="fixed right-0 top-0 h-full w-4/5 max-w-sm bg-background p-6 shadow-xl">
             <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center">
-                <Bitcoin className="h-6 w-6 text-bitcoin-orange mr-2" />
-                <span className="font-bold">Satoshi Station</span>
-              </div>
+              <Link 
+                href="/"
+                className="flex items-center space-x-2 group"
+                onClick={() => {
+                  setIsOpen(false);
+                  setError(null);
+                }}
+              >
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-full bg-bitcoin-orange/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Bitcoin className="h-6 w-6 text-bitcoin-orange relative" />
+                </div>
+                <span className="font-bold text-lg" data-brand-text="true">Satoshi Station</span>
+              </Link>
               <Button 
                 variant="ghost" 
                 size="icon"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setError(null);
+                }}
+                className="focus-visible:ring-2 focus-visible:ring-bitcoin-orange/30"
+                aria-label="Close menu"
               >
                 <X className="h-5 w-5" />
               </Button>
             </div>
+            
+            {error && (
+              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-md">
+                <p className="text-sm text-red-500">{error}</p>
+              </div>
+            )}
             
             <nav className="flex flex-col space-y-6">
               {navigationItems.map((section) => {
@@ -167,15 +191,25 @@ export function MobileNav() {
                                   <ExternalLink className="ml-1.5 h-3 w-3" />
                                 </a>
                               ) : (
-                                <Link
+                                <Link 
                                   href={item.href}
-                                  className={`flex items-center ${
-                                    isItemActive
-                                      ? 'text-bitcoin-orange font-medium'
-                                      : 'text-muted-foreground hover:text-foreground'
+                                  className={`flex items-center py-2 px-3 rounded-md text-sm ${
+                                    pathname === item.href ? 'bg-muted font-medium' : 'hover:bg-muted/50'
                                   }`}
+                                  onClick={(e) => {
+                                    try {
+                                      setOpenSection(null);
+                                    } catch (err) {
+                                      console.error('Navigation error:', err);
+                                      setError('Failed to navigate. Please try again.');
+                                      e.preventDefault();
+                                    }
+                                  }}
                                 >
                                   {item.title}
+                                  {pathname === item.href && (
+                                    <span className="ml-2 w-1.5 h-1.5 rounded-full bg-primary" />
+                                  )}
                                 </Link>
                               )}
                             </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -50,16 +50,20 @@ export function MobileLearningSidebar({
   } = useLearningProgress();
 
   // Handle body scroll when menu is open
-  useState(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'unset';
+      }
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = 'unset';
+      }
     };
-  });
+  }, [isOpen]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty.toLowerCase()) {
@@ -83,10 +87,14 @@ export function MobileLearningSidebar({
   };
 
   const handleModuleClick = useCallback((moduleId: string, sectionId: string) => {
-    if (onModuleSelect) {
-      onModuleSelect(moduleId, sectionId);
+    try {
+      setIsOpen(false);
+      if (onModuleSelect) {
+        onModuleSelect(moduleId, sectionId);
+      }
+    } catch (error) {
+      console.error('Error navigating to module/section:', error);
     }
-    setIsOpen(false);
   }, [onModuleSelect]);
 
   const calculateSectionInfo = useCallback((moduleId: string, sectionId: string) => {
@@ -112,6 +120,12 @@ export function MobileLearningSidebar({
   }, [modules, calculateSectionInfo]);
 
   const renderSection = useCallback((module: LearningModule, section: Section) => {
+    // Validate module and section IDs to prevent errors
+    if (!module?.id || !section?.id) {
+      console.error('Invalid module or section data:', { module, section });
+      return null;
+    }
+
     const isActive = currentModule === module.id && currentSection === section.id;
     const { isComplete, locked, progress } = calculateSectionInfo(module.id, section.id);
     const nextIncomplete = findNextIncompleteSection();
@@ -125,12 +139,15 @@ export function MobileLearningSidebar({
       ? 'text-[var(--primary-light)]' 
       : 'text-lightning-purple';
 
+    // Ensure the path is valid
+    const sectionPath = `/learn/${pathPrefix}/${module.id}/${section.id}`;
+
     return (
       <Link
         key={`${module.id}-${section.id}`}
-        href={locked ? '#' : `/learn/${pathPrefix}/${module.id}/${section.id}`}
+        href={locked ? '#' : sectionPath}
         className={cn(
-          'group flex items-center py-2 px-3 rounded transition-colors',
+          'group flex items-center justify-between py-2 px-3 rounded-md transition-colors',
           isActive ? activeColor : 'hover:bg-muted/50',
           locked && 'opacity-50 cursor-not-allowed'
         )}
@@ -138,26 +155,46 @@ export function MobileLearningSidebar({
           if (locked) {
             e.preventDefault();
           } else {
-            handleModuleClick(module.id, section.id);
+            try {
+              handleModuleClick(module.id, section.id);
+            } catch (error) {
+              console.error('Error navigating to section:', error);
+              e.preventDefault();
+            }
           }
         }}
       >
-        {isComplete ? (
-          <Check className={`h-3.5 w-3.5 mr-2 ${completedColor}`} />
-        ) : locked ? (
-          <Lock className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
-        ) : isNextSection ? (
-          <ArrowRight className="h-3.5 w-3.5 mr-2 text-emerald-500" />
-        ) : (
-          <div className="w-3.5 h-3.5 mr-2" />
+        <div className="flex items-center">
+          {isComplete ? (
+            <Check className={`h-4 w-4 mr-2 ${completedColor}`} />
+          ) : locked ? (
+            <Lock className="h-4 w-4 mr-2 text-muted-foreground" />
+          ) : isNextSection ? (
+            <ArrowRight className="h-4 w-4 mr-2 text-emerald-500" />
+          ) : (
+            <div className="w-4 h-4 mr-2" />
+          )}
+          <span className={cn(
+            'text-sm',
+            isActive && 'font-medium',
+            isNextSection && 'text-emerald-500'
+          )}>
+            {section.title}
+          </span>
+        </div>
+        
+        {/* Section progress indicator */}
+        {!locked && (
+          <div className="flex items-center">
+            <span className="text-xs text-muted-foreground mr-2">{progress}%</span>
+            <div className="w-8 h-1.5 rounded-full bg-muted overflow-hidden">
+              <div 
+                className={`h-full ${pathPrefix === 'bitcoin' ? 'bg-[var(--primary-light)]' : 'bg-lightning-purple'}`}
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         )}
-        <span className={cn(
-          'text-sm',
-          isActive && 'font-medium',
-          isNextSection && 'text-emerald-500'
-        )}>
-          {section.title}
-        </span>
       </Link>
     );
   }, [
