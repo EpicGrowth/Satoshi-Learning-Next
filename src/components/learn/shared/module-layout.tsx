@@ -84,9 +84,9 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 'var(--lightning-purple)';
   
   return (
-    <div className="container max-w-5xl py-4 sm:py-6 md:py-8 px-3 sm:px-4 md:px-6">
+    <div className="w-full max-w-5xl py-4 sm:py-6 md:py-8 px-2 sm:px-4 md:px-6 mx-auto">
           {/* Content */}
-          <div className="prose dark:prose-invert prose-sm sm:prose-base md:prose-lg max-w-none overflow-x-hidden">
+          <div className="prose dark:prose-invert prose-sm sm:prose-base md:prose-lg w-full max-w-full overflow-x-hidden">
             {children}
           </div>
           

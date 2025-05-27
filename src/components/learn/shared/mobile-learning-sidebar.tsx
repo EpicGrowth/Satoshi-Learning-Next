@@ -134,7 +134,7 @@ export function MobileLearningSidebar({
         key={`${module.id}-${section.id}`}
         href={locked ? '#' : `/learn/${pathPrefix}/${module.id}/${section.id}`}
         className={cn(
-          'group flex items-center py-2 px-3 rounded transition-colors',
+          'group flex items-center justify-between py-2 px-3 rounded-md transition-colors',
           isActive ? activeColor : 'hover:bg-muted/50',
           locked && 'opacity-50 cursor-not-allowed'
         )}
@@ -146,22 +146,37 @@ export function MobileLearningSidebar({
           }
         }}
       >
-        {isComplete ? (
-          <Check className={`h-3.5 w-3.5 mr-2 ${completedColor}`} />
-        ) : locked ? (
-          <Lock className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
-        ) : isNextSection ? (
-          <ArrowRight className="h-3.5 w-3.5 mr-2 text-emerald-500" />
-        ) : (
-          <div className="w-3.5 h-3.5 mr-2" />
+        <div className="flex items-center">
+          {isComplete ? (
+            <Check className={`h-4 w-4 mr-2 ${completedColor}`} />
+          ) : locked ? (
+            <Lock className="h-4 w-4 mr-2 text-muted-foreground" />
+          ) : isNextSection ? (
+            <ArrowRight className="h-4 w-4 mr-2 text-emerald-500" />
+          ) : (
+            <div className="w-4 h-4 mr-2" />
+          )}
+          <span className={cn(
+            'text-sm',
+            isActive && 'font-medium',
+            isNextSection && 'text-emerald-500'
+          )}>
+            {section.title}
+          </span>
+        </div>
+        
+        {/* Section progress indicator */}
+        {!locked && (
+          <div className="flex items-center">
+            <span className="text-xs text-muted-foreground mr-2">{progress}%</span>
+            <div className="w-8 h-1.5 rounded-full bg-muted overflow-hidden">
+              <div 
+                className={`h-full ${pathPrefix === 'bitcoin' ? 'bg-[var(--primary-light)]' : 'bg-lightning-purple'}`}
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         )}
-        <span className={cn(
-          'text-sm',
-          isActive && 'font-medium',
-          isNextSection && 'text-emerald-500'
-        )}>
-          {section.title}
-        </span>
       </Link>
     );
   }, [
