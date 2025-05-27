@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -50,16 +50,20 @@ export function MobileLearningSidebar({
   } = useLearningProgress();
 
   // Handle body scroll when menu is open
-  useState(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'unset';
+      }
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = 'unset';
+      }
     };
-  });
+  }, [isOpen]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty.toLowerCase()) {
