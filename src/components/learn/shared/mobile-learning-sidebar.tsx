@@ -87,16 +87,16 @@ export function MobileLearningSidebar({
     );
   };
 
-  const handleModuleClick = useCallback((moduleId: string, sectionId: string) => {
-    try {
-      setIsOpen(false);
-      if (onModuleSelect) {
-        onModuleSelect(moduleId, sectionId);
-      }
-    } catch (error) {
-      console.error('Error navigating to module/section:', error);
+  const handleSectionClick = useCallback((moduleId: string, sectionId: string) => {
+    if (onModuleSelect) {
+      onModuleSelect(moduleId, sectionId);
+    } else {
+      // Default behavior: navigate to the section
+      window.location.href = `/learn/${pathPrefix}/${moduleId}/${sectionId}`;
     }
-  }, [onModuleSelect]);
+    // Always close the sidebar after selection
+    setIsOpen(false);
+  }, [onModuleSelect, pathPrefix]);
 
   const calculateSectionInfo = useCallback((moduleId: string, sectionId: string) => {
     const progress = getSectionProgress(pathPrefix, moduleId, sectionId);
@@ -159,7 +159,7 @@ export function MobileLearningSidebar({
             try {
               // Close the mobile menu when navigating to a section
               setIsOpen(false);
-              handleModuleClick(module.id, section.id);
+              handleSectionClick(module.id, section.id);
             } catch (error) {
               console.error('Error navigating to section:', error);
               e.preventDefault();
@@ -206,7 +206,7 @@ export function MobileLearningSidebar({
     pathPrefix, 
     calculateSectionInfo, 
     findNextIncompleteSection, 
-    handleModuleClick 
+    handleSectionClick 
   ]);
 
   // FAB button that opens the mobile sidebar
