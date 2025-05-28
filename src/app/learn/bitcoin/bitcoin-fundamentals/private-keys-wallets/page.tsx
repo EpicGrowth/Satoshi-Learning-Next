@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { ModuleLayout } from '@/components/learn/shared/module-layout';
 import { ModuleContent } from '@/components/learn/shared/module-content';
 import {
   Key,
@@ -137,14 +138,15 @@ const KeyPairVisualizer = () => {
 // Main page component
 export default function PrivateKeysWallets() {
   return (
-    <ModuleContent
-      moduleId="fundamentals"
-      sectionId="private-keys-wallets"
-      moduleTitle="Private Keys & Wallets"
-      moduleDescription="Managing Bitcoin securely"
-      difficulty="Beginner"
-      checkpoints={1}
-    >
+    <ModuleLayout>
+      <ModuleContent
+        moduleId="fundamentals"
+        sectionId="private-keys-wallets"
+        moduleTitle="Private Keys & Wallets"
+        moduleDescription="Managing Bitcoin securely"
+        difficulty="Beginner"
+        checkpoints={1}
+      >
       <div className="space-y-8">
         <SatoshiQuote
           quote="Lost coins only make everyone else's coins worth slightly more. Think of it as a donation to everyone."
@@ -572,6 +574,7 @@ export default function PrivateKeysWallets() {
           />
         </div>
       </div>
-    </ModuleContent>
+      </ModuleContent>
+    </ModuleLayout>
   );
 }

@@ -206,7 +206,7 @@ const FeeEstimator = () => {
 
 // --- Main Page Component ---
 export default function MakingTransactionsPage() {
-  const moduleId = 'fundamentals'; // Corrected moduleId
+  const moduleId = 'bitcoin-fundamentals';
   const sectionId = 'making-transactions';
 
   return (
