@@ -5,6 +5,15 @@ import { MobileLearningSidebar } from '../mobile-learning-sidebar';
 import { LearningProgressProvider } from '@/contexts/learning-progress-context';
 import { bitcoinModules, lightningModules } from '@/config/learning-modules';
 
+// Mock the ResetProgressButton component
+jest.mock('../reset-progress-button', () => ({
+  ResetProgressButton: ({ pathPrefix }: { pathPrefix: string }) => (
+    <button data-testid="mock-reset-button">
+      Reset {pathPrefix} Progress
+    </button>
+  ),
+}));
+
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
   usePathname: () => '/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin',
