@@ -96,7 +96,7 @@ export function MobileProgressTracker({ modules, pathPrefix }: MobileProgressTra
   };
 
   return (
-    <div className="fixed top-14 left-0 right-0 z-30 bg-background border-b border-border/50 shadow-sm lg:hidden overflow-visible">
+    <div className="fixed top-14 left-0 right-0 z-30 bg-background border-b border-border/50 shadow-sm lg:hidden overflow-visible w-full max-w-[100vw]">
       {/* Reset confirmation dialog */}
       {showResetConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">

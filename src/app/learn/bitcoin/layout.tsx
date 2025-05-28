@@ -24,8 +24,8 @@ export default function BitcoinLearningLayout({
           <BitcoinSidebar />
         </aside>
 
-        <main className="w-full pt-[3.5rem] lg:pt-0 mobile-safe">
-          <div className="mx-auto max-w-4xl space-y-8 px-4 py-6 lg:px-8 lg:py-8">
+        <main className="w-full pt-[3.5rem] lg:pt-0 mobile-safe overflow-x-hidden">
+          <div className="mx-auto max-w-full md:max-w-4xl space-y-8 px-3 sm:px-4 py-6 lg:px-8 lg:py-8">
             {children}
           </div>
         </main>

@@ -12,17 +12,15 @@ const footerLinks = {
     { name: 'Mining & Consensus', href: '/learn/bitcoin/bitcoin-technical/mining-consensus' },
   ],
   lightningLearning: [
-    { name: 'Fundamentals', href: '/learn/lightning/lightning-fundamentals/what-is-lightning' },
-    { name: 'Lightning Channels', href: '/learn/lightning/lightning-channel-management/opening-channels' },
-    { name: 'Routing & Pathfinding', href: '/learn/lightning/lightning-routing-operations/path-finding' },
-    { name: 'Node Management', href: '/learn/lightning/lightning-node-operations/node-setup' },
-    { name: 'Channel Management', href: '/learn/lightning/channel-management' },
+    { name: 'What is Lightning?', href: '/learn/lightning/lightning-fundamentals/what-is-lightning' },
+    { name: 'Opening Channels', href: '/learn/lightning/lightning-channel-management/opening-channels' },
+    { name: 'Path Finding', href: '/learn/lightning/lightning-routing-operations/path-finding' },
+    { name: 'Node Setup', href: '/learn/lightning/lightning-node-operations/node-setup' },
+    { name: 'Security', href: '/learn/lightning/lightning-security/node-security' },
   ],
   resources: [
-    { name: 'Technical Resources', href: '/resources' },
-    { name: 'Contact Explorer', href: '/contact-explorer' },
-    { name: 'Developer Tools', href: '/resources' },
-    { name: 'Node Dashboard', href: '/resources' },
+    { name: 'Bitcoin Whitepaper', href: 'https://bitcoin.org/bitcoin.pdf', external: true },
+    { name: 'Lightning Network', href: 'https://lightning.network/', external: true },
     { 
       name: 'Mempool Explorer',
       href: 'https://mempool.space',
@@ -39,10 +37,10 @@ const footerLinks = {
 export function Footer() {
   return (
     <footer className="border-t bg-background/50 backdrop-blur-sm" role="contentinfo">
-      <div className="container py-12 px-4">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+      <div className="container py-8 sm:py-12 px-4">
+        <div className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-4">
           {/* Branding and Social Links */}
-          <div className="space-y-4">
+          <div className="col-span-2 md:col-span-1 space-y-4">
             <Link 
               href="/" 
               className="flex items-center space-x-2 group transition-transform duration-200 hover:scale-105"
@@ -57,25 +55,33 @@ export function Footer() {
               Your sovereign platform for Bitcoin education and verification.
               Don't trust, verify every claim through direct interaction with the Bitcoin network.
             </p>
-            <div className="flex items-center space-x-4 text-muted-foreground pt-2">
-              <a 
-                href="https://twitter.com/satoshistation" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hover:text-foreground transition-colors hover:scale-110 transform"
-                aria-label="Follow us on Twitter"
-              >
-                <Twitter className="h-5 w-5" aria-hidden="true" />
-              </a>
-              <a 
-                href="https://github.com/satoshi-station" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hover:text-foreground transition-colors hover:scale-110 transform"
-                aria-label="Visit our GitHub repository"
-              >
-                <Github className="h-5 w-5" aria-hidden="true" />
-              </a>
+            <div className="flex items-center justify-between w-full text-muted-foreground pt-2">
+              <div className="flex items-center space-x-4">
+                <div className="md:block hidden">
+                  <ThemeToggle />
+                </div>
+                <a 
+                  href="https://twitter.com/satoshistation" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-foreground transition-colors hover:scale-110 transform"
+                  aria-label="Follow us on Twitter"
+                >
+                  <Twitter className="h-5 w-5" aria-hidden="true" />
+                </a>
+                <a 
+                  href="https://github.com/satoshi-station" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-foreground transition-colors hover:scale-110 transform"
+                  aria-label="Visit our GitHub repository"
+                >
+                  <Github className="h-5 w-5" aria-hidden="true" />
+                </a>
+              </div>
+              <div className="md:hidden block">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
           
@@ -143,27 +149,28 @@ export function Footer() {
           </div>
         </div>
         
-        <Separator className="my-8 opacity-50" />
+        <Separator className="my-6 sm:my-8 opacity-50" />
         
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <div className="flex items-center space-x-4">
-            <p className="text-xs text-muted-foreground/90">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:space-x-4">
+            <p className="text-xs text-muted-foreground/90 text-center sm:text-left">
               &copy; {new Date().getFullYear()} Satoshi Station. All content released under MIT license.
             </p>
-            <a 
-              href="https://github.com/satoshi-station/license" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs text-muted-foreground/90 hover:text-bitcoin-orange transition-colors"
-            >
-              License
-            </a>
-            <ThemeToggle />
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://github.com/satoshi-station/license" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground/90 hover:text-bitcoin-orange transition-colors"
+              >
+                License
+              </a>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground/90 flex items-center">
-            Powered by proof-of-work & 
+          <p className="text-xs text-muted-foreground/90 flex items-center flex-wrap justify-center">
+            <span className="whitespace-nowrap">Powered by proof-of-work</span>
             <Heart className="mx-1.5 h-3 w-3 text-bitcoin-orange animate-pulse" aria-hidden="true" /> 
-            from 
+            <span className="whitespace-nowrap">from</span>
             <a 
               href="https://bitcoin.org" 
               target="_blank" 
