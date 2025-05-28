@@ -19,6 +19,7 @@ Visit `http://localhost:3000` to view the application.
 - [Content Strategy](docs/satoshi-station-content-strategy.md) - Content guidelines and standards
 - [Visual Guidelines](docs/satoshi-station-visual-guidelines-comprehensive.md) - Visual design standards
 - [Learning Path System](docs/LEARN_PATH_SYSTEM.md) - Learning path architecture and management
+- [Mobile Components](docs/MOBILE_COMPONENTS.md) - Mobile navigation and progress tracking components
 - [Search Indexing](docs/SEARCH_INDEXING.md) - Search functionality and indexing documentation
 - [Post Deployment Verification](docs/POST_DEPLOYMENT_VERIFICATION.md) - Deployment verification procedures
 - [Content Style Guide](docs/satoshi-station-content-style-guide-comprehensive.md) - Comprehensive content guidelines

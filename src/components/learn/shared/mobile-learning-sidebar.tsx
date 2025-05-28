@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { useLearningProgress } from '@/contexts/learning-progress-context';
 import { LearningModule, Section } from '@/types/learning';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ResetProgressButton } from './reset-progress-button';
 
 interface MobileLearningSidebarProps {
   modules: LearningModule[];
@@ -156,6 +157,8 @@ export function MobileLearningSidebar({
             e.preventDefault();
           } else {
             try {
+              // Close the mobile menu when navigating to a section
+              setIsOpen(false);
               handleModuleClick(module.id, section.id);
             } catch (error) {
               console.error('Error navigating to section:', error);
@@ -337,11 +340,17 @@ export function MobileLearningSidebar({
                     const isLocked = isSectionLocked(pathPrefix, module.id, module.sections[0]?.id || '');
                     const moduleProgress = getModuleProgress(pathPrefix, module.id);
                     
-                    // Calculate module progress
-                    const progressPercentage = moduleProgress ? 
-                      Object.values(moduleProgress.completedSections).reduce((acc, s) => acc + (s?.progress || 0), 0) / 
-                      (module.sections.length > 0 ? module.sections.length : 1) : 0;
+                    // Calculate module progress - properly capped at 100%
+                    let progressPercentage = 0;
                     
+                    if (moduleProgress && module.sections.length > 0) {
+                      // Count completed sections
+                      const completedSections = Object.values(moduleProgress.completedSections || {}).filter(s => s?.progress === 100).length;
+                      progressPercentage = (completedSections / module.sections.length) * 100;
+                    }
+                    
+                    // Ensure progress is between 0-100%
+                    progressPercentage = Math.min(Math.max(progressPercentage, 0), 100);
                     const formattedProgress = `${Math.round(progressPercentage)}%`;
                     
                     // Different styling based on light/dark mode is handled by Tailwind's dark class
@@ -387,7 +396,7 @@ export function MobileLearningSidebar({
                           </div>
                           
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground">{formattedProgress}</span>
+                            <span className="text-xs text-muted-foreground">{Math.min(Math.round(progressPercentage), 100)}%</span>
                             {isExpanded ? (
                               <ChevronDown className="h-4 w-4" />
                             ) : (
@@ -429,6 +438,11 @@ export function MobileLearningSidebar({
                     );
                   })}
                 </div>
+              </div>
+              
+              {/* Reset Progress Button */}
+              <div className="mt-4 border-t pt-4">
+                <ResetProgressButton pathPrefix={pathPrefix} />
               </div>
             </motion.div>
           </>

@@ -24,11 +24,41 @@ interface LearningProgressContextType {
   resetProgress: (type?: 'bitcoin' | 'lightning') => void;
   getSectionProgress: (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => number;
   isSectionLocked: (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => boolean;
+  isContentLocked: (type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string) => boolean;
   updateSkillLevel: (level: 'beginner' | 'intermediate' | 'advanced') => void;
   getModuleProgress: (type: 'bitcoin' | 'lightning', moduleId: string) => ModuleProgress | undefined;
 }
 
 const LearningProgressContext = createContext<LearningProgressContextType | undefined>(undefined);
+
+// Helper function to normalize progress data
+const normalizeProgressData = (data: UserProgress): UserProgress => {
+  const normalized = { ...data };
+  
+  // Process both bitcoin and lightning paths
+  ['bitcoin', 'lightning'].forEach(pathType => {
+    const pathData = normalized[pathType as 'bitcoin' | 'lightning'];
+    
+    // Process each module
+    Object.keys(pathData).forEach(moduleId => {
+      const module = pathData[moduleId];
+      if (!module || !module.completedSections) return;
+      
+      // Process each section
+      Object.keys(module.completedSections).forEach(sectionId => {
+        const section = module.completedSections[sectionId];
+        if (!section) return;
+        
+        // Cap progress at 100%
+        if (section.progress > 100) {
+          section.progress = 100;
+        }
+      });
+    });
+  });
+  
+  return normalized;
+};
 
 export function LearningProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<UserProgress>({
@@ -59,7 +89,15 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
       try {
         const savedProgress = localStorage.getItem('satoshi-station-progress');
         if (savedProgress) {
-          setProgress(JSON.parse(savedProgress));
+          // Parse and normalize the progress data to fix any incorrect values
+          const parsedProgress = JSON.parse(savedProgress);
+          const normalizedProgress = normalizeProgressData(parsedProgress);
+          
+          // Save the normalized data back to localStorage
+          localStorage.setItem('satoshi-station-progress', JSON.stringify(normalizedProgress));
+          
+          // Update state with normalized data
+          setProgress(normalizedProgress);
         }
       } catch (error) {
         console.error('Failed to load learning progress:', error);
@@ -221,7 +259,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     if (!section) return 0;
     
     const totalSteps = section.checkboxCount || 1;
-    return Math.round((sectionProgress.completedSteps.length / totalSteps) * 100);
+    // Calculate progress and ensure it's capped at 100%
+    const calculatedProgress = Math.round((sectionProgress.completedSteps.length / totalSteps) * 100);
+    return Math.min(calculatedProgress, 100);
   }, [progress]);
 
   const getModuleProgress = useCallback((type: 'bitcoin' | 'lightning', moduleId: string): ModuleProgress | undefined => {
@@ -247,6 +287,13 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     }
   }, []);
 
+  // Function to check if content should be locked (similar to isSectionLocked but can be customized)
+  const isContentLocked = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): boolean => {
+    // For now, use the same logic as isSectionLocked
+    // This can be extended with additional logic specific to content access if needed
+    return isSectionLocked(type, moduleId, sectionId);
+  }, [isSectionLocked]);
+
   return (
     <LearningProgressContext.Provider
       value={{
@@ -256,6 +303,7 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
         resetProgress,
         getSectionProgress,
         isSectionLocked,
+        isContentLocked,
         updateSkillLevel,
         getModuleProgress
       }}
