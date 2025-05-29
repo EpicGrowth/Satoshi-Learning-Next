@@ -348,6 +348,26 @@ textarea:focus-visible {
     @apply border-bitcoin-orange/20 bg-bitcoin-orange/5;
   }
 
+  /* Mobile optimization for learning content */
+  .mobile-optimized-content {
+    @apply px-0 sm:px-4 md:px-6;
+  }
+
+  /* Ensure content is readable on mobile devices */
+  @media (max-width: 640px) {
+    .prose p, .prose ul, .prose ol {
+      @apply text-sm leading-relaxed;
+    }
+
+    .prose h2 {
+      @apply text-xl;
+    }
+
+    .prose h3 {
+      @apply text-lg;
+    }
+  }
+
   .card-highlight-lightning {
     @apply border-lightning-purple/20 bg-lightning-purple/5;
   }

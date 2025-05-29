@@ -16,7 +16,7 @@ export default function WhatIsBitcoinContent() {
       />
 
       {/* A Message from Satoshi */}
-      <Card className="mb-8 p-6 border-bitcoin-orange/20">
+      <Card className="mb-8 p-3 sm:p-4 md:p-6 border-bitcoin-orange/20">
         <h3 className="mb-4 text-lg font-medium">A Message from Satoshi</h3>
         <p className="text-muted-foreground">
           I've developed a new open source P2P e-cash system called Bitcoin. It's completely decentralized, with no central server or trusted parties, because everything is based on crypto proof instead of trust.
@@ -31,7 +31,7 @@ export default function WhatIsBitcoinContent() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-        <Card className="p-6 border-bitcoin-orange/20">
+        <Card className="p-3 sm:p-4 md:p-6 border-bitcoin-orange/20">
           <div className="flex items-start gap-4">
             <div className="p-2 rounded-full bg-bitcoin-orange/10">
               <Lock className="h-6 w-6 text-bitcoin-orange" />
@@ -46,7 +46,7 @@ export default function WhatIsBitcoinContent() {
           </div>
         </Card>
 
-        <Card className="p-6 border-bitcoin-orange/20">
+        <Card className="p-3 sm:p-4 md:p-6 border-bitcoin-orange/20">
           <div className="flex items-start gap-4">
             <div className="p-2 rounded-full bg-bitcoin-orange/10">
               <Database className="h-6 w-6 text-bitcoin-orange" />
@@ -61,7 +61,7 @@ export default function WhatIsBitcoinContent() {
           </div>
         </Card>
 
-        <Card className="p-6 border-bitcoin-orange/20">
+        <Card className="p-3 sm:p-4 md:p-6 border-bitcoin-orange/20">
           <div className="flex items-start gap-4">
             <div className="p-2 rounded-full bg-bitcoin-orange/10">
               <Network className="h-6 w-6 text-bitcoin-orange" />
@@ -76,7 +76,7 @@ export default function WhatIsBitcoinContent() {
           </div>
         </Card>
 
-        <Card className="p-6 border-bitcoin-orange/20">
+        <Card className="p-3 sm:p-4 md:p-6 border-bitcoin-orange/20">
           <div className="flex items-start gap-4">
             <div className="p-2 rounded-full bg-bitcoin-orange/10">
               <Shield className="h-6 w-6 text-bitcoin-orange" />
@@ -99,14 +99,15 @@ export default function WhatIsBitcoinContent() {
         problem that had prevented digital scarcity before Bitcoin's invention.
       </p>
 
-      <div className="my-8 p-6 bg-muted rounded-lg">
+      <div className="my-8 p-3 sm:p-4 md:p-6 bg-muted rounded-lg">
         <h3 className="text-xl font-semibold mb-4">Key Innovation</h3>
         <p className="text-muted-foreground">
           Bitcoin's key innovation was solving the double-spending problem without requiring a
           trusted authority. This opened the door to truly decentralized digital money.
         </p>
         <VerifyCheckbox 
-          id="bitcoin-fundamentals-understanding" 
+          moduleId="bitcoin-fundamentals" 
+          verificationId="bitcoin-fundamentals-understanding" 
           label="I understand that Bitcoin is a decentralized digital currency that operates without central control"
         />
       </div>
@@ -116,7 +117,7 @@ export default function WhatIsBitcoinContent() {
         Bitcoin works through a combination of several technologies and principles:
       </p>
 
-      <ul className="list-disc pl-6 space-y-2 mb-8">
+      <ul className="list-disc pl-4 sm:pl-6 space-y-2 mb-8">
         <li>
           <strong>Public ledger:</strong> All confirmed transactions are stored in the blockchain
         </li>

@@ -128,7 +128,7 @@ export function ModuleContent({
       )}
 
       <Card className="relative border-border/50">
-        <div className="p-8 space-y-6">
+        <div className="p-4 sm:p-6 md:p-8 space-y-6">
           {children}
         </div>
       </Card>

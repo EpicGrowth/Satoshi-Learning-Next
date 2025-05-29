@@ -42,7 +42,7 @@ export default function RootLayout({
       <head>
         {/* Add direct CSS links for more reliable loading */}
       </head>
-      <body className="min-h-screen font-sans antialiased">
+      <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -129,9 +129,9 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 'var(--lightning-purple)';
   
   return (
-    <div className="w-full max-w-6xl pt-0 pb-4 sm:pb-6 md:pb-8 px-2 sm:px-4 md:px-6 mx-auto">
+    <div className="w-full max-w-6xl pt-0 pb-4 sm:pb-6 md:pb-8 px-0 sm:px-4 md:px-6 mx-auto">
           {/* Content */}
-          <div className="w-full max-w-full">
+          <div className="w-full max-w-full mobile-optimized-content">
             {children}
           </div>
           
