@@ -1,14 +1,43 @@
-# Satoshi Learning Path Documentation
+# Satoshi Station Development Documentation
 
-## Project Overview
-A comprehensive Bitcoin and Lightning Network education platform with interactive learning paths, progress tracking, and difficulty-based module organization. Built with Next.js 13+ for modern performance and user experience.
+This directory contains comprehensive documentation for the Satoshi Station project, covering development, design, content, and deployment aspects.
 
-## Features
-- **Multiple Learning Paths**: Bitcoin and Lightning Network curricula
-- **Progressive Difficulty**: Beginner, Intermediate, and Advanced modules
-- **Interactive Learning**: Verification checkpoints and progress tracking
-- **Modern UI**: Clean, responsive design with dark mode support
-- **Progress Persistence**: Local storage for learning progress
+## Development Documentation
+
+- [Development Guide](DEVELOPMENT.md) - Complete development setup and workflow
+- [Repository Strategy](REPOSITORY_STRATEGY.md) - Dual-repository strategy explanation
+- [Workflow](WORKFLOW.md) - Day-to-day development and promotion workflow
+
+## Technical Documentation
+
+- [Technical Overview](TECHNICAL.md) - Technical architecture and implementation details
+- [Deployment Strategy](DEPLOYMENT_STRATEGY.md) - Deployment infrastructure and process
+- [Post Deployment Verification](POST_DEPLOYMENT_VERIFICATION.md) - Verification procedures
+
+## Learning Path System
+
+- [Learning Path System](LEARN_PATH_SYSTEM.md) - Learning path architecture and management
+- [Mobile Components](MOBILE_COMPONENTS.md) - Mobile navigation and progress tracking
+
+## Design Guidelines
+
+- [Color & Typography](COLOR-TYPOGRAPHY-UPDATE.md) - Design system specifications
+- [Visual Guidelines](satoshi-station-visual-guidelines-comprehensive.md) - Comprehensive visual design standards
+
+## Content Guidelines
+
+- [Content Strategy](satoshi-station-content-strategy.md) - Overall content strategy
+- [Content Style Guide](satoshi-station-content-style-guide-comprehensive.md) - Writing style and formatting
+- [Editorial Workflow](satoshi-station-editorial-workflow.md) - Content creation and review process
+- [Voice Application Guide](satoshi-station-voice-application-guide.md) - Brand voice guidelines
+
+## Marketing & Research
+
+- [Audience Personas](satoshi-station-audience-personas.md) - Target audience definitions
+- [Measurement Framework](satoshi-station-measurement-framework.md) - Analytics and success metrics
+- [Messaging Architecture](satoshi-station-messaging-architecture.md) - Content organization
+- [Response Frameworks](satoshi-station-response-frameworks.md) - Communication guidelines
+- [Crisis Plan](satoshi-station-crisis-plan.md) - Incident response procedures
 - **SEO Optimized**: Built-in metadata management
 - **Type Safety**: Full TypeScript implementation
 
