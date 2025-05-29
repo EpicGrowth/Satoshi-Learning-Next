@@ -66,9 +66,9 @@ export default function TheBlockchainPage() {
                 requiring a central authority.
               </p>
 
-              <div className="p-5 bg-background rounded-lg border border-border">
+              <div className="p-3 sm:p-4 md:p-5 bg-background rounded-lg border border-border mobile-text-container">
                 <h5 className="font-medium mb-3">Core Components</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mobile-text-container">
                   <div className="p-4 bg-muted/50 rounded-lg flex items-start">
                     <Database className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
                     <div>
