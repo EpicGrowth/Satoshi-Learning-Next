@@ -31,11 +31,11 @@ const navigationItems = [
     icon: Zap,
     path: '/learn/lightning',
     items: [
-      { title: 'Fundamentals', href: '/learn/lightning/fundamentals/what-is-lightning' },
-      { title: 'Node Operations', href: '/learn/lightning/node-operations/node-setup' },
-      { title: 'Channel Management', href: '/learn/lightning/channel-management/opening-channels' },
-      { title: 'Routing Operations', href: '/learn/lightning/routing-operations/path-finding' },
-      { title: 'Security', href: '/learn/lightning/security/node-security' },
+      { title: 'Fundamentals', href: '/learn/lightning/lightning-fundamentals/what-is-lightning' },
+      { title: 'Node Operations', href: '/learn/lightning/lightning-node-operations/node-setup' },
+      { title: 'Channel Management', href: '/learn/lightning/lightning-channel-management/opening-channels' },
+      { title: 'Routing Operations', href: '/learn/lightning/lightning-routing-operations/path-finding' },
+      { title: 'Security', href: '/learn/lightning/lightning-security/node-security' },
     ],
   },
   {

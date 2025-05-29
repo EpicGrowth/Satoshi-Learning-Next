@@ -65,18 +65,30 @@ export function ModuleContent({
   // Auto-complete section when all checkpoints are verified
   // Added safeguard against infinite loops by checking if the section is already completed
   useEffect(() => {
+    // Create a flag to track if the component is mounted
+    let isMounted = true;
+    
     // Only attempt to mark section complete if progress is 100% AND the section isn't already completed
     if (progress >= 100) {
-      // Check if this is the final section of the module
-      const moduleProgress = getModuleProgress(pathType, normalizedModuleId);
-      const isAlreadyCompleted = moduleProgress?.completedSections?.[sectionId]?.completedAt !== undefined;
-      
-      // Only mark complete if not already completed
-      if (!isAlreadyCompleted) {
-        markSectionComplete(pathType, normalizedModuleId, sectionId);
+      try {
+        // Check if this is the final section of the module
+        const moduleProgress = getModuleProgress(pathType, normalizedModuleId);
+        const isAlreadyCompleted = moduleProgress?.completedSections?.[sectionId]?.completedAt !== undefined;
+        
+        // Only mark complete if not already completed and component is still mounted
+        if (!isAlreadyCompleted && isMounted) {
+          markSectionComplete(pathType, normalizedModuleId, sectionId);
+        }
+      } catch (error) {
+        console.error('Error in module content effect:', error);
       }
     }
-  }, [progress, pathType, moduleId, sectionId, markSectionComplete, getModuleProgress]);
+    
+    // Cleanup function to prevent state updates after unmount
+    return () => {
+      isMounted = false;
+    };
+  }, [progress, pathType, normalizedModuleId, sectionId, markSectionComplete, getModuleProgress]);
 
   return (
     <div className="space-y-6">

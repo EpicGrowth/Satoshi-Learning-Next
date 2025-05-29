@@ -20,7 +20,7 @@ const SatoshiQuote: React.FC<SatoshiQuoteProps> = ({
 }) => {
   return (
     <div className="bg-muted/30 border border-border p-3 sm:p-4 md:p-6 rounded-lg my-6 relative mobile-text-container overflow-hidden">
-      <div className="absolute -left-2 -top-2 bg-bitcoin-orange text-white p-1 rounded-full">
+      <div className="absolute left-2 top-2 bg-bitcoin-orange text-white p-1 rounded-full">
         <Bitcoin className="h-4 w-4" />
       </div>
       <p className="italic text-lg text-foreground/90 leading-relaxed">"{quote}"</p>
