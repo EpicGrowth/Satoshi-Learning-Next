@@ -34,7 +34,7 @@ export function Callout({ type, title, children, className }: CalloutProps) {
 
   return (
     <div className={cn(
-      'my-6 rounded-lg border p-4 shadow-sm',
+      'my-6 rounded-lg border p-3 sm:p-4 shadow-sm mobile-text-container overflow-hidden',
       styles[type],
       className
     )}>

@@ -353,18 +353,68 @@ textarea:focus-visible {
     @apply px-0 sm:px-4 md:px-6;
   }
 
+  /* Prevent text overflow on mobile */
+  .mobile-text-container {
+    @apply max-w-full overflow-x-hidden overflow-y-auto break-words;
+  }
+
+  /* Mobile-optimized card */
+  .mobile-optimized-card {
+    @apply p-3 sm:p-4 md:p-6;
+  }
+
+  /* Mobile-optimized grid items */
+  .mobile-optimized-grid {
+    @apply grid-cols-1 gap-3 sm:gap-4 md:gap-6;
+  }
+
+  /* Mobile-optimized flex items */
+  .mobile-optimized-flex {
+    @apply flex-col sm:flex-row;
+  }
+
   /* Ensure content is readable on mobile devices */
   @media (max-width: 640px) {
-    .prose p, .prose ul, .prose ol {
-      @apply text-sm leading-relaxed;
+    /* Typography adjustments */
+    .prose p, .prose ul, .prose ol, p, li {
+      @apply text-sm leading-relaxed max-w-full break-words;
     }
 
-    .prose h2 {
-      @apply text-xl;
+    .prose h2, h2 {
+      @apply text-xl max-w-full break-words;
     }
 
-    .prose h3 {
-      @apply text-lg;
+    .prose h3, h3 {
+      @apply text-lg max-w-full break-words;
+    }
+
+    .prose h4, h4 {
+      @apply text-base max-w-full break-words;
+    }
+
+    /* Force all content to wrap properly */
+    * {
+      @apply break-words;
+    }
+
+    /* Reduce padding in nested containers */
+    .p-4, .p-5, .p-6 {
+      @apply p-3;
+    }
+
+    /* Ensure code blocks don't overflow */
+    pre, code {
+      @apply max-w-full overflow-x-auto text-xs whitespace-pre-wrap;
+    }
+
+    /* Optimize tables for mobile */
+    table {
+      @apply w-full table-auto text-xs;
+    }
+
+    /* Ensure images don't overflow */
+    img {
+      @apply max-w-full h-auto;
     }
   }
 
