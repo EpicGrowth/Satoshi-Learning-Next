@@ -64,11 +64,19 @@ Satoshi Station uses a dual-repository strategy:
 
 ## Important Notes
 
-### Robots.txt Handling
+### Production-Specific Files
 
-- **Staging**: Should disallow all crawlers (`Disallow: /`)
-- **Production**: Should allow crawlers (`Allow: /`)
-- The promotion script automatically preserves the production robots.txt
+The following files are automatically preserved during promotion:
+
+1. **robots.txt**
+   - **Staging**: Should disallow all crawlers (`Disallow: /`)
+   - **Production**: Should allow crawlers (`Allow: /`)
+
+2. **README.md**
+   - **Staging**: Development-focused with setup instructions
+   - **Production**: Production-focused with deployed application information
+
+The promotion script automatically preserves these production-specific files when creating a release branch.
 
 ### Branch Naming Conventions
 
