@@ -19,12 +19,14 @@ Satoshi Station uses a dual-repository strategy:
 ### 1. Development Process
 
 1. **Start by syncing repositories**:
+
    ```bash
    cd /home/jean-paul/Source/ClaudeCode/sats-production
    ./scripts/promote-to-production.sh sync
    ```
 
 2. **Create feature branch in staging repository**:
+
    ```bash
    cd /home/jean-paul/Source/ClaudeCode/sats-next
    git checkout -b feature/your-feature-name
@@ -42,6 +44,7 @@ Satoshi Station uses a dual-repository strategy:
 ### 2. Promotion to Production
 
 1. **Sync repositories and create release branch**:
+
    ```bash
    cd /home/jean-paul/Source/ClaudeCode/sats-production
    ./scripts/promote-to-production.sh v1.x.x
@@ -77,6 +80,7 @@ Satoshi Station uses a dual-repository strategy:
 ### Commit Message Format
 
 Follow conventional commits format:
+
 - `feat: Add new feature`
 - `fix: Fix specific issue`
 - `docs: Update documentation`
