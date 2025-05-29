@@ -19,7 +19,7 @@ const Card = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border shadow-sm overflow-hidden",
+        "rounded-xl border shadow-sm overflow-hidden mobile-text-container break-words",
         variantClasses[variant],
         className
       )}
@@ -35,7 +35,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-3 sm:p-4 md:p-6", className)}
+    className={cn("flex flex-col space-y-1.5 p-3 sm:p-4 md:p-6 mobile-text-container break-words", className)}
     {...props}
   />
 ));
@@ -47,7 +47,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn("font-semibold leading-none tracking-tight break-words", className)}
     {...props}
   />
 ));
@@ -59,7 +59,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-muted-foreground break-words", className)}
     {...props}
   />
 ));
@@ -71,7 +71,7 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("p-3 sm:p-4 md:p-6 pt-0 sm:pt-0 md:pt-0", className)}
+    className={cn("p-3 sm:p-4 md:p-6 pt-0 sm:pt-0 md:pt-0 mobile-text-container break-words", className)}
     {...props}
   />
 ));

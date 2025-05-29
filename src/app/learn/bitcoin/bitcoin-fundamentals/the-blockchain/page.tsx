@@ -69,11 +69,11 @@ export default function TheBlockchainPage() {
               <div className="p-3 sm:p-4 md:p-5 bg-background rounded-lg border border-border mobile-text-container">
                 <h5 className="font-medium mb-3">Core Components</h5>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mobile-text-container">
-                  <div className="p-4 bg-muted/50 rounded-lg flex items-start">
+                  <div className="p-3 sm:p-4 bg-muted/50 rounded-lg flex items-start overflow-hidden">
                     <Database className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                    <div>
-                      <h6 className="font-medium mb-1">Distributed Ledger</h6>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0 flex-1 break-words">
+                      <h6 className="font-medium mb-1 break-words">Distributed Ledger</h6>
+                      <p className="text-sm text-muted-foreground break-words">
                         Unlike traditional centralized databases, a blockchain is replicated across
                         thousands of nodes. Each participant maintains a complete copy of the
                         ledger, creating a network of redundancy and eliminating single points of
@@ -82,11 +82,11 @@ export default function TheBlockchainPage() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-muted/50 rounded-lg flex items-start">
+                  <div className="p-3 sm:p-4 bg-muted/50 rounded-lg flex items-start overflow-hidden">
                     <Hash className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                    <div>
-                      <h6 className="font-medium mb-1">Cryptographic Linking</h6>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0 flex-1 break-words">
+                      <h6 className="font-medium mb-1 break-words">Cryptographic Linking</h6>
+                      <p className="text-sm text-muted-foreground break-words">
                         Each block contains a cryptographic hash of the previous block, creating an
                         unbreakable chain. Altering any block would change its hash, making all
                         subsequent blocks invalid and immediately detectable by the network.
@@ -94,11 +94,11 @@ export default function TheBlockchainPage() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-muted/50 rounded-lg flex items-start">
+                  <div className="p-3 sm:p-4 bg-muted/50 rounded-lg flex items-start overflow-hidden">
                     <Cpu className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                    <div>
-                      <h6 className="font-medium mb-1">Consensus Mechanism</h6>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0 flex-1 break-words">
+                      <h6 className="font-medium mb-1 break-words">Consensus Mechanism</h6>
+                      <p className="text-sm text-muted-foreground break-words">
                         Bitcoin uses proof-of-work consensus, where miners compete to solve a
                         computationally difficult puzzle. This creates an objective, verifiable way
                         for the network to agree on the valid chain without requiring trust or
@@ -107,11 +107,11 @@ export default function TheBlockchainPage() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-muted/50 rounded-lg flex items-start">
+                  <div className="p-3 sm:p-4 bg-muted/50 rounded-lg flex items-start overflow-hidden">
                     <Key className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                    <div>
-                      <h6 className="font-medium mb-1">Public-Key Cryptography</h6>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0 flex-1 break-words">
+                      <h6 className="font-medium mb-1 break-words">Public-Key Cryptography</h6>
+                      <p className="text-sm text-muted-foreground break-words">
                         Transactions are secured using digital signatures generated with private
                         keys. Anyone can verify a signature is valid using the corresponding public
                         key, but only the private key holder can create valid signatures.
@@ -140,9 +140,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         1
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Version (4 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           Software version that created the block, used for protocol upgrades.
                         </p>
                       </div>
@@ -154,9 +154,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         2
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Previous Block Hash (32 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           SHA-256 hash of the previous block's header, linking blocks into a chain.
                           Changing any block requires changing all subsequent blocks.
                         </p>
@@ -172,9 +172,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         3
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Merkle Root (32 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           Hash of the root of the Merkle tree containing all transactions in the
                           block. Efficiently verifies any transaction's inclusion without
                           downloading all transactions.
@@ -188,9 +188,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         4
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Timestamp (4 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           Block creation time in Unix time (seconds since January 1, 1970). Used to
                           adjust difficulty and verify the block is in correct sequence.
                         </p>
@@ -203,9 +203,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         5
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Difficulty Target (4 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           Compact representation of the proof-of-work difficulty target. The hash of
                           a valid block must be below this target.
                         </p>
@@ -218,9 +218,9 @@ export default function TheBlockchainPage() {
                       <div className="flex h-6 w-6 rounded-full bg-primary/10 text-primary items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5">
                         6
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Nonce (4 bytes)</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           Arbitrary number miners change to get different block hashes when mining,
                           looking for one below the difficulty target.
                         </p>
@@ -234,9 +234,9 @@ export default function TheBlockchainPage() {
                   <div className="p-3 bg-background border border-border rounded-lg">
                     <div className="flex items-start">
                       <HardDrive className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <h6 className="font-medium">Transaction Data</h6>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground break-words">
                           List of all transactions included in the block, starting with the coinbase
                           transaction that rewards the miner with newly created bitcoins and
                           transaction fees. Current blocks typically contain 2,000-3,000
@@ -361,14 +361,14 @@ export default function TheBlockchainPage() {
                     <div className="space-y-3">
                       <div className="flex items-start">
                         <Clock className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Timestamp</p>
                           <p className="text-xs text-muted-foreground">2023-06-25 14:32:01 UTC</p>
                         </div>
                       </div>
                       <div className="flex items-start">
                         <Hash className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">This Block's Hash</p>
                           <p className="text-xs text-muted-foreground overflow-x-auto">
                             00000000000000000001fb91ca9d0e9...
@@ -377,7 +377,7 @@ export default function TheBlockchainPage() {
                       </div>
                       <div className="flex items-start">
                         <HardDrive className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Transactions</p>
                           <p className="text-xs text-muted-foreground">2,651 transactions</p>
                         </div>
@@ -390,14 +390,14 @@ export default function TheBlockchainPage() {
                     <div className="space-y-3">
                       <div className="flex items-start">
                         <Clock className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Timestamp</p>
                           <p className="text-xs text-muted-foreground">2023-06-25 15:08:43 UTC</p>
                         </div>
                       </div>
                       <div className="flex items-start">
                         <Hash className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Previous Block Hash</p>
                           <p className="text-xs text-muted-foreground overflow-x-auto">
                             00000000000000000001fb91ca9d0e9...
@@ -406,7 +406,7 @@ export default function TheBlockchainPage() {
                       </div>
                       <div className="flex items-start">
                         <HardDrive className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Transactions</p>
                           <p className="text-xs text-muted-foreground">3,128 transactions</p>
                         </div>
@@ -419,14 +419,14 @@ export default function TheBlockchainPage() {
                     <div className="space-y-3">
                       <div className="flex items-start">
                         <Clock className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Timestamp</p>
                           <p className="text-xs text-muted-foreground">2023-06-25 15:42:18 UTC</p>
                         </div>
                       </div>
                       <div className="flex items-start">
                         <Hash className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Previous Block Hash</p>
                           <p className="text-xs text-muted-foreground overflow-x-auto">
                             00000000000000000004a21fb632c88...
@@ -435,7 +435,7 @@ export default function TheBlockchainPage() {
                       </div>
                       <div className="flex items-start">
                         <HardDrive className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <div>
+                        <div className="min-w-0 flex-1 break-words">
                           <p className="text-sm font-medium">Transactions</p>
                           <p className="text-xs text-muted-foreground">2,879 transactions</p>
                         </div>

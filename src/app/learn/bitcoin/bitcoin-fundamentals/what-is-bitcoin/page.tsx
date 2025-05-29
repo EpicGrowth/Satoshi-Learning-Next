@@ -29,7 +29,7 @@ export default function WhatIsBitcoin() {
         {/* A Message from Satoshi */}
         <Card className="mb-8 p-6 border-bitcoin-orange/20">
           <h3 className="mb-4 text-lg font-medium">A Message from Satoshi</h3>
-          <div className="rounded-lg bg-muted/50 p-5 text-sm italic text-muted-foreground border border-border/40">
+          <div className="rounded-lg bg-muted/50 p-3 sm:p-4 md:p-5 text-sm italic text-muted-foreground border border-border/40 mobile-text-container break-words">
             <p>
               "I've been working on a new electronic cash system that's fully peer-to-peer,
               with no trusted third party. The root problem with conventional currency is all
@@ -75,9 +75,9 @@ export default function WhatIsBitcoin() {
         <Card className="mb-8 p-6">
           <h3 className="mb-4 text-lg font-medium">Technical Foundation</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-muted p-4 rounded-lg flex items-start">
+            <div className="bg-muted p-3 sm:p-4 rounded-lg flex items-start overflow-hidden">
               <Database className="h-6 w-6 text-bitcoin-orange mr-3 mt-1 flex-shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1 break-words">
                 <h5 className="font-medium mb-2">Blockchain</h5>
                 <p className="text-sm text-muted-foreground">
                   A chronological, append-only database of all transactions, organized in "blocks"
@@ -87,9 +87,9 @@ export default function WhatIsBitcoin() {
               </div>
             </div>
 
-            <div className="bg-muted p-4 rounded-lg flex items-start">
+            <div className="bg-muted p-3 sm:p-4 rounded-lg flex items-start overflow-hidden">
               <Lock className="h-6 w-6 text-bitcoin-orange mr-3 mt-1 flex-shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1 break-words">
                 <h5 className="font-medium mb-2">Cryptography</h5>
                 <p className="text-sm text-muted-foreground">
                   Bitcoin uses public-key cryptography to create digital signatures that prove
@@ -99,9 +99,9 @@ export default function WhatIsBitcoin() {
               </div>
             </div>
 
-            <div className="bg-muted p-4 rounded-lg flex items-start">
+            <div className="bg-muted p-3 sm:p-4 rounded-lg flex items-start overflow-hidden">
               <Network className="h-6 w-6 text-bitcoin-orange mr-3 mt-1 flex-shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1 break-words">
                 <h5 className="font-medium mb-2">P2P Network</h5>
                 <p className="text-sm text-muted-foreground">
                   Bitcoin operates on a peer-to-peer network where all participants run the same
@@ -111,9 +111,9 @@ export default function WhatIsBitcoin() {
               </div>
             </div>
 
-            <div className="bg-muted p-4 rounded-lg flex items-start">
+            <div className="bg-muted p-3 sm:p-4 rounded-lg flex items-start overflow-hidden">
               <Shield className="h-6 w-6 text-bitcoin-orange mr-3 mt-1 flex-shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1 break-words">
                 <h5 className="font-medium mb-2">Consensus Mechanism</h5>
                 <p className="text-sm text-muted-foreground">
                   The proof-of-work algorithm requires miners to expend computational resources to

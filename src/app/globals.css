@@ -357,6 +357,16 @@ textarea:focus-visible {
   .mobile-text-container {
     @apply max-w-full overflow-x-hidden overflow-y-auto break-words;
   }
+  
+  /* Fix for flex layouts with text overflow */
+  .flex > * {
+    @apply min-w-0;
+  }
+  
+  /* Ensure all text elements can break words */
+  p, h1, h2, h3, h4, h5, h6, span, div {
+    @apply break-words;
+  }
 
   /* Mobile-optimized card */
   .mobile-optimized-card {
