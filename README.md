@@ -11,24 +11,17 @@ npm run dev
 
 Visit `http://localhost:3000` to view the application.
 
-## Documentation Structure
+## Documentation
+
+All project documentation is located in the `docs/` directory. For a complete list of available documentation, see the [Documentation Index](docs/DOCUMENTATION_INDEX.md).
+
+Key documentation includes:
 
 - [Development Guide](docs/DEVELOPMENT.md) - Complete development documentation
 - [Technical Documentation](docs/TECHNICAL.md) - Technical architecture and implementation details
 - [Deployment Strategy](docs/DEPLOYMENT_STRATEGY.md) - Deployment procedures and infrastructure
 - [Content Strategy](docs/satoshi-station-content-strategy.md) - Content guidelines and standards
-- [Visual Guidelines](docs/satoshi-station-visual-guidelines-comprehensive.md) - Visual design standards
 - [Learning Path System](docs/LEARN_PATH_SYSTEM.md) - Learning path architecture and management
-- [Mobile Components](docs/MOBILE_COMPONENTS.md) - Mobile navigation and progress tracking components
-- [Search Indexing](docs/SEARCH_INDEXING.md) - Search functionality and indexing documentation
-- [Post Deployment Verification](docs/POST_DEPLOYMENT_VERIFICATION.md) - Deployment verification procedures
-- [Content Style Guide](docs/satoshi-station-content-style-guide-comprehensive.md) - Comprehensive content guidelines
-- [Editorial Workflow](docs/satoshi-station-editorial-workflow.md) - Content creation and review process
-- [Audience Personas](docs/satoshi-station-audience-personas.md) - Target audience definitions
-- [Measurement Framework](docs/satoshi-station-measurement-framework.md) - Analytics and success metrics
-- [Color & Typography](docs/COLOR-TYPOGRAPHY-UPDATE.md) - Design system specifications
-- [Voice Application Guide](docs/satoshi-station-voice-application-guide.md) - Brand voice guidelines
-- [Crisis Plan](docs/satoshi-station-crisis-plan.md) - Incident response procedures
 - [Response Frameworks](docs/satoshi-station-response-frameworks.md) - Communication guidelines
 - [Messaging Architecture](docs/satoshi-station-messaging-architecture.md) - Content organization strategy
 
