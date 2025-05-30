@@ -1,9 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Network, Shield, Bitcoin, FileCheck } from 'lucide-react';
+import { Network, Shield, Bitcoin, FileCheck, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const verificationTools = [
   {
@@ -60,26 +62,34 @@ export default function VerifyPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {verificationTools.map((tool) => (
-          <Card key={tool.title} className="p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <tool.icon className="h-6 w-6 text-primary" />
+          <Link href={tool.href} key={tool.title}>
+            <Card className="p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 h-full flex flex-col">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <tool.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h2 className="text-xl font-semibold">{tool.title}</h2>
               </div>
-              <h2 className="text-xl font-semibold">{tool.title}</h2>
-            </div>
-            <p className="text-muted-foreground mb-6">{tool.description}</p>
-            <div className="space-y-2">
-              <h3 className="font-medium mb-2">Features:</h3>
-              <ul className="space-y-1">
-                {tool.features.map((feature) => (
-                  <li key={feature} className="text-sm text-muted-foreground flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mr-2" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Card>
+              <p className="text-muted-foreground mb-6">{tool.description}</p>
+              <div className="space-y-2 flex-grow">
+                <h3 className="font-medium mb-2">Features:</h3>
+                <ul className="space-y-1">
+                  {tool.features.map((feature) => (
+                    <li key={feature} className="text-sm text-muted-foreground flex items-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mr-2" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/40">
+                <Button variant="ghost" className="w-full justify-between hover:bg-primary/5">
+                  Open Tool
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </div>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

@@ -40,7 +40,11 @@ export default function RootLayout({
       className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable} ${fontBrand.variable}`}
     >
       <head>
-        {/* Add direct CSS links for more reliable loading */}
+        {/* 
+          In case of styling issues in development mode, consider adding direct CSS links here.
+          For example:
+          <link rel="stylesheet" href="/_next/static/css/app/layout.css" />
+        */}
       </head>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider

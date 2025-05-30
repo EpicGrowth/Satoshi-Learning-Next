@@ -26,7 +26,24 @@ const nextConfig = {
   },
   
   // External packages that can be used by Server Components
-  serverExternalPackages: []
+  serverExternalPackages: [],
+  
+  // Configure webpack to handle WebAssembly files
+  webpack: (config) => {
+    // Add WebAssembly file loader
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
+    
+    // Add rule for WebAssembly files
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'webassembly/async',
+    });
+    
+    return config;
+  }
 };
 
 module.exports = nextConfig;

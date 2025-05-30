@@ -201,9 +201,9 @@ export default function Home() {
               className="gap-2 text-base border-bitcoin-orange/30 text-bitcoin-orange hover:bg-bitcoin-orange/5 hover:border-bitcoin-orange/50 px-8 py-6"
               asChild
             >
-              <Link href="/verify/blocks">
+              <Link href="/verify">
                 <Shield className="h-5 w-5 mr-2" />
-                Verify Blocks
+                Verification Tools
               </Link>
             </Button>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, FileCheck, RefreshCw, Search, CheckCircle, XCircle, Info } from 'lucide-react';
+import { ArrowLeft, FileCheck, RefreshCw, Search, CheckCircle, XCircle, Info, Shield } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,22 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Link from 'next/link';
 import * as bitcoin from 'bitcoinjs-lib';
+
+// Educational content about Merkle proofs
+const educationalContent = [
+  {
+    title: "What is a Merkle Proof?",
+    content: "A Merkle proof is a cryptographic verification method that efficiently proves a transaction is included in a block without requiring the verifier to download the entire block. It uses a binary tree structure called a Merkle tree."
+  },
+  {
+    title: "Why Use Merkle Proofs?",
+    content: "Merkle proofs allow lightweight clients (SPV wallets) to verify transactions without running a full node. They're essential for Bitcoin's scalability, enabling verification with minimal data requirements."
+  },
+  {
+    title: "Security Considerations",
+    content: "While Merkle proofs confirm a transaction is in a block, they don't verify the transaction's validity. Full nodes perform complete validation of all transactions and consensus rules."
+  }
+];
 
 // Component to visualize a Merkle tree
 const MerkleTreeVisualization = ({ txids, targetTxid }: { txids: string[], targetTxid?: string }) => {
@@ -216,10 +232,9 @@ export default function VerifyMerklePage() {
           <FileCheck className="mr-1 h-3 w-3" />
           Merkle Proof Verification
         </Badge>
-        <h1 className="text-4xl font-bold mb-4">Verify Merkle Proofs</h1>
+        <h1 className="text-4xl font-bold mb-4">Verify Transaction Inclusion</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Verify that a transaction is included in a Bitcoin block using Merkle proofs.
-          Understand how lightweight verification works in the Bitcoin network.
+          Verify that a transaction is included in a block using Merkle proofs without needing to download the entire blockchain.
         </p>
       </div>
 
@@ -228,7 +243,7 @@ export default function VerifyMerklePage() {
           <TabsTrigger value="verify">Verify Proof</TabsTrigger>
           <TabsTrigger value="visualize">Visualize Merkle Tree</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="verify">
           <Card>
             <CardHeader>
@@ -300,11 +315,11 @@ export default function VerifyMerklePage() {
                   </div>
                 </div>
               </div>
-              
+
               {error && (
                 <p className="text-red-500 text-sm">{error}</p>
               )}
-              
+
               <Button 
                 onClick={verifyMerkleProof} 
                 disabled={verifying}
@@ -322,7 +337,7 @@ export default function VerifyMerklePage() {
                   </>
                 )}
               </Button>
-              
+
               {verificationResult !== null && (
                 <div className={`p-4 rounded-md ${verificationResult ? 'bg-green-100 dark:bg-green-900/20' : 'bg-red-100 dark:bg-red-900/20'}`}>
                   <div className="flex items-center">
@@ -348,7 +363,7 @@ export default function VerifyMerklePage() {
             </CardFooter>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="visualize">
           <Card>
             <CardHeader>
@@ -379,14 +394,14 @@ export default function VerifyMerklePage() {
                   </Button>
                 </div>
               </div>
-              
+
               {blockData && (
                 <div className="mt-4">
                   <h3 className="text-lg font-medium mb-2">Block #{blockData.height}</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Merkle Root: <span className="font-mono">{blockData.merkleroot.substring(0, 16)}...</span>
                   </p>
-                  
+
                   {sampleTxids.length > 0 ? (
                     <>
                       <p className="text-sm mb-2">
@@ -405,9 +420,9 @@ export default function VerifyMerklePage() {
                           </Button>
                         ))}
                       </div>
-                      
+
                       <MerkleTreeVisualization txids={sampleTxids} targetTxid={txid} />
-                      
+
                       <div className="bg-muted p-4 rounded-md mt-4">
                         <div className="flex items-start">
                           <Info className="h-5 w-5 text-muted-foreground mr-2 mt-0.5" />
@@ -432,45 +447,186 @@ export default function VerifyMerklePage() {
           </Card>
         </TabsContent>
       </Tabs>
-      
-      <Card className="mb-10">
-        <CardHeader>
-          <CardTitle>Understanding Merkle Trees</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+
+      <div className="mb-12 border rounded-lg p-6 bg-card text-card-foreground shadow-sm">
+        <div className="flex flex-col space-y-1.5 pb-4 border-b mb-4">
+          <h3 className="text-xl font-semibold">How Merkle Proofs Work</h3>
+        </div>
+        <div className="space-y-6">
           <p>
-            Merkle trees are a fundamental data structure in Bitcoin that enable efficient and secure verification
-            of transaction inclusion without requiring the entire blockchain.
+            Merkle proofs allow you to verify that a transaction is included in a block without downloading the entire block.
+            Here's how they work:
           </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border rounded-md p-4">
-              <h3 className="text-lg font-medium mb-2">How Merkle Trees Work</h3>
-              <ol className="list-decimal list-inside space-y-2 text-sm">
-                <li>All transactions in a block are hashed</li>
-                <li>Pairs of transaction hashes are combined and hashed again</li>
-                <li>This process continues until a single hash remains (the Merkle root)</li>
-                <li>The Merkle root is included in the block header</li>
-              </ol>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="border rounded-md p-4 bg-background hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 mx-auto">
+                <FileCheck className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-medium mb-2 text-center">Merkle Tree Structure</h3>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "All transactions in a block are arranged in a binary tree",
+                  "Each leaf node is a transaction hash",
+                  "Each non-leaf node is a hash of its two children",
+                  "The root of the tree is the Merkle root in the block header"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="border rounded-md p-4">
-              <h3 className="text-lg font-medium mb-2">Benefits of Merkle Proofs</h3>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li>Efficient verification (logarithmic complexity)</li>
-                <li>Enables Simplified Payment Verification (SPV)</li>
-                <li>Allows lightweight clients to verify transactions</li>
-                <li>Preserves privacy by only revealing necessary data</li>
+
+            <div className="border rounded-md p-4 bg-background hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 mx-auto">
+                <Search className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-medium mb-2 text-center">Verification Process</h3>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "You have a transaction ID and want to verify it's in a block",
+                  "You need the Merkle path (a set of hashes) to the root",
+                  "By combining your transaction hash with the path hashes, you can compute the root",
+                  "If your computed root matches the block's Merkle root, the transaction is verified"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="border rounded-md p-4 bg-background hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 mx-auto">
+                <Shield className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-medium mb-2 text-center">Security Benefits</h3>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "Efficient: Verification requires only log₂(n) hashes for n transactions",
+                  "Trustless: No need to trust third parties about transaction inclusion",
+                  "Lightweight: SPV clients can verify without storing the full blockchain",
+                  "Tamper-proof: Changing any transaction would change the Merkle root"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
+
+          <div className="mt-4 p-4 border rounded-md bg-muted/30">
+            <p className="text-sm text-muted-foreground">
+              <strong>Did you know?</strong> Merkle proofs are essential for SPV (Simplified Payment Verification) clients, which don't store the full blockchain.
+              They allow lightweight verification while maintaining Bitcoin's security model. This concept was described in Satoshi Nakamoto's original Bitcoin whitepaper.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Educational content section */}
+      <div className="mt-16 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6 text-center">Understanding Merkle Proofs</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {educationalContent.map((item, index) => (
+            <div 
+              key={index} 
+              className="border rounded-lg p-6 bg-card hover:shadow-md transition-shadow duration-300 hover:border-primary/30"
+            >
+              <h3 className="text-lg font-semibold mb-3 text-primary">{item.title}</h3>
+              <p className="text-sm text-muted-foreground">{item.content}</p>
+            </div>
+          ))}
+        </div>
+        
+        {/* Technical diagram */}
+        <div className="mt-12 border rounded-lg p-6 bg-muted/30">
+          <h3 className="text-lg font-semibold mb-4">Merkle Tree Visualization</h3>
           
-          <p className="text-sm text-muted-foreground">
-            Merkle proofs are used by lightweight Bitcoin clients (SPV clients) to verify transactions without
-            downloading the entire blockchain, making Bitcoin more accessible on mobile and low-resource devices.
-          </p>
-        </CardContent>
-      </Card>
+          <div className="relative overflow-hidden rounded-md p-6 bg-background border">
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-8">
+                <div className="w-20 h-20 mx-auto rounded-md bg-primary/10 flex items-center justify-center mb-2">
+                  <div className="font-mono text-xs text-primary font-bold">MERKLE ROOT</div>
+                </div>
+                <div className="text-xs text-muted-foreground">Block Header</div>
+              </div>
+              
+              <div className="w-full flex justify-center mb-8">
+                <div className="flex space-x-16">
+                  {[1, 2].map(i => (
+                    <div key={i} className="text-center">
+                      <div className="w-16 h-16 rounded-md bg-primary/5 flex items-center justify-center mb-2">
+                        <div className="font-mono text-xs text-primary/80 font-bold">HASH {i}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">Internal Node</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="w-full flex justify-center">
+                <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="text-center">
+                      <div className={`w-14 h-14 rounded-md ${i === 2 ? 'bg-green-100 border-green-300 border-2 dark:bg-green-900/30' : 'bg-muted'} flex items-center justify-center mb-2`}>
+                        <div className={`font-mono text-xs ${i === 2 ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'} font-bold`}>TX {i}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">{i === 2 ? 'Your Transaction' : 'Transaction'}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Connecting lines */}
+              <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0" style={{ maxHeight: '300px' }}>
+                <path d="M 50% 20% L 33% 35%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                <path d="M 50% 20% L 67% 35%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                <path d="M 33% 35% L 20% 65%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                <path d="M 33% 35% L 40% 65%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                <path d="M 67% 35% L 60% 65%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                <path d="M 67% 35% L 80% 65%" stroke="currentColor" strokeWidth="1" strokeDasharray="4" className="text-muted-foreground/50" fill="none" />
+                
+                {/* Highlight path for the verified transaction */}
+                <path d="M 50% 20% L 33% 35% L 40% 65%" stroke="#10b981" strokeWidth="2" fill="none" />
+              </svg>
+            </div>
+          </div>
+          
+          <div className="mt-4 text-sm text-muted-foreground">
+            <p><strong>The Merkle Path:</strong> To verify transaction TX 2, you only need the hashes along the green path, not the entire block. This makes verification extremely efficient, requiring only log₂(n) hashes for a block with n transactions.</p>
+          </div>
+        </div>
+        
+        {/* Real-world applications */}
+        <div className="mt-8 rounded-lg border p-6">
+          <h3 className="text-lg font-semibold mb-4">Real-World Applications</h3>
+          <ul className="space-y-2 text-sm">
+            <li className="flex items-start">
+              <span className="w-2 h-2 rounded-full bg-primary mt-1.5 mr-2 flex-shrink-0"></span>
+              <span><strong>Light Clients:</strong> Mobile wallets use Merkle proofs to verify transactions without downloading the entire blockchain.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 rounded-full bg-primary mt-1.5 mr-2 flex-shrink-0"></span>
+              <span><strong>Payment Verification:</strong> Merchants can confirm payments are included in the blockchain.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 rounded-full bg-primary mt-1.5 mr-2 flex-shrink-0"></span>
+              <span><strong>Cross-Chain Proofs:</strong> Some blockchain interoperability solutions use Merkle proofs to verify events across different chains.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="w-2 h-2 rounded-full bg-primary mt-1.5 mr-2 flex-shrink-0"></span>
+              <span><strong>Sidechains:</strong> Merkle proofs enable efficient verification of transactions between Bitcoin and sidechains.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
