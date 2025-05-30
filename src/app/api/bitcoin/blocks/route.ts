@@ -22,32 +22,44 @@ export async function GET(request: Request) {
       ? `https://blockstream.info/api/block-height/${blockQuery}`
       : `https://blockstream.info/api/block/${blockQuery}`;
     
-    // Get API credentials
-    const { apiKey, apiSecret } = await getBlockstreamCredentials();
-    
-    // Prepare headers for authenticated request if credentials exist
+    // Prepare headers for the request
+    // Note: We're making the API call without credentials for educational purposes
+    // In a production environment, you would use proper API credentials
     const headers: HeadersInit = {};
-    if (apiKey && apiSecret) {
-      const authString = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
-      headers['Authorization'] = `Basic ${authString}`;
-    }
     
     // First, if it's a height query, we need to get the block hash
     let blockHash = blockQuery;
     if (isHeight) {
-      const heightResponse = await fetch(apiUrl, { headers });
-      if (!heightResponse.ok) {
+      try {
+        const heightResponse = await fetch(apiUrl, { headers });
+        if (!heightResponse.ok) {
+          return NextResponse.json(
+            { error: `Block at height ${blockQuery} not found` },
+            { status: 404 }
+          );
+        }
+        blockHash = await heightResponse.text();
+      } catch (error) {
+        console.error('Error fetching block height:', error);
         return NextResponse.json(
-          { error: `Block at height ${blockQuery} not found` },
-          { status: 404 }
+          { error: 'Failed to connect to Blockstream API. Please try again later.' },
+          { status: 500 }
         );
       }
-      blockHash = await heightResponse.text();
     }
     
     // Now get the block details using the hash
     const blockUrl = `https://blockstream.info/api/block/${blockHash}`;
-    const blockResponse = await fetch(blockUrl, { headers });
+    let blockResponse;
+    try {
+      blockResponse = await fetch(blockUrl, { headers });
+    } catch (error) {
+      console.error('Error fetching block data:', error);
+      return NextResponse.json(
+        { error: 'Failed to connect to Blockstream API. Please try again later.' },
+        { status: 500 }
+      );
+    }
     
     if (!blockResponse.ok) {
       return NextResponse.json(

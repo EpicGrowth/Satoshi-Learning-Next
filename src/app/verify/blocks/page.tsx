@@ -55,22 +55,27 @@ export default function VerifyBlocksPage() {
 
     setIsLoading(true);
     setError('');
+    setBlockData(null);
+    setTransactionData([]);
     setCurrentPage(1); // Reset to first page on new search
-    setTransactionData([]); // Clear previous transactions
 
     try {
-      // Fetch block data
       const data = await fetchBlockData(blockInput);
       setBlockData(data);
+      setCurrentPage(1);
       setTotalTransactions(data.tx_count || 0);
-      
-      // Fetch first page of transactions
-      if (data && data.hash) {
-        await fetchTransactionPage(data.hash, 1);
+      await fetchTransactionPage(data.hash, 1);
+    } catch (err: any) {
+      console.error('Block search error:', err);
+      if (err.message.includes('Blockstream API')) {
+        setError('Unable to connect to the Bitcoin network. Please try again later.');
+      } else if (blockInput.match(/^[0-9]+$/)) {
+        setError(`Block at height ${blockInput} not found or not yet mined.`);
+      } else if (blockInput.match(/^[0-9a-f]{64}$/i)) {
+        setError(`Block with hash ${blockInput} not found.`);
+      } else {
+        setError('Invalid block identifier. Please enter a valid block height or hash.');
       }
-    } catch (err) {
-      setError('Failed to fetch block data. Please try again.');
-      console.error(err);
     } finally {
       setIsLoading(false);
     }

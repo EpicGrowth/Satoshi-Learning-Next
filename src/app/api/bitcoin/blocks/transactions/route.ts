@@ -15,24 +15,28 @@ export async function GET(request: Request) {
       );
     }
     
-    // Get API credentials
-    const { apiKey, apiSecret } = await getBlockstreamCredentials();
-    
-    // Prepare headers for authenticated request if credentials exist
+    // Prepare headers for the request
+    // Note: We're making the API call without credentials for educational purposes
     const headers: HeadersInit = {};
-    if (apiKey && apiSecret) {
-      const authString = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
-      headers['Authorization'] = `Basic ${authString}`;
-    }
     
     // Fetch transaction IDs for the block
     const txsUrl = `https://blockstream.info/api/block/${blockHash}/txids`;
-    const txsResponse = await fetch(txsUrl, { headers });
+    let txsResponse;
     
-    if (!txsResponse.ok) {
+    try {
+      txsResponse = await fetch(txsUrl, { headers });
+      
+      if (!txsResponse.ok) {
+        return NextResponse.json(
+          { error: 'Failed to fetch transaction IDs' },
+          { status: txsResponse.status }
+        );
+      }
+    } catch (error) {
+      console.error('Error fetching transaction IDs:', error);
       return NextResponse.json(
-        { error: 'Failed to fetch transaction IDs' },
-        { status: txsResponse.status }
+        { error: 'Failed to connect to Blockstream API. Please try again later.' },
+        { status: 500 }
       );
     }
     

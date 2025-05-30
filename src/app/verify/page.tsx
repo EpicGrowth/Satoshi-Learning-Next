@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Network, Shield, Bitcoin, FileCheck, ArrowRight } from 'lucide-react';
+import { Network, Shield, Bitcoin, FileCheck, ArrowRight, History, Clock } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
@@ -42,6 +42,18 @@ const verificationTools = [
       'Proof generation',
       'Proof verification',
       'SPV validation',
+    ],
+  },
+  {
+    title: 'Blockchain Milestones',
+    description: 'Explore significant blocks and events in Bitcoin history through an interactive timeline.',
+    icon: History,
+    href: '/verify/milestones',
+    features: [
+      'Historical blocks',
+      'Protocol upgrades',
+      'Network events',
+      'Interactive timeline',
     ],
   },
 ];
