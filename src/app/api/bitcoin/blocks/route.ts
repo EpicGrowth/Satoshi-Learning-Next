@@ -1,14 +1,6 @@
 import { NextResponse } from 'next/server';
+import { getBlockstreamCredentials } from '@/lib/secrets';
 
-// This will be replaced with actual secret management
-// For development, we'll use environment variables
-// In production, this will use Google Cloud Secret Manager
-const getBlockstreamCredentials = async () => {
-  return {
-    apiKey: process.env.BLOCKSTREAM_API_KEY || '',
-    apiSecret: process.env.BLOCKSTREAM_API_SECRET || '',
-  };
-};
 
 export async function GET(request: Request) {
   try {
