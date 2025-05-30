@@ -91,7 +91,7 @@ export default function VerifyBlocksPage() {
                 className="w-full"
               />
             </div>
-            <Button onClick={handleSearch} disabled={isLoading}>
+            <Button onClick={handleSearch} disabled={isLoading} className="button-search">
               <Search className="mr-2 h-4 w-4" />
               {isLoading ? 'Searching...' : 'Search'}
             </Button>

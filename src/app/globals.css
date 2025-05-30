@@ -308,6 +308,13 @@ textarea:focus-visible {
 }
 
 @layer components {
+  /* Improve button text contrast in light mode */
+  .light .button-search,
+  :root .button-search {
+    color: hsl(var(--primary-foreground));
+    font-weight: 500;
+  }
+
   /* Bitcoin themed components - keeps bitcoin-specific utility classes */
   .bitcoin-gradient {
     @apply bg-gradient-to-r from-bitcoin-orange to-bitcoin-orange/80;
