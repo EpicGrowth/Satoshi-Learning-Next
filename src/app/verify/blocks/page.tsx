@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bitcoin, Search, ArrowLeft, Database, Clock, Hash, CreditCard, ArrowRight, FileText, DollarSign } from 'lucide-react';
+import { Bitcoin, Search, ArrowLeft, Database, Clock, Hash, CreditCard, ArrowRight, FileText, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,11 @@ export default function VerifyBlocksPage() {
   const [blockData, setBlockData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [transactionsPerPage] = useState(10);
+  const [transactionData, setTransactionData] = useState<any[]>([]);
+  const [loadingTransactions, setLoadingTransactions] = useState(false);
+  const [totalTransactions, setTotalTransactions] = useState(0);
 
   const handleSearch = async () => {
     if (!blockInput.trim()) {
@@ -34,16 +39,52 @@ export default function VerifyBlocksPage() {
 
     setIsLoading(true);
     setError('');
+    setCurrentPage(1); // Reset to first page on new search
+    setTransactionData([]); // Clear previous transactions
 
     try {
-      // This will be replaced with actual API call
+      // Fetch block data
       const data = await fetchBlockData(blockInput);
       setBlockData(data);
+      setTotalTransactions(data.tx_count || 0);
+      
+      // Fetch first page of transactions
+      if (data && data.hash) {
+        await fetchTransactionPage(data.hash, 1);
+      }
     } catch (err) {
       setError('Failed to fetch block data. Please try again.');
       console.error(err);
     } finally {
       setIsLoading(false);
+    }
+  };
+  
+  // Function to fetch a page of transactions
+  const fetchTransactionPage = async (blockHash: string, page: number) => {
+    setLoadingTransactions(true);
+    try {
+      const offset = (page - 1) * transactionsPerPage;
+      const response = await fetch(`/api/bitcoin/blocks/transactions?blockHash=${blockHash}&start=${offset}&limit=${transactionsPerPage}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch transactions');
+      }
+      
+      const data = await response.json();
+      setTransactionData(data);
+      setCurrentPage(page);
+    } catch (err) {
+      console.error('Error fetching transactions:', err);
+    } finally {
+      setLoadingTransactions(false);
+    }
+  };
+  
+  // Handle page change
+  const handlePageChange = (newPage: number) => {
+    if (blockData && blockData.hash) {
+      fetchTransactionPage(blockData.hash, newPage);
     }
   };
 
@@ -165,7 +206,7 @@ export default function VerifyBlocksPage() {
               </p>
             </div>
             
-            {blockData.transactions && blockData.transactions.length > 0 && (
+            {blockData && blockData.hash && (
               <div className="mt-8">
                 <h3 className="text-sm font-medium mb-4">Transactions in this Block</h3>
                 <div className="border rounded-md overflow-hidden">
@@ -179,40 +220,89 @@ export default function VerifyBlocksPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-muted">
-                      {blockData.transactions.map((tx: any) => (
-                        <tr key={tx.txid} className="hover:bg-muted/50">
-                          <td className="px-4 py-3">
-                            <div className="flex items-center">
-                              <CreditCard className="h-4 w-4 mr-2 text-muted-foreground" />
-                              <a 
-                                href={`https://mempool.space/tx/${tx.txid}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-xs font-mono text-primary hover:underline truncate max-w-[180px]"
-                              >
-                                {tx.txid}
-                              </a>
+                      {loadingTransactions ? (
+                        <tr>
+                          <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
+                            <div className="flex justify-center items-center">
+                              <Search className="h-4 w-4 mr-2 animate-spin" />
+                              Loading transactions...
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-xs text-right">{tx.size} bytes</td>
-                          <td className="px-4 py-3 text-xs text-right">{(tx.value / 100000000).toFixed(8)}</td>
-                          <td className="px-4 py-3 text-xs text-right">{tx.fee || 'N/A'}</td>
                         </tr>
-                      ))}
+                      ) : transactionData.length > 0 ? (
+                        transactionData.map((tx: any) => (
+                          <tr key={tx.txid} className="hover:bg-muted/50">
+                            <td className="px-4 py-3">
+                              <div className="flex items-center">
+                                <CreditCard className="h-4 w-4 mr-2 text-muted-foreground" />
+                                <a 
+                                  href={`https://mempool.space/tx/${tx.txid}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs font-mono text-primary hover:underline truncate max-w-[180px]"
+                                >
+                                  {tx.txid}
+                                </a>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 text-xs text-right">{tx.size} bytes</td>
+                            <td className="px-4 py-3 text-xs text-right">{(tx.value / 100000000).toFixed(8)}</td>
+                            <td className="px-4 py-3 text-xs text-right">{tx.fee || 'N/A'}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
+                            No transactions found
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Showing {blockData.transactions.length} of {blockData.tx_count} transactions. 
-                  <a 
-                    href={`https://mempool.space/block/${blockData.hash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    View all transactions
-                  </a>
-                </p>
+                
+                {/* Pagination controls */}
+                {totalTransactions > 0 && (
+                  <div className="flex justify-between items-center mt-4">
+                    <p className="text-xs text-muted-foreground">
+                      Showing {((currentPage - 1) * transactionsPerPage) + 1}-
+                      {Math.min(currentPage * transactionsPerPage, totalTransactions)} of {totalTransactions} transactions
+                    </p>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1 || loadingTransactions}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      
+                      <span className="text-xs">
+                        Page {currentPage} of {Math.ceil(totalTransactions / transactionsPerPage)}
+                      </span>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage >= Math.ceil(totalTransactions / transactionsPerPage) || loadingTransactions}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    
+                    <a 
+                      href={`https://mempool.space/block/${blockData.hash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline"
+                    >
+                      View on Mempool.space
+                    </a>
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
