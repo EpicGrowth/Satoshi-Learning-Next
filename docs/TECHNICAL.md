@@ -29,13 +29,69 @@ SatoshiStationNext is built on modern web technologies with a focus on performan
    - Dynamic imports for code splitting
    - Optimized image handling
 
-3. **Performance Optimizations**
+3. **Bitcoin Verification Tools**
+
+   - Client-side cryptographic operations
+   - Educational content integration
+   - Interactive visualizations
+   - Responsive design for all devices
+   - WebAssembly compatibility for cryptographic libraries
+
+4. **Performance Optimizations**
 
    - Server-side rendering
    - Image optimization
    - Code splitting strategies
    - Caching policies
    - Automatic scaling via Cloud Run
+
+### Bitcoin Verification Tools Implementation
+
+The platform includes three main Bitcoin verification tools, each implemented as client-side components to ensure security and privacy:
+
+#### 1. Block Explorer
+
+**Implementation Details:**
+- **API Integration**: Uses Blockstream API to fetch block and transaction data
+- **Pagination**: Implements client-side pagination for transaction lists
+- **Educational Content**: Integrates visual diagrams and explanatory text
+- **File Structure**:
+  - `/src/app/verify/blocks/page.tsx`: Main component with UI and educational content
+  - `/src/app/api/bitcoin/blocks/transactions/route.ts`: API route for fetching transaction data
+
+**Technical Considerations:**
+- Uses server-side API routes to proxy requests to Blockstream for better error handling
+- Implements loading states and error boundaries for better UX
+- Responsive design adapts to different screen sizes
+
+#### 2. Digital Signature Verification
+
+**Implementation Details:**
+- **Libraries**: Uses bitcoinjs-lib and tiny-secp256k1 for cryptographic operations
+- **Client Components**: Implemented as client components to handle WebAssembly dependencies
+- **Educational Content**: Includes explanations of ECDSA signatures and their applications
+- **File Structure**:
+  - `/src/app/verify/signatures/page.tsx`: Container component with dynamic imports
+  - `/src/app/verify/signatures/signature-verification-tool.tsx`: Client component with verification logic
+
+**Technical Considerations:**
+- Uses dynamic imports to handle WebAssembly compatibility
+- Implements tooltips and example data for better user experience
+- All cryptographic operations happen client-side for security
+
+#### 3. Merkle Proof Verification
+
+**Implementation Details:**
+- **Visualization**: Interactive visualization of Merkle trees and verification paths
+- **API Integration**: Fetches Merkle proof data from Blockstream API
+- **Educational Content**: Explains how Merkle proofs enable lightweight verification
+- **File Structure**:
+  - `/src/app/verify/merkle/page.tsx`: Main component with verification logic and visualization
+
+**Technical Considerations:**
+- Uses recursive algorithms to build and visualize Merkle trees
+- Implements responsive design for the tree visualization
+- Provides step-by-step explanation of the verification process
 
 ### Development Workflow
 

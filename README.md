@@ -45,6 +45,7 @@ Satoshi Station's mission is to ignite a revolution in digital expression and Bi
 - **Theme Support**: Dark and light modes with exact colors from the original sats.sv site
 - **Honeycomb Background**: Recreated SVG-based hexagon pattern from the original site
 - **Interactive Visualizations**: Lightning Network demonstrations and Bitcoin concept illustrations
+- **Bitcoin Verification Tools**: Educational tools for verifying blocks, signatures, and Merkle proofs
 - **Strict Typography Requirements**: Exo 2 font (weight 700) with exact #FF523C orange color for all Satoshi Station branding
 
 ## Learning Path Structure
@@ -249,6 +250,27 @@ The learning path system has the following key components:
 - **Honeycomb Background**: SVG-based background pattern with themed overlays
 - **Progress Tracking**: Context-based system for tracking and persisting user progress
 - **Homepage Layout**: Exact recreation of the original sats.sv homepage layout
+
+### Bitcoin Verification Tools
+
+The platform includes a suite of interactive Bitcoin verification tools that serve both educational and practical purposes:
+
+- **Block Explorer**: Allows users to search for blocks by height or hash and explore transaction details
+  - Features educational content about block structure and headers
+  - Includes visual diagrams showing the anatomy of a Bitcoin block
+  - Provides pagination for transaction lists
+
+- **Digital Signature Verification**: Enables users to verify Bitcoin message signatures
+  - Includes tooltips explaining each input field (address, message, signature)
+  - Provides example data for testing with Satoshi's address
+  - Features educational content about ECDSA signatures and their importance
+
+- **Merkle Proof Verification**: Allows users to verify transaction inclusion in blocks
+  - Features visualization of Merkle trees and verification paths
+  - Includes educational content about how Merkle proofs work
+  - Explains the importance of Merkle proofs for lightweight clients
+
+All verification tools feature a consistent design pattern with dark mode support and responsive layouts that work well on mobile devices. The tools are implemented as client-side components to ensure that private keys and sensitive data never leave the user's device.
 
 ### Design System
 
