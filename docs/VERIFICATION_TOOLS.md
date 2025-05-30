@@ -10,14 +10,16 @@ The verification tools in Satoshi Station allow users to independently verify Bi
 
 The Block Explorer allows users to search for and verify Bitcoin blocks by height or hash.
 
-#### Features:
+#### Features
+
 - Search for blocks by height or hash
 - View detailed block information
 - Verify Merkle root calculations
 - Navigate between blocks
 - View transaction lists
 
-#### Implementation:
+#### Implementation
+
 - Frontend: React components in `/src/app/verify/blocks/`
 - API: Secure backend routes in `/src/app/api/bitcoin/blocks/`
 - Data Source: Blockstream API with secure credential management
@@ -26,7 +28,8 @@ The Block Explorer allows users to search for and verify Bitcoin blocks by heigh
 
 Tools for verifying cryptographic signatures and creating signed messages.
 
-#### Planned Features:
+#### Planned Features
+
 - Message signing
 - Signature verification
 - Key pair validation
@@ -36,7 +39,8 @@ Tools for verifying cryptographic signatures and creating signed messages.
 
 Tools for verifying transaction inclusion in blocks using Merkle proofs.
 
-#### Planned Features:
+#### Merkle Features
+
 - Merkle tree visualization
 - Proof generation
 - Proof verification
@@ -53,15 +57,16 @@ Credentials for external APIs are managed securely:
    - Sample configuration in `.env.local.example`
 
 2. **Production Environment**:
-   - Credentials stored in Google Cloud Secret Manager
-   - Accessed securely at runtime via the Secret Manager API
-   - Service account has limited permissions (secretAccessor role only)
+   - Credentials stored as GitHub Secrets
+   - Passed to Cloud Run as environment variables during deployment
+   - Accessed securely at runtime via environment variables
 
-### Implementation Details:
+### Implementation Details
 
 - Secret management utilities in `/src/lib/secrets.ts`
 - API routes handle all external API communication
 - No credentials exposed to client-side code
+- GitHub Actions workflow configured to pass secrets to Cloud Run
 
 ## Adding New Verification Tools
 

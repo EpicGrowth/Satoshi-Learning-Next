@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bitcoin, Search, ArrowLeft, Database, Clock, Hash } from 'lucide-react';
+import { Bitcoin, Search, ArrowLeft, Database, Clock, Hash, CreditCard, ArrowRight, FileText, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -164,6 +164,57 @@ export default function VerifyBlocksPage() {
                 It allows efficient verification that a transaction is included in a block.
               </p>
             </div>
+            
+            {blockData.transactions && blockData.transactions.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-sm font-medium mb-4">Transactions in this Block</h3>
+                <div className="border rounded-md overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-muted">
+                      <tr>
+                        <th className="px-4 py-2 text-xs font-medium text-left">Transaction ID</th>
+                        <th className="px-4 py-2 text-xs font-medium text-right">Size</th>
+                        <th className="px-4 py-2 text-xs font-medium text-right">Value (BTC)</th>
+                        <th className="px-4 py-2 text-xs font-medium text-right">Fee (sats)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-muted">
+                      {blockData.transactions.map((tx: any) => (
+                        <tr key={tx.txid} className="hover:bg-muted/50">
+                          <td className="px-4 py-3">
+                            <div className="flex items-center">
+                              <CreditCard className="h-4 w-4 mr-2 text-muted-foreground" />
+                              <a 
+                                href={`https://mempool.space/tx/${tx.txid}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs font-mono text-primary hover:underline truncate max-w-[180px]"
+                              >
+                                {tx.txid}
+                              </a>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 text-xs text-right">{tx.size} bytes</td>
+                          <td className="px-4 py-3 text-xs text-right">{(tx.value / 100000000).toFixed(8)}</td>
+                          <td className="px-4 py-3 text-xs text-right">{tx.fee || 'N/A'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Showing {blockData.transactions.length} of {blockData.tx_count} transactions. 
+                  <a 
+                    href={`https://mempool.space/block/${blockData.hash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    View all transactions
+                  </a>
+                </p>
+              </div>
+            )}
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button variant="outline" asChild>

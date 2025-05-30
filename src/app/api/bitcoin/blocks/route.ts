@@ -58,13 +58,39 @@ export async function GET(request: Request) {
     
     const blockData = await blockResponse.json();
     
-    // Get transaction count for the block
+    // Get transaction IDs for the block
     const txsUrl = `https://blockstream.info/api/block/${blockHash}/txids`;
     const txsResponse = await fetch(txsUrl, { headers });
     
     if (txsResponse.ok) {
       const txids = await txsResponse.json();
       blockData.tx_count = txids.length;
+      
+      // Get the first 10 transactions to display
+      const transactionsToFetch = txids.slice(0, 10);
+      blockData.transactions = [];
+      
+      // Fetch basic info for each transaction
+      for (const txid of transactionsToFetch) {
+        try {
+          const txUrl = `https://blockstream.info/api/tx/${txid}`;
+          const txResponse = await fetch(txUrl, { headers });
+          
+          if (txResponse.ok) {
+            const txData = await txResponse.json();
+            blockData.transactions.push({
+              txid: txData.txid,
+              size: txData.size,
+              weight: txData.weight,
+              fee: txData.fee,
+              vsize: txData.vsize,
+              value: txData.vout.reduce((sum: number, output: any) => sum + output.value, 0)
+            });
+          }
+        } catch (txError) {
+          console.error(`Error fetching transaction ${txid}:`, txError);
+        }
+      }
     }
     
     return NextResponse.json(blockData);
