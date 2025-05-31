@@ -34,5 +34,5 @@ export interface LearningProgressContextType {
   calculateSectionProgress: (moduleId: string, sectionId: string) => number;
   calculateModuleProgress: (moduleId: string) => number;
   isSectionLocked: (moduleId: string) => boolean;
-  resetProgress: (pathType: 'bitcoin' | 'lightning') => void;
+  resetProgress: (pathType: 'bitcoin' | 'lightning' | 'liquid') => void;
 }

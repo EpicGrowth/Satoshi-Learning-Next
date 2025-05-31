@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Bitcoin, Zap, Shield, Menu, Search, Github, Lock, ArrowLeft, Compass } from 'lucide-react';
+import { Bitcoin, Zap, Shield, Menu, Search, Github, Lock, ArrowLeft, Compass, Droplet } from 'lucide-react';
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { SearchIndexItem } from '@/types';
 import SearchResultsPortal from './SearchResultsPortal';
@@ -17,6 +17,7 @@ import { useLearningProgress } from '@/contexts/learning-progress-context';
 const navigationItems = [
 	{ name: 'Bitcoin', href: '/learn/bitcoin', icon: Bitcoin },
 	{ name: 'Lightning', href: '/learn/lightning', icon: Zap },
+	{ name: 'Liquid', href: '/learn/liquid', icon: Droplet },
 	{ name: 'Resources', href: '/resources', icon: Shield },
 	{ name: 'Explorer', href: '/contact-explorer', icon: Compass },
 ];
@@ -124,7 +125,11 @@ export const Header: FC = () => {
 			router.push(item.path);
 		} else {
       // Navigate to the main page of the learning path if locked
-      const basePath = item.topic === 'bitcoin' ? '/learn/bitcoin' : '/learn/lightning';
+      const basePath = item.topic === 'bitcoin' 
+        ? '/learn/bitcoin' 
+        : item.topic === 'lightning' 
+        ? '/learn/lightning'
+        : '/learn/liquid';
       router.push(basePath);
     }
 		setIsSearchFocused(false);

@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home, Compass } from 'lucide-react';
+import { Bitcoin, Zap, Shield, Menu, X, ExternalLink, Search, FileText, Home, Compass, Droplet } from 'lucide-react';
 
 // Import learning modules for accurate navigation
-import { bitcoinModules, lightningModules } from '@/config/learning-modules';
+import { bitcoinModules, lightningModules, liquidModules } from '@/config/learning-modules';
 
 // Generate navigation items dynamically from learning modules
 const generateLearningItems = (modules: any[], pathPrefix: string) => {
@@ -37,6 +37,12 @@ const navigationItems = [
     icon: Zap,
     path: '/learn/lightning',
     items: generateLearningItems(lightningModules, 'lightning'),
+  },
+  {
+    title: 'Liquid Learning',
+    icon: Droplet,
+    path: '/learn/liquid',
+    items: generateLearningItems(liquidModules, 'liquid'),
   },
   {
     title: 'Resources',

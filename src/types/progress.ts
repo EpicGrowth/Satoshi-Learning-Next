@@ -18,8 +18,9 @@ export interface SectionProgress {
 export interface UserProgress {
   bitcoin: Record<string, ModuleProgress>;
   lightning: Record<string, ModuleProgress>;
+  liquid: Record<string, ModuleProgress>;
   lastActiveModule?: {
-    type: 'bitcoin' | 'lightning';
+    type: 'bitcoin' | 'lightning' | 'liquid';
     moduleId: string;
     sectionId: string;
   };
