@@ -34,7 +34,15 @@ const sectionId = 'opening-channels';
 export default function OpeningChannelsPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Opening Channels"
+        moduleDescription="Learn to open Lightning channels"
+        difficulty="Intermediate"
+        icon={Link}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
             quote="The main benefits are privacy, instant confirmation, extremely low fees and the ability to do micropayments."

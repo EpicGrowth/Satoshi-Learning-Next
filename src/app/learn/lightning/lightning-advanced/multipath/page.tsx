@@ -13,7 +13,15 @@ const sectionId = 'multipath';
 export default function MultipathPaymentsPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Multipath Payments"
+        moduleDescription="Understanding multipath payments"
+        difficulty="Advanced"
+        icon={Split}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Multipath Payments: Enhancing Lightning Network Capabilities</h2>

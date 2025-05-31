@@ -13,7 +13,15 @@ const sectionId = 'network-security';
 export default function NetworkSecurityPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Network Security"
+        moduleDescription="Network-level security"
+        difficulty="Advanced"
+        icon={Network}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Network Security in Lightning Network</h2>

@@ -13,6 +13,10 @@ export default function PaymentChannels() {
       <ModuleContent
         moduleId="lightning-fundamentals"
         sectionId="payment-channels"
+        moduleTitle="Payment Channels"
+        moduleDescription="Learn about Lightning payment channels"
+        difficulty="Beginner"
+        icon={Link2}
         checkpoints={3}
       >
         {/* Introduction */}

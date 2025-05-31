@@ -28,7 +28,15 @@ const sectionId = 'channel-capacity';
 export default function ChannelCapacityPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Channel Capacity"
+        moduleDescription="Understanding channel capacity"
+        difficulty="Intermediate"
+        icon={Scale}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
             quote="Moving a payment from one channel to another should work like something moving from one hand to the other."

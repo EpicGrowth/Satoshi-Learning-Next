@@ -13,7 +13,15 @@ const sectionId = 'fee-management';
 export default function FeeManagementPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Fee Management"
+        moduleDescription="Managing routing fees"
+        difficulty="Intermediate"
+        icon={DollarSign}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Fee Management in Lightning Network</h2>

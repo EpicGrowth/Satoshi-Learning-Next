@@ -13,7 +13,15 @@ const sectionId = 'path-finding';
 export default function PathFindingPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Path Finding"
+        moduleDescription="Finding optimal payment routes"
+        difficulty="Intermediate"
+        icon={Network}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Path Finding in Lightning Network</h2>

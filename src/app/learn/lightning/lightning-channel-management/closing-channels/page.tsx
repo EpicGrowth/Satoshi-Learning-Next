@@ -29,7 +29,15 @@ const sectionId = 'closing-channels';
 export default function ClosingChannelsPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Closing Channels"
+        moduleDescription="Learn about channel closure types"
+        difficulty="Intermediate"
+        icon={X}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
             quote="In the Bitcoin system, every transaction is final and permanently recorded on-chain. With Lightning channels, we introduced a different paradigm: a payment relationship that could begin, evolve, and eventually end."

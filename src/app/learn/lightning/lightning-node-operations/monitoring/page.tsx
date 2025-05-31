@@ -41,13 +41,20 @@ const sectionId = 'monitoring';
 export default function MonitoringPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Node Monitoring"
+        moduleDescription="Monitoring your Lightning node"
+        difficulty="Intermediate"
+        icon={Activity}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
-            quote="Without 100% confidence in the node being online, there is a risk of getting a channel force closed in a non-favorable state."
+            quote="Without 100% confidence in the node being online, there is a risk of getting a channel force closed in a non-favorable state. Monitoring is essential for ensuring uptime and preventing unexpected channel closures."
             source="Adapted from Lightning Network discussions"
             date="circa 2018"
-            context="Emphasizes the critical need for uptime and proactive monitoring."
           />
 
           <div className="bg-card p-6 rounded-lg border border-border">

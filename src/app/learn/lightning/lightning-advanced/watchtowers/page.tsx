@@ -13,7 +13,15 @@ const sectionId = 'watchtowers';
 export default function WatchtowersPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Watchtowers"
+        moduleDescription="Understanding Lightning watchtowers"
+        difficulty="Advanced"
+        icon={Shield}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Watchtowers: Guardians of the Lightning Network</h2>

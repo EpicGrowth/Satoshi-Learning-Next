@@ -13,7 +13,15 @@ const sectionId = 'node-security';
 export default function NodeSecurityPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Node Security"
+        moduleDescription="Securing your Lightning node"
+        difficulty="Advanced"
+        icon={Shield}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Node Security in Lightning Network</h2>

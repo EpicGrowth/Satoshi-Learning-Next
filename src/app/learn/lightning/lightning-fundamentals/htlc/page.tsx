@@ -22,7 +22,15 @@ const sectionId = 'htlc';
 export default function HTLCFundamentalsPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Hash Time-Locked Contracts"
+        moduleDescription="Understanding HTLCs"
+        difficulty="Beginner"
+        icon={Lock}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
             quote="The idea of using cryptographic puzzles and timelocks to facilitate conditional payments was always part of the roadmap for Bitcoin's scaling solutions."

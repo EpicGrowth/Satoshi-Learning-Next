@@ -16,6 +16,11 @@ const HowLightningWorks = () => {
       <ModuleContent 
         moduleId={moduleId} 
         sectionId={sectionId}
+        moduleTitle="How Lightning Works"
+        moduleDescription="Understanding the technical foundations"
+        difficulty="Beginner"
+        icon={Zap}
+        checkpoints={1}
       >
         <div className="space-y-8"> 
           <SatoshiQuote

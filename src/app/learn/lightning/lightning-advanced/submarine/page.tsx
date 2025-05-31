@@ -13,7 +13,15 @@ const sectionId = 'submarine';
 export default function SubmarineSwapsPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Submarine Swaps"
+        moduleDescription="Understanding submarine swaps"
+        difficulty="Advanced"
+        icon={Anchor}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Submarine Swaps: Bridging On-Chain and Lightning</h2>

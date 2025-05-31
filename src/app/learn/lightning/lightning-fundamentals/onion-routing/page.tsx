@@ -23,8 +23,9 @@ export default function OnionRoutingModule() {
         sectionId="onion-routing"
         moduleTitle="Onion Routing"
         moduleDescription="Privacy and routing in Lightning"
-        difficulty="Intermediate"
-        icon={Lightbulb}
+        difficulty="Beginner"
+        icon={EyeOff}
+        checkpoints={1}
       >
         <div className="space-y-8">
           <SatoshiQuote

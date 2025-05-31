@@ -13,7 +13,15 @@ const sectionId = 'key-management';
 export default function KeyManagementPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Key Management"
+        moduleDescription="Managing Lightning keys"
+        difficulty="Advanced"
+        icon={Key}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Key Management in Lightning Network</h2>

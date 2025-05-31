@@ -15,6 +15,11 @@ export default function WhatIsLightning() {
       <ModuleContent
         moduleId={moduleId}
         sectionId={sectionId}
+        moduleTitle="What is Lightning?"
+        moduleDescription="Introduction to the Lightning Network"
+        difficulty="Beginner"
+        icon={Zap}
+        checkpoints={1}
       >
         {/* Introduction */}
         <div className="mb-8">

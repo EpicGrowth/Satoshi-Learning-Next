@@ -13,7 +13,15 @@ const sectionId = 'htlc-deep-dive';
 export default function HTLCDeepDivePage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="HTLC Deep Dive"
+        moduleDescription="Advanced understanding of HTLCs"
+        difficulty="Advanced"
+        icon={Lock}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Hashed Time-Locked Contracts (HTLCs): Advanced Operations</h2>

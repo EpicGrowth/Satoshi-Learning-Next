@@ -30,7 +30,15 @@ const sectionId = 'channel-balancing';
 export default function ChannelBalancingPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Channel Balancing"
+        moduleDescription="Balancing channel liquidity"
+        difficulty="Intermediate"
+        icon={ArrowLeftRight}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <SatoshiQuote
             quote="The Lightning Network introduces a more fluid economic system, where value flows bidirectionally through channels."

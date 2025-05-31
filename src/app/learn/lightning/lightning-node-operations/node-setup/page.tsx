@@ -13,7 +13,15 @@ const sectionId = 'node-setup';
 export default function NodeSetupPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Node Setup"
+        moduleDescription="Setting up your Lightning node"
+        difficulty="Intermediate"
+        icon={Server}
+        checkpoints={1}
+      >
         {/* Content migrated from SatsSV node-setup.tsx starts here */}
         <div className="space-y-8">
           <SatoshiQuote

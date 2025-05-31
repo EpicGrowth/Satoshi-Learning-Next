@@ -13,7 +13,15 @@ const sectionId = 'route-optimization';
 export default function RouteOptimizationPage() {
   return (
     <ModuleLayout>
-      <ModuleContent moduleId={moduleId} sectionId={sectionId}>
+      <ModuleContent 
+        moduleId={moduleId} 
+        sectionId={sectionId}
+        moduleTitle="Route Optimization"
+        moduleDescription="Optimizing payment routing"
+        difficulty="Intermediate"
+        icon={LineChart}
+        checkpoints={1}
+      >
         <div className="space-y-8">
           <Card className="p-6">
             <h2 className="text-xl font-bold mb-4">Route Optimization in Lightning Network</h2>

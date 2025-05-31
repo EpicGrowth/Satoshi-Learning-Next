@@ -28,6 +28,7 @@ export default function NetworkTopology() {
       moduleDescription="Understanding Lightning Network's structure and routing"
       difficulty="Beginner"
       icon={Network}
+      checkpoints={1}
     >
       <div className="space-y-8">
         <SatoshiQuote
