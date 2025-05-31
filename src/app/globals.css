@@ -289,7 +289,7 @@ textarea:focus-visible {
 
 /* Brand Text Enhancement */
 [data-brand-text="true"] {
-  @apply font-display text-bitcoin-orange font-bold tracking-tight;
+  @apply font-brand text-bitcoin-orange font-bold tracking-tight;
 }
 
 /* High Contrast Dark Mode Text */

@@ -49,7 +49,7 @@ export function Footer() {
               <div className="rounded-full p-1.5 bg-bitcoin-orange/15">
                 <Bitcoin className="h-5 w-5 text-bitcoin-orange" aria-hidden="true" />
               </div>
-              <span className="font-bold" data-brand-text="true">Satoshi Station</span>
+              <span className="font-brand tracking-tight text-bitcoin-orange" style={{ fontWeight: 700 }}>Satoshi Station</span>
             </Link>
             <p className="text-sm text-muted-foreground/90 max-w-xs leading-relaxed">
               Your sovereign platform for Bitcoin education and verification.

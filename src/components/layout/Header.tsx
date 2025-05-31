@@ -192,11 +192,11 @@ export const Header: FC = () => {
 							</div>
 							<div className="relative z-10">
 								<span
-									className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-bold brand-text"
-									data-brand-text="true"
-								>
-									Satoshi Station
-								</span>
+								className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-brand tracking-tight"
+								style={{ fontWeight: 700 }}
+							>
+								Satoshi Station
+							</span>
 							</div>
 						</div>
 					</Link>

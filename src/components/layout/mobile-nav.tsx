@@ -129,7 +129,7 @@ export function MobileNav() {
                     <div className="absolute -inset-1 rounded-full bg-bitcoin-orange/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <Bitcoin className="h-6 w-6 text-bitcoin-orange relative" />
                   </div>
-                  <span className="font-bold text-lg" data-brand-text="true">Satoshi Station</span>
+                  <span className="text-lg font-brand tracking-tight text-bitcoin-orange" style={{ fontWeight: 700 }}>Satoshi Station</span>
                 </Link>
                 <Button 
                   variant="ghost" 
