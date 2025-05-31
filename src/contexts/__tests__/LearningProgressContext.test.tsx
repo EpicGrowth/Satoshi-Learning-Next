@@ -80,120 +80,55 @@ describe('LearningProgressContext - Bitcoin Path', () => {
     }
   });
 
-  it('section locking: second section in a Bitcoin module should be initially locked', () => {
+  it('section locking: second section in a Bitcoin module should be accessible with open access model', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const moduleId = bitcoinModules[0].id;
     // Ensure the module has at least two sections for this test
     if (bitcoinModules[0].sections.length < 2) {
       console.warn("Skipping test: First Bitcoin module has less than 2 sections.");
       return;
     }
-    const secondSectionId = bitcoinModules[0].sections[1].id;
-
-    expect(result.current.isSectionLocked('bitcoin', moduleId, secondSectionId)).toBe(true);
-  });
-
-  it('section locking: completing the first Bitcoin section should unlock the second', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
     const moduleId = bitcoinModules[0].id;
-    if (bitcoinModules[0].sections.length < 2) {
-      console.warn("Skipping test: First Bitcoin module has less than 2 sections.");
-      return;
-    }
-    const firstSectionId = bitcoinModules[0].sections[0].id;
     const secondSectionId = bitcoinModules[0].sections[1].id;
-
-    act(() => {
-      // Complete all steps for the first section
-      const firstSectionSteps = Array.from({ length: bitcoinModules[0].sections.find(s=>s.id === firstSectionId)?.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
-      firstSectionSteps.forEach(stepId => {
-        result.current.updateSectionProgress('bitcoin', moduleId, firstSectionId, stepId);
-      });
-      result.current.markSectionComplete('bitcoin', moduleId, firstSectionId);
-    });
-
+    
+    // With open access model, all sections should be unlocked
     expect(result.current.isSectionLocked('bitcoin', moduleId, secondSectionId)).toBe(false);
   });
 
-  it('section locking: a later Bitcoin section remains locked if its preceding section is not complete', () => {
+  it('section progress: completing first section in a Bitcoin module should track progress correctly', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const moduleId = bitcoinModules[0].id;
-    // Ensure the module has at least three sections for this test
-    if (bitcoinModules[0].sections.length < 3) {
-      console.warn("Skipping test: First Bitcoin module has less than 3 sections.");
+    if (bitcoinModules.length === 0 || bitcoinModules[0].sections.length < 2) {
+      console.warn("Skipping test: Not enough Bitcoin modules or sections defined.");
       return;
     }
+    const moduleId = bitcoinModules[0].id;
     const firstSectionId = bitcoinModules[0].sections[0].id;
     const secondSectionId = bitcoinModules[0].sections[1].id;
-    const thirdSectionId = bitcoinModules[0].sections[2].id;
-
-    // Complete first section
+    
     act(() => {
-      const firstSectionSteps = Array.from({ length: bitcoinModules[0].sections.find(s=>s.id === firstSectionId)?.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
-      firstSectionSteps.forEach(stepId => {
+      const steps = Array.from({ length: bitcoinModules[0].sections[0].checkboxCount || 1 }, (_, i) => `step${i + 1}`);
+      steps.forEach(stepId => {
         result.current.updateSectionProgress('bitcoin', moduleId, firstSectionId, stepId);
       });
       result.current.markSectionComplete('bitcoin', moduleId, firstSectionId);
-    });
-
-    // Second section is now unlocked, but third should be locked as second is not complete
-    expect(result.current.isSectionLocked('bitcoin', moduleId, secondSectionId)).toBe(false);
-    expect(result.current.isSectionLocked('bitcoin', moduleId, thirdSectionId)).toBe(true);
-  });
-
-  it('module locking: first section of second Bitcoin module should be initially locked', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    // Ensure there are at least two modules
-    if (bitcoinModules.length < 2) {
-      console.warn("Skipping test: Less than 2 Bitcoin modules defined.");
-      return;
-    }
-    const secondModuleId = bitcoinModules[1].id;
-    const firstSectionOfSecondModuleId = bitcoinModules[1].sections[0].id;
-
-    // Assuming first module is not complete
-    expect(result.current.isSectionLocked('bitcoin', secondModuleId, firstSectionOfSecondModuleId)).toBe(true);
-  });
-
-  it('module locking: completing first Bitcoin module should unlock first section of second module', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    if (bitcoinModules.length < 2) {
-      console.warn("Skipping test: Less than 2 Bitcoin modules defined.");
-      return;
-    }
-    const firstModuleId = bitcoinModules[0].id;
-    const secondModuleId = bitcoinModules[1].id;
-    const firstSectionOfSecondModuleId = bitcoinModules[1].sections[0].id;
-
-    // Complete all sections of the first module
-    act(() => {
-      bitcoinModules[0].sections.forEach(section => {
-        const steps = Array.from({ length: section.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
-        steps.forEach(stepId => {
-          result.current.updateSectionProgress('bitcoin', firstModuleId, section.id, stepId);
-        });
-        result.current.markSectionComplete('bitcoin', firstModuleId, section.id);
-      });
     });
     
-    // Verify first module is actually marked as complete
-    expect(result.current.progress.bitcoin[firstModuleId]?.completedAt).toBeDefined();
-
-    expect(result.current.isSectionLocked('bitcoin', secondModuleId, firstSectionOfSecondModuleId)).toBe(false);
+    // With open access model, all sections are unlocked regardless of completion status
+    expect(result.current.isSectionLocked('bitcoin', moduleId, secondSectionId)).toBe(false);
+    // But we should still track progress correctly
+    expect(result.current.progress.bitcoin[moduleId].completedSections[firstSectionId]).toBeDefined();
   });
 
-  it('module locking: a later Bitcoin module remains locked if its preceding module is not complete', () => {
+  it('module access: later Bitcoin modules should be accessible with open access model regardless of previous module completion', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
     if (bitcoinModules.length < 3) {
       console.warn("Skipping test: Less than 3 Bitcoin modules defined for this test.");
       return;
     }
     const firstModuleId = bitcoinModules[0].id;
-    const secondModuleId = bitcoinModules[1].id; // This module will remain incomplete
+    const secondModuleId = bitcoinModules[1].id; 
     const thirdModuleId = bitcoinModules[2].id;
     const firstSectionOfThirdModuleId = bitcoinModules[2].sections[0].id;
 
-    // Complete the first module
     act(() => {
       bitcoinModules[0].sections.forEach(section => {
         const steps = Array.from({ length: section.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
@@ -204,10 +139,9 @@ describe('LearningProgressContext - Bitcoin Path', () => {
       });
     });
 
-    // First section of second module is unlocked, but it's not completed.
-    // So, third module should remain locked.
+    // With open access model, all modules and sections should be accessible regardless of completion status
     expect(result.current.isSectionLocked('bitcoin', secondModuleId, bitcoinModules[1].sections[0].id)).toBe(false);
-    expect(result.current.isSectionLocked('bitcoin', thirdModuleId, firstSectionOfThirdModuleId)).toBe(true);
+    expect(result.current.isSectionLocked('bitcoin', thirdModuleId, firstSectionOfThirdModuleId)).toBe(false);
   });
 });
 
@@ -278,63 +212,44 @@ describe('LearningProgressContext - Lightning Path', () => {
     }
   });
 
-  it('section locking: second section in a Lightning module should be initially locked', () => {
+  it('section locking: second section in a Lightning module should be accessible with open access model', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const moduleId = lightningModules[0].id;
-    if (lightningModules[0].sections.length < 2) {
-      console.warn("Skipping test: First Lightning module has less than 2 sections.");
+    if (lightningModules.length === 0 || lightningModules[0].sections.length < 2) {
+      console.warn("Skipping test: Not enough Lightning modules or sections defined.");
       return;
     }
+    const moduleId = lightningModules[0].id;
     const secondSectionId = lightningModules[0].sections[1].id;
-
-    expect(result.current.isSectionLocked('lightning', moduleId, secondSectionId)).toBe(true);
+    
+    // With open access model, all sections should be unlocked
+    expect(result.current.isSectionLocked('lightning', moduleId, secondSectionId)).toBe(false);
   });
 
-  it('section locking: completing the first Lightning section should unlock the second', () => {
+  it('section progress: completing first section in a Lightning module should track progress correctly', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const moduleId = lightningModules[0].id;
-    if (lightningModules[0].sections.length < 2) {
-      console.warn("Skipping test: First Lightning module has less than 2 sections.");
+    if (lightningModules.length === 0 || lightningModules[0].sections.length < 2) {
+      console.warn("Skipping test: Not enough Lightning modules or sections defined.");
       return;
     }
+    const moduleId = lightningModules[0].id;
     const firstSectionId = lightningModules[0].sections[0].id;
     const secondSectionId = lightningModules[0].sections[1].id;
-
+    
     act(() => {
-      const firstSectionSteps = Array.from({ length: lightningModules[0].sections.find(s=>s.id === firstSectionId)?.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
-      firstSectionSteps.forEach(stepId => {
+      const steps = Array.from({ length: lightningModules[0].sections[0].checkboxCount || 1 }, (_, i) => `step${i + 1}`);
+      steps.forEach(stepId => {
         result.current.updateSectionProgress('lightning', moduleId, firstSectionId, stepId);
       });
       result.current.markSectionComplete('lightning', moduleId, firstSectionId);
     });
-
+    
+    // With open access model, all sections are unlocked regardless of completion status
     expect(result.current.isSectionLocked('lightning', moduleId, secondSectionId)).toBe(false);
+    // But we should still track progress correctly
+    expect(result.current.progress.lightning[moduleId].completedSections[firstSectionId]).toBeDefined();
   });
 
-  it('section locking: a later Lightning section remains locked if its preceding section is not complete', () => {
-    const { result } = renderHook(() => useLearningProgress(), { wrapper });
-    const moduleId = lightningModules[0].id;
-    if (lightningModules[0].sections.length < 3) {
-      console.warn("Skipping test: First Lightning module has less than 3 sections.");
-      return;
-    }
-    const firstSectionId = lightningModules[0].sections[0].id;
-    const secondSectionId = lightningModules[0].sections[1].id;
-    const thirdSectionId = lightningModules[0].sections[2].id;
-
-    act(() => {
-      const firstSectionSteps = Array.from({ length: lightningModules[0].sections.find(s=>s.id === firstSectionId)?.checkboxCount || 1 }, (_, i) => `step${i + 1}`);
-      firstSectionSteps.forEach(stepId => {
-        result.current.updateSectionProgress('lightning', moduleId, firstSectionId, stepId);
-      });
-      result.current.markSectionComplete('lightning', moduleId, firstSectionId);
-    });
-
-    expect(result.current.isSectionLocked('lightning', moduleId, secondSectionId)).toBe(false);
-    expect(result.current.isSectionLocked('lightning', moduleId, thirdSectionId)).toBe(true);
-  });
-
-  it('module locking: first section of second Lightning module should be initially locked', () => {
+  it('module access: second Lightning module should be accessible with open access model', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
     if (lightningModules.length < 2) {
       console.warn("Skipping test: Less than 2 Lightning modules defined.");
@@ -343,10 +258,11 @@ describe('LearningProgressContext - Lightning Path', () => {
     const secondModuleId = lightningModules[1].id;
     const firstSectionOfSecondModuleId = lightningModules[1].sections[0].id;
 
-    expect(result.current.isSectionLocked('lightning', secondModuleId, firstSectionOfSecondModuleId)).toBe(true);
+    // With open access model, all modules and sections should be unlocked
+    expect(result.current.isSectionLocked('lightning', secondModuleId, firstSectionOfSecondModuleId)).toBe(false);
   });
 
-  it('module locking: completing first Lightning module should unlock first section of second module', () => {
+  it('module progress: completing first Lightning module should track module completion correctly', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
     if (lightningModules.length < 2) {
       console.warn("Skipping test: Less than 2 Lightning modules defined.");
@@ -366,11 +282,13 @@ describe('LearningProgressContext - Lightning Path', () => {
       });
     });
     
+    // Module completion should be tracked correctly
     expect(result.current.progress.lightning[firstModuleId]?.completedAt).toBeDefined();
+    // With open access model, all modules and sections should be unlocked regardless of prior completion
     expect(result.current.isSectionLocked('lightning', secondModuleId, firstSectionOfSecondModuleId)).toBe(false);
   });
 
-  it('module locking: a later Lightning module remains locked if its preceding module is not complete', () => {
+  it('module access: later Lightning modules should be accessible with open access model regardless of previous module completion', () => {
     const { result } = renderHook(() => useLearningProgress(), { wrapper });
     if (lightningModules.length < 3) {
       console.warn("Skipping test: Less than 3 Lightning modules defined for this test.");
@@ -391,8 +309,9 @@ describe('LearningProgressContext - Lightning Path', () => {
       });
     });
 
+    // With open access model, all modules and sections should be accessible regardless of completion status
     expect(result.current.isSectionLocked('lightning', secondModuleId, lightningModules[1].sections[0].id)).toBe(false);
-    expect(result.current.isSectionLocked('lightning', thirdModuleId, firstSectionOfThirdModuleId)).toBe(true);
+    expect(result.current.isSectionLocked('lightning', thirdModuleId, firstSectionOfThirdModuleId)).toBe(false);
   });
 });
 
