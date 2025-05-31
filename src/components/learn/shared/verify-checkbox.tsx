@@ -21,7 +21,10 @@ const VerifyCheckbox: React.FC<VerifyCheckboxProps> = ({
   const { updateSectionProgress, getSectionProgress, markSectionComplete } = useLearningProgress();
   const pathname = usePathname();
   // Determine the path type from the URL and module ID
-  const pathType: 'bitcoin' | 'lightning' = pathname.includes('/lightning') ? 'lightning' : 'bitcoin';
+  const pathType: 'bitcoin' | 'lightning' | 'liquid' = 
+    pathname.includes('/lightning') ? 'lightning' : 
+    pathname.includes('/liquid') ? 'liquid' : 
+    'bitcoin';
   
   // Normalize the module ID to ensure consistent behavior with prefixed IDs
   const normalizedModuleId = moduleId.includes('-') ? moduleId : `${pathType}-${moduleId}`;
@@ -53,7 +56,11 @@ const VerifyCheckbox: React.FC<VerifyCheckboxProps> = ({
       >
         <div className={`
           w-5 h-5 rounded-sm flex items-center justify-center mr-3
-          ${isChecked ? 'bg-emerald-500' : 'border border-muted-foreground'}
+          ${isChecked ? 
+            pathType === 'liquid' ? 'bg-cyan-500' : 
+            pathType === 'lightning' ? 'bg-purple-500' : 
+            'bg-emerald-500' 
+            : 'border border-muted-foreground'}
         `}>
           {isChecked && (
             <Check className="h-4 w-4 text-white" />

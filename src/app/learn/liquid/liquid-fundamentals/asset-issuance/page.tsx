@@ -337,7 +337,7 @@ export default function AssetIssuance() {
             </div>
           </div>
           
-          <SatoshiNote className="mt-6" note="Asset issuance on Liquid represents a powerful capability, but it comes with responsibilities. Issuers should carefully consider the technical, regulatory, and market aspects of their asset before issuance, and users should conduct thorough due diligence before interacting with any Liquid asset." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="Asset issuance on Liquid represents a powerful capability, but it comes with responsibilities. Issuers should carefully consider the technical, regulatory, and market aspects of their asset before issuance, and users should conduct thorough due diligence before interacting with any Liquid asset." />
         </Card>
         
         {/* Verification Checkpoint */}

@@ -81,7 +81,7 @@ export default function FederatedSidechains() {
             </div>
           </div>
           
-          <SatoshiNote className="mt-6" note="The two-way peg is critical for maintaining the value proposition of L-BTC. Every L-BTC in circulation is backed 1:1 by real BTC held by the federation, ensuring that L-BTC maintains its value relative to BTC." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="The two-way peg is critical for maintaining the value proposition of L-BTC. Every L-BTC in circulation is backed 1:1 by real BTC held by the federation, ensuring that L-BTC maintains its value relative to BTC." />
         </Card>
 
         {/* Federation Model */}
@@ -182,7 +182,7 @@ export default function FederatedSidechains() {
             </div>
           </div>
           
-          <SatoshiNote className="mt-6" note="The federated model represents a deliberate tradeoff between the absolute decentralization of Bitcoin and the speed and feature set needed for specific use cases. It's not better or worse than Bitcoin's model—just optimized for different priorities." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="The federated model represents a deliberate tradeoff between the absolute decentralization of Bitcoin and the speed and feature set needed for specific use cases. It's not better or worse than Bitcoin's model—just optimized for different priorities." />
         </Card>
         
         {/* Comparing Consensus Models */}

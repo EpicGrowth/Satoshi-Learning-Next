@@ -34,8 +34,12 @@ export function ModuleContent({
   const { updateSectionProgress, getSectionProgress, markSectionComplete, getModuleProgress } = useLearningProgress();
 
   // Determine if we're using prefixed or unprefixed module IDs
-  const pathType: 'bitcoin' | 'lightning' = moduleId.includes('lightning') ? 'lightning' : 'bitcoin';
+  const pathType: 'bitcoin' | 'lightning' | 'liquid' = 
+    moduleId.includes('lightning') ? 'lightning' : 
+    moduleId.includes('liquid') ? 'liquid' : 
+    'bitcoin';
   const isLightning = pathType === 'lightning';
+  const isLiquid = pathType === 'liquid';
   
   // Normalize the module ID by ensuring it has the correct prefix
   const normalizedModuleId = moduleId.includes('-') ? 
@@ -45,8 +49,8 @@ export function ModuleContent({
   const progress = getSectionProgress(pathType, normalizedModuleId, sectionId);
 
   // Theme colors based on path type
-  const themeColor = isLightning ? 
-    'bg-lightning text-lightning-foreground' : 
+  const themeColor = isLightning ? 'bg-lightning text-lightning-foreground' : 
+    isLiquid ? 'bg-cyan-600 text-white' : 
     'bg-bitcoin text-bitcoin-foreground';
 
   const getDifficultyColor = (diff: Difficulty) => {
@@ -107,14 +111,16 @@ export function ModuleContent({
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">{Math.round(progress)}% complete</span>
                   {progress >= 100 && (
-                    <CheckCircle2 className={`h-4 w-4 ${isLightning ? 'text-lightning-purple' : 'text-bitcoin-orange'}`} />
+                    <CheckCircle2 className={`h-4 w-4 ${isLightning ? 'text-lightning-purple' : isLiquid ? 'text-cyan-600' : 'text-bitcoin-orange'}`} />
                   )}
                 </div>
                 <Progress 
                   value={progress} 
                   className={`h-1.5 w-24 ${
                     progress >= 100 
-                      ? isLightning ? 'bg-lightning-purple/20' : 'bg-bitcoin-orange/20' 
+                      ? isLightning ? 'bg-lightning-purple/20' : 
+                        isLiquid ? 'bg-cyan-600/20' : 
+                        'bg-bitcoin-orange/20' 
                       : 'bg-muted'
                   }`} 
                 />
@@ -127,10 +133,14 @@ export function ModuleContent({
               </Badge>
               {Icon && (
                 <div className={`h-8 w-8 rounded-full ${
-                  isLightning ? 'bg-lightning-purple/10' : 'bg-bitcoin-orange/10'
+                  isLightning ? 'bg-lightning-purple/10' : 
+                  isLiquid ? 'bg-cyan-600/10' : 
+                  'bg-bitcoin-orange/10'
                 } flex items-center justify-center`}>
                   <Icon className={`h-4 w-4 ${
-                    isLightning ? 'text-lightning-purple' : 'text-bitcoin-orange'
+                    isLightning ? 'text-lightning-purple' : 
+                    isLiquid ? 'text-cyan-600' : 
+                    'text-bitcoin-orange'
                   }`} />
                 </div>
               )}

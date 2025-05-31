@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, ArrowUp, Check } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import { bitcoinModules, lightningModules } from '@/config/learning-modules';
+import { bitcoinModules, lightningModules, liquidModules } from '@/config/learning-modules';
 import { useLearningProgress } from '@/contexts/learning-progress-context';
 import { Progress } from '@/components/ui/progress';
 
@@ -20,7 +20,7 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
 
   // Parse the current path to get module and section info
   const pathParts = pathname.split('/').filter(Boolean);
-  const pathType = pathParts[1] as 'bitcoin' | 'lightning';
+  const pathType = pathParts[1] as 'bitcoin' | 'lightning' | 'liquid';
   const moduleId = pathParts[2];
   const sectionId = pathParts[3];
   
@@ -29,7 +29,9 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   const isSectionCompleted = sectionProgress >= 100;
 
   // Get the current module and section
-  const modules = pathType === 'bitcoin' ? bitcoinModules : lightningModules;
+  const modules = pathType === 'bitcoin' ? bitcoinModules : 
+                 pathType === 'lightning' ? lightningModules : 
+                 liquidModules;
   const currentModule = modules.find(m => m.id === moduleId);
   const currentSection = currentModule?.sections.find(s => s.id === sectionId);
 
@@ -96,7 +98,9 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
 
   // Check if all modules in the current learning path are completed
   const checkPathCompletion = useCallback(() => {
-    const allModules = pathType === 'bitcoin' ? bitcoinModules : lightningModules;
+    const allModules = pathType === 'bitcoin' ? bitcoinModules : 
+                       pathType === 'lightning' ? lightningModules : 
+                       liquidModules;
     const allModulesCompleted = allModules.every(module => {
       const moduleProgress = getModuleProgress(pathType, module.id);
       return moduleProgress?.completedAt !== undefined;
@@ -126,7 +130,9 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   };
 
   // Determine theme colors based on path type
-  const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 'var(--lightning-purple)';
+  const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 
+                      pathType === 'lightning' ? 'var(--lightning-purple)' : 
+                      'var(--cyan-500)';
   
   return (
     <div className="w-full max-w-6xl pt-0 pb-4 sm:pb-6 md:pb-8 px-0 sm:px-4 md:px-6 mx-auto overflow-hidden">
@@ -220,6 +226,11 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
                   }}
                   disabled={!next || !isSectionCompleted}
                   title={!isSectionCompleted ? 'Complete the verification checkbox first' : 'Continue to next section'}
+                  style={{ 
+                    backgroundColor: isSectionCompleted ? primaryColor : 'transparent', 
+                    color: isSectionCompleted ? 'white' : 'currentColor', 
+                    borderColor: isSectionCompleted ? primaryColor : 'var(--border)' 
+                  }}
                 >
                   <span className="text-xs sm:text-sm truncate">Next</span>
                   <ArrowRight className="h-4 w-4 flex-shrink-0" />

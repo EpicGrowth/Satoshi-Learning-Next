@@ -47,7 +47,7 @@ export default function WhatIsLiquid() {
             <li>Extends Bitcoin's functionality while inheriting its security model</li>
             <li>Maintains 1:1 backing of Liquid Bitcoin (L-BTC) with real BTC</li>
           </ul>
-          <SatoshiNote className="mt-6" note="While Liquid extends Bitcoin's capabilities, it makes different trade-offs compared to the base layer. Understanding these differences is key to grasping Liquid's role in the broader Bitcoin ecosystem." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="While Liquid extends Bitcoin's capabilities, it makes different trade-offs compared to the base layer. Understanding these differences is key to grasping Liquid's role in the broader Bitcoin ecosystem." />
         </Card>
 
         {/* Technical Foundation */}
@@ -233,7 +233,7 @@ export default function WhatIsLiquid() {
             </div>
           </div>
           
-          <SatoshiNote className="mt-6" note="Liquid represents a different set of tradeoffs than Bitcoin, optimizing for different use cases. It's not a replacement for Bitcoin's base layer, but a complementary system with its own strengths and limitations." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="Liquid represents a different set of tradeoffs than Bitcoin, optimizing for different use cases. It's not a replacement for Bitcoin's base layer, but a complementary system with its own strengths and limitations." />
         </Card>
         
         {/* Verification Checkpoint */}

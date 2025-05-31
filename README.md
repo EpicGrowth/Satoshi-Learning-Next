@@ -1,6 +1,6 @@
 # SatoshiStationNext
 
-An interactive learning platform for Bitcoin and Lightning Network education.
+An interactive learning platform for Bitcoin, Lightning Network, and Liquid education.
 
 ## Quick Start
 
@@ -38,7 +38,7 @@ Satoshi Station's mission is to ignite a revolution in digital expression and Bi
 
 ## Key Features
 
-- **Interactive Learning Modules**: Comprehensive Bitcoin and Lightning Network educational content
+- **Interactive Learning Modules**: Comprehensive Bitcoin, Lightning Network, and Liquid educational content
 - **Progress Tracking System**: Using React Context API and localStorage
 - **Verification Checkboxes**: Custom-styled green checkboxes with white checkmarks for section completion
 - **Learning Sidebar**: Module-based navigation showing progress percentages and completion status
@@ -50,7 +50,13 @@ Satoshi Station's mission is to ignite a revolution in digital expression and Bi
 
 ## Learning Path Structure
 
-The Satoshi Station Next learning path is divided into two main categories: Bitcoin and Lightning. Each learning path is independent, allowing users to progress through either path without prerequisites from the other.
+The app consists of three primary learning paths:
+
+1. **Bitcoin Learning Path**: Core Bitcoin concepts and technical knowledge
+2. **Lightning Learning Path**: Lightning Network operations and technical implementation
+3. **Liquid Learning Path**: Liquid Network sidechain fundamentals and technical deep dives
+
+The Satoshi Station Next learning path is divided into three main categories: Bitcoin, Lightning, and Liquid. Each learning path is independent, allowing users to progress through either path without prerequisites from the other.
 
 ## Project Structure
 
@@ -65,20 +71,27 @@ src/app/learn/
   │   ├── bitcoin-economics/         # Bitcoin economics module
   │   └── bitcoin-technical/         # Bitcoin technical module
   │
-  └── lightning/             # Lightning learning path
-      ├── lightning-fundamentals/         # Lightning fundamentals module
-      ├── lightning-node-operations/      # Lightning node operations module
-      ├── lightning-channel-management/   # Lightning channel management module
-      ├── lightning-routing-operations/   # Lightning routing operations module
-      └── lightning-security/            # Lightning security module
+  ├── lightning/             # Lightning learning path
+  │   ├── lightning-fundamentals/         # Lightning fundamentals module
+  │   ├── lightning-node-operations/      # Lightning node operations module
+  │   ├── lightning-channel-management/   # Lightning channel management module
+  │   ├── lightning-routing-operations/   # Lightning routing operations module
+  │   └── lightning-security/            # Lightning security module
+  │
+  └── liquid/                # Liquid learning path
+      ├── liquid-fundamentals/           # Liquid fundamentals module
+      ├── liquid-technical/              # Liquid technical module
+      ├── liquid-assets/                 # Liquid assets module
+      └── liquid-applications/           # Liquid applications module
 ```
 
 ### Naming Conventions
 
-Both learning paths use consistent naming conventions with prefixed directory names:
+All learning paths use consistent naming conventions with prefixed directory names:
 
 - **Bitcoin path**: Module directories use the 'bitcoin-' prefix (e.g., `bitcoin-fundamentals`, `bitcoin-economics`)
 - **Lightning path**: Module directories use the 'lightning-' prefix (e.g., `lightning-fundamentals`, `lightning-node-operations`)
+- **Liquid path**: Module directories use the 'liquid-' prefix (e.g., `liquid-fundamentals`, `liquid-technical`)
 
 Each module directory contains section directories, which in turn contain the `page.tsx` files that render the content for that section.
 
@@ -90,7 +103,7 @@ The learning path system has the following key components:
 
 2. **Progress Tracking**: The `LearningProgressContext` tracks user progress through sections and modules
 
-3. **Path Independence**: Bitcoin and Lightning paths are completely independent of each other
+3. **Path Independence**: Bitcoin, Lightning, and Liquid paths are completely independent of each other
 
 4. **Open Access Learning**: All learning content is freely accessible without restrictions, allowing users to explore topics in any order while still tracking their progress
 
@@ -444,9 +457,10 @@ This command executes the `scripts/generate-search-index.ts` script.
 - Implemented verification checkboxes with progress tracking
 - Implemented learning sidebar with proper module expansion and progress display
 - Updated verification checkboxes to match the original green style
-- Stabilized Lightning learning path with consistent naming conventions
-- Fixed module navigation and progress tracking for both Bitcoin and Lightning paths
-- Implemented consistent URL structure for both learning paths
+- Stabilized Lightning and Liquid learning paths with consistent naming conventions
+- Fixed module navigation and progress tracking for Bitcoin, Lightning, and Liquid paths
+- Implemented consistent URL structure for all three learning paths
+- Added complete Liquid learning path modules and sections
 - Added all missing pages in the Lightning learning path, including advanced concepts
 
 ### Roadmap

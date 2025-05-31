@@ -50,7 +50,7 @@ export default function ConfidentialTransactions() {
             <li>Users deserve basic financial privacy for their personal transactions</li>
           </ul>
           
-          <SatoshiNote className="mt-6" note="Privacy is not about hiding illegal activity, but about protecting sensitive financial information from public view—just as traditional financial systems do. Confidential Transactions provide this privacy while maintaining verifiability." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="Privacy is not about hiding illegal activity, but about protecting sensitive financial information from public view—just as traditional financial systems do. Confidential Transactions provide this privacy while maintaining verifiability." />
         </Card>
 
         {/* How Confidential Transactions Work */}
@@ -251,7 +251,7 @@ export default function ConfidentialTransactions() {
             </table>
           </div>
           
-          <SatoshiNote className="mt-6" note="Confidential Transactions provide a balanced approach to privacy: they hide the most sensitive information (amounts and asset types) while maintaining a manageable transaction size and computational overhead. This makes them well-suited for a sidechain like Liquid that focuses on financial privacy for businesses and traders." />
+          <SatoshiNote className="mt-6" pathType="liquid" note="Confidential Transactions provide a balanced approach to privacy: they hide the most sensitive information (amounts and asset types) while maintaining a manageable transaction size and computational overhead. This makes them well-suited for a sidechain like Liquid that focuses on financial privacy for businesses and traders." />
         </Card>
         
         {/* Verification Checkpoint */}

@@ -2,14 +2,14 @@
 
 ## Overview
 
-The learning path system in Satoshi Station is designed to guide users through a structured educational journey on Bitcoin and Lightning Network. This document explains the core mechanics of the learning paths, modules, sections, verification system, and progress tracking.
+The learning path system in Satoshi Station is designed to guide users through a structured educational journey on Bitcoin, Lightning Network, and Liquid sidechain technologies. This document explains the core mechanics of the learning paths, modules, sections, verification system, and progress tracking.
 
 ## Learning Path Structure
 
 The learning content is organized in a hierarchical structure:
 
 ```text
-Learning Path (Bitcoin/Lightning)
+Learning Path (Bitcoin/Lightning/Liquid)
 └── Module (e.g., "Bitcoin Basics")
     └── Section (e.g., "What is Bitcoin")
         └── Content with Verification Checkpoints
@@ -17,10 +17,11 @@ Learning Path (Bitcoin/Lightning)
 
 ### Paths
 
-There are two main learning paths:
+There are three main learning paths:
 
 1. **Bitcoin Path** - Covers Bitcoin fundamentals through advanced topics, using Bitcoin-orange theming
 2. **Lightning Network Path** - Covers Lightning Network topics, using Lightning-purple theming
+3. **Liquid Path** - Covers Liquid sidechain technology and features, using Liquid-cyan theming
 
 ### Bitcoin Path Structure
 
@@ -68,6 +69,31 @@ There are two main learning paths:
    - Multipath Payments (`/lightning-advanced/multipath`)
    - Submarine Swaps (`/lightning-advanced/submarine`)
    - Watchtowers (`/lightning-advanced/watchtowers`)
+
+### Liquid Path Structure
+
+1. **Liquid Fundamentals** (Beginner)
+   - What is Liquid (`/liquid-fundamentals/what-is-liquid`)
+   - Liquid vs Bitcoin (`/liquid-fundamentals/liquid-vs-bitcoin`)
+   - Confidential Transactions (`/liquid-fundamentals/confidential-transactions`)
+   - Issued Assets (`/liquid-fundamentals/issued-assets`)
+
+2. **Liquid Technical** (Advanced)
+   - Federation Consensus (`/liquid-technical/federation-consensus`)
+   - Script Extensions (`/liquid-technical/script-extensions`)
+   - Liquid Security (`/liquid-technical/liquid-security`)
+   - Watchtowers (`/liquid-technical/watchtowers`)
+
+3. **Liquid Assets** (Intermediate)
+   - Asset Types (`/liquid-assets/asset-types`)
+   - Asset Registry (`/liquid-assets/asset-registry`)
+   - Asset Security (`/liquid-assets/asset-security`)
+   - L-BTC (`/liquid-assets/l-btc`)
+
+4. **Liquid Applications** (Advanced)
+   - Token Issuance (`/liquid-applications/token-issuance`)
+   - DeFi on Liquid (`/liquid-applications/defi`)
+   - Security Tokens (`/liquid-applications/security-tokens`)
 
 ## Verification Checkpoint System
 
