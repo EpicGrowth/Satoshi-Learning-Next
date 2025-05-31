@@ -80,6 +80,18 @@ const verificationTools = [
       'Historical reward data',
     ],
   },
+  {
+    title: 'Block Time Analyzer',
+    description: 'Analyze Bitcoin block time intervals and difficulty adjustments throughout the blockchain history.',
+    icon: Clock,
+    href: '/verify/block-time',
+    features: [
+      'Block interval analysis',
+      'Difficulty adjustment tracking',
+      'Historical time patterns',
+      'Mining efficiency metrics',
+    ],
+  },
 ];
 
 export default function VerifyPage() {
