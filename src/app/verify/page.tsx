@@ -56,6 +56,18 @@ const verificationTools = [
       'Interactive timeline',
     ],
   },
+  {
+    title: 'Mining Reward Calculator',
+    description: 'Calculate block rewards, visualize halving events, and understand Bitcoin\'s emission schedule.',
+    icon: Bitcoin,
+    href: '/verify/mining-rewards',
+    features: [
+      'Block reward calculation',
+      'Halving visualization',
+      'Emission schedule',
+      'Historical reward data',
+    ],
+  },
 ];
 
 export default function VerifyPage() {
