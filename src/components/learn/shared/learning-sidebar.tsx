@@ -196,7 +196,7 @@ export function LearningSidebar({
                   variant={difficultyFilter === 'intermediate' ? 'default' : 'outline'}
                   className={cn(
                     'cursor-pointer',
-                    difficultyFilter === 'intermediate' ? 'bg-bitcoin-orange hover:bg-bitcoin-orange/90' : 'border-bitcoin-orange/20 text-bitcoin-orange'
+                    difficultyFilter === 'intermediate' ? 'bg-blue-500 hover:bg-blue-600' : 'border-blue-500/20 text-blue-500'
                   )}
                   onClick={() => {
                     setDifficultyFilter('intermediate');

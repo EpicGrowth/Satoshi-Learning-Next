@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Bitcoin, Zap, Shield, Menu, Search, Github, Lock, ArrowLeft } from 'lucide-react';
+import { Bitcoin, Zap, Shield, Menu, Search, Github, Lock, ArrowLeft, Compass } from 'lucide-react';
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { SearchIndexItem } from '@/types';
 import SearchResultsPortal from './SearchResultsPortal';
@@ -18,7 +18,7 @@ const navigationItems = [
 	{ name: 'Bitcoin', href: '/learn/bitcoin', icon: Bitcoin },
 	{ name: 'Lightning', href: '/learn/lightning', icon: Zap },
 	{ name: 'Resources', href: '/resources', icon: Shield },
-	{ name: 'Explorer', href: '/contact-explorer', icon: Search },
+	{ name: 'Explorer', href: '/contact-explorer', icon: Compass },
 ];
 
 export const Header: FC = () => {
@@ -177,22 +177,22 @@ export const Header: FC = () => {
           <div className="flex h-20 items-center justify-between">
 					<Link
 						href="/"
-						className="flex items-center space-x-1 group relative overflow-hidden py-2 flex-shrink-0"
+						className="flex items-center"
 						aria-label="Satoshi Station Home"
 					>
-						<div className="absolute -inset-1 bg-bitcoin-orange/15 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-						<div className="relative flex items-center">
-							<div className="relative z-10 mr-1.5 transition-all duration-300 group-hover:translate-y-[-2px]">
-								<div className="relative rounded-full p-1.5 bg-bitcoin-orange/15">
+						<div className="flex items-center">
+							<div className="mr-1.5">
+								<div className="rounded-full p-1.5 bg-bitcoin-orange/15 transition-colors duration-300 hover:bg-bitcoin-orange/25">
 									<Bitcoin
 										className="h-5 w-5 text-bitcoin-orange"
 										aria-hidden="true"
 									/>
 								</div>
 							</div>
-							<div className="relative z-10">
+							<div>
 								<span
-								className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-brand tracking-tight"
+								className="text-xl md:text-2xl whitespace-nowrap text-bitcoin-orange font-brand tracking-tight transition-transform duration-300"
+								data-brand-text="true"
 								style={{ fontWeight: 700 }}
 							>
 								Satoshi Station

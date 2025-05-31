@@ -596,3 +596,11 @@ textarea:focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
 }
+
+/* Brand text styling - ensures Exo 2 font is properly applied */
+[data-brand-text="true"] {
+  font-family: var(--font-brand), 'Exo 2', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  color: #e44c41 !important; /* Bitcoin Orange - matching the hero section and Tailwind config */
+}

@@ -98,7 +98,7 @@ export default function PathContent() {
             <div className="mt-3 sm:mt-4">
               <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${
                 module.difficulty === 'Beginner' ? 'bg-emerald-500/20 text-emerald-500' :
-                module.difficulty === 'Intermediate' ? 'bg-bitcoin-orange/20 text-bitcoin-orange' :
+                module.difficulty === 'Intermediate' ? 'bg-blue-500/20 text-blue-500' :
                 'bg-red-500/20 text-red-500'
               }`}>
                 {module.difficulty}
