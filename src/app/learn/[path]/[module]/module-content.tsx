@@ -39,7 +39,7 @@ export default function ModuleContent() {
             <div className="mt-4">
               <span className={`px-3 py-1 rounded-full text-sm ${
                 section.difficulty === 'Beginner' ? 'bg-emerald-500/20 text-emerald-500' :
-                section.difficulty === 'Intermediate' ? 'bg-amber-500/20 text-amber-500' :
+                section.difficulty === 'Intermediate' ? 'bg-blue-500/20 text-blue-500' :
                 'bg-red-500/20 text-red-500'
               }`}>
                 {section.difficulty}

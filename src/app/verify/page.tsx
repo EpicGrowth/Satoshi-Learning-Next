@@ -45,6 +45,18 @@ const verificationTools = [
     ],
   },
   {
+    title: 'Block Time Verification',
+    description: 'Monitor Bitcoin\'s block time and understand how the difficulty adjustment mechanism works.',
+    icon: Clock,
+    href: '/verify/block-time',
+    features: [
+      'Current block time',
+      'Difficulty adjustment',
+      'Historical trends',
+      'Educational content',
+    ],
+  },
+  {
     title: 'Blockchain Milestones',
     description: 'Explore significant blocks and events in Bitcoin history through an interactive timeline.',
     icon: History,
