@@ -99,9 +99,8 @@ export function LearningSidebar({
     return null;
   }, [modules, calculateSectionInfo]); // Depends on modules prop and memoized calculateSectionInfo
   
-  const handleSectionComplete = useCallback(() => {
-    router.push(`/learn/${pathPrefix}`);
-  }, [router, pathPrefix]);
+  // We no longer redirect completed sections to the main learning path
+  // This allows users to revisit completed sections
 
   const renderSection = useCallback((module: LearningModule, section: Section) => {
     const isActive = currentModule === module.id && currentSection === section.id;
@@ -120,27 +119,18 @@ export function LearningSidebar({
     return (
       <Link
         key={`${module.id}-${section.id}`}
-        href={locked ? '#' : `/learn/${pathPrefix}/${module.id}/${section.id}`}
+        href={`/learn/${pathPrefix}/${module.id}/${section.id}`}
         className={cn(
-          'group flex items-center py-2 px-3 rounded transition-colors',
-          isActive ? activeColor : 'hover:bg-muted/50',
-          locked && 'opacity-50 cursor-not-allowed'
+          'group flex items-center gap-1 sm:gap-2 py-2 px-3 rounded transition-colors',
+          isActive ? activeColor : 'hover:bg-muted/50'
         )}
         onClick={(e) => {
-          if (locked) {
-            e.preventDefault();
-          } else if (progress === 100) {
-            e.preventDefault();
-            handleSectionComplete();
-          } else {
-            handleModuleClick(module.id, section.id);
-          }
+          // Allow navigation to all sections
+          handleModuleClick(module.id, section.id);
         }}
       >
         {isComplete ? (
           <Check className={`h-3.5 w-3.5 mr-2 ${completedColor}`} />
-        ) : locked ? (
-          <Lock className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
         ) : isNextSection ? (
           <ArrowRight className="h-3.5 w-3.5 mr-2 text-emerald-500" />
         ) : (
@@ -161,8 +151,8 @@ export function LearningSidebar({
     pathPrefix, 
     calculateSectionInfo, 
     findNextIncompleteSection, 
-    handleSectionComplete, 
-    handleModuleClick 
+    handleModuleClick,
+    router
   ]);
 
   return (

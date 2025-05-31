@@ -1,7 +1,7 @@
 'use client';
 
 import { LearningProgressProvider } from '@/contexts/learning-progress-context';
-import ErrorBoundary from '@/components/layout/ErrorBoundary'; // Added import
+import ErrorBoundary from '@/components/layout/ErrorBoundary';
 
 export default function LearnLayout({
   children,

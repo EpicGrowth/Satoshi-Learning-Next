@@ -92,7 +92,7 @@ The learning path system has the following key components:
 
 3. **Path Independence**: Bitcoin and Lightning paths are completely independent of each other
 
-4. **Progressive Unlocking**: Within each path, sections unlock progressively as users complete previous sections
+4. **Open Access Learning**: All learning content is freely accessible without restrictions, allowing users to explore topics in any order while still tracking their progress
 
 5. **Verification System**: Each section has a single verification checkbox that marks that section as completed
 

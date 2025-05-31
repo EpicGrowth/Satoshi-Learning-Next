@@ -223,27 +223,9 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
   }, []);
 
   const isSectionLocked = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): boolean => {
-    const modules = type === 'bitcoin' ? bitcoinModules : lightningModules;
-    const module = modules.find(m => m.id === moduleId);
-    if (!module) return true;
-
-    // Each learning path is independent - no cross-path prerequisites
-    // Bitcoin and Lightning paths can be completed separately
-
-    // Check if previous sections in the same module are completed
-    const sectionIndex = module.sections.findIndex(s => s.id === sectionId);
-    if (sectionIndex === 0) {
-      // First section is only unlocked if previous module is completed
-      const moduleIndex = modules.findIndex(m => m.id === moduleId);
-      if (moduleIndex === 0) return false;
-      
-      const prevModule = modules[moduleIndex - 1];
-      return !progress[type][prevModule.id]?.completedAt;
-    }
-
-    const previousSection = module.sections[sectionIndex - 1];
-    return !progress[type][moduleId]?.completedSections[previousSection.id]?.completedAt;
-  }, [progress]);
+    // All sections are now unlocked
+    return false;
+  }, []);
 
   const getSectionProgress = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): number => {
     const sectionProgress = progress[type][moduleId]?.completedSections[sectionId];
@@ -287,12 +269,11 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     }
   }, []);
 
-  // Function to check if content should be locked (similar to isSectionLocked but can be customized)
+  // Function to check if content should be locked
   const isContentLocked = useCallback((type: 'bitcoin' | 'lightning', moduleId: string, sectionId: string): boolean => {
-    // For now, use the same logic as isSectionLocked
-    // This can be extended with additional logic specific to content access if needed
-    return isSectionLocked(type, moduleId, sectionId);
-  }, [isSectionLocked]);
+    // All content is now unlocked
+    return false;
+  }, []);
 
   return (
     <LearningProgressContext.Provider

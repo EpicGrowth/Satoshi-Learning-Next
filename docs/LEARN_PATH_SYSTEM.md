@@ -8,7 +8,7 @@ The learning path system in Satoshi Station is designed to guide users through a
 
 The learning content is organized in a hierarchical structure:
 
-```
+```text
 Learning Path (Bitcoin/Lightning)
 └── Module (e.g., "Bitcoin Basics")
     └── Section (e.g., "What is Bitcoin")
@@ -18,6 +18,7 @@ Learning Path (Bitcoin/Lightning)
 ### Paths
 
 There are two main learning paths:
+
 1. **Bitcoin Path** - Covers Bitcoin fundamentals through advanced topics, using Bitcoin-orange theming
 2. **Lightning Network Path** - Covers Lightning Network topics, using Lightning-purple theming
 
@@ -73,9 +74,10 @@ There are two main learning paths:
 ### Verification Checkboxes
 
 The verification checkboxes are a core mechanic for:
+
 1. Confirming user understanding
 2. Tracking learning progress
-3. Unlocking subsequent content
+3. Providing a sense of accomplishment
 
 #### Implementation Details
 
@@ -95,18 +97,22 @@ interface VerifyCheckboxProps {
 }
 ```
 
-### Unlocking Mechanism
+### Progress Tracking
 
-1. **Prerequisite System**:
-   - Each section may have prerequisites (previously completed sections)
-   - Sections with unmet prerequisites appear locked in the sidebar
-   - Attempting to access locked content redirects to prerequisites
+The system tracks user progress through the learning paths without restricting access:
 
-2. **Progressive Unlocking**:
+1. **Open Access Model**:
+   - All sections are freely accessible regardless of completion status
+   - Users can explore content in any order based on their interests
+   - Progress is still tracked for a sense of accomplishment
+   - All sections are visually represented in the sidebar with their completion status
+   - The sidebar provides a clear indication of progress through each learning path
+
+2. **Progress Visualization**:
    - When a user checks a verification checkbox, the system:
-     - Marks that specific verification point as complete
-     - Updates the progress percentage for the parent section/module
-     - Checks if any dependent content can now be unlocked
+     - Marks that verification point as complete
+     - Updates the progress percentage for that section
+     - If this completes the section, it visually indicates completion in the sidebar
      - Persists the verification state to localStorage
 
 ## Progress Tracking System
@@ -144,15 +150,17 @@ interface LearningProgressContextType {
 
 ### Progress Visualization
 
-1. **Sidebar Indicators**:
-   - Each module shows an overall percentage complete
-   - Modules display a color-coded progress bar (Bitcoin-orange or Lightning-purple)
-   - Completed sections show a checkmark icon
-   - Locked sections show a lock icon and appear dimmed
+1. **Section State Indicators**
+
+The sidebar UI shows section state in several ways:
+
+   - Completed sections have a check mark icon
+   - In-progress sections show a progress percentage
+   - Next recommended sections are highlighted with an arrow icon
 
 2. **Path Overview**:
    - Path landing pages show module completion status
-   - Visual indicators highlight completed, in-progress, and locked modules
+   - Visual indicators highlight completed, in-progress, and next recommended modules
    - Progress percentage displayed for each module card
 
 ## Learning Sidebar Implementation
@@ -161,7 +169,7 @@ The `learning-sidebar.tsx` component:
 - Renders the navigation tree of modules and sections
 - Displays progress indicators and percentages
 - Handles module expansion/collapse
-- Shows appropriate icons for completed/locked content
+- Shows appropriate icons for completed and next recommended content
 - Styles differently based on the current learning path
 
 ```tsx
@@ -179,9 +187,8 @@ interface LearningPathSidebarProps {
 1. User starts at "What is Bitcoin" (first unlocked section)
 2. User reads content and reaches a verification point
 3. User checks the verification checkbox, confirming understanding
-4. System updates progress and unlocks the next section
-5. Sidebar updates to show progress and newly available content
-6. User continues to the next section or module
+4. System updates progress and visually indicates completion in the sidebar
+5. User continues to the next section or module
 
 ## Technical Implementation Notes
 

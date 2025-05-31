@@ -146,32 +146,25 @@ export function MobileLearningSidebar({
     return (
       <Link
         key={`${module.id}-${section.id}`}
-        href={locked ? '#' : sectionPath}
+        href={sectionPath}
         className={cn(
           'group flex items-center justify-between py-2 px-3 rounded-md transition-colors',
-          isActive ? activeColor : 'hover:bg-muted/50',
-          locked && 'opacity-50 cursor-not-allowed'
+          isActive ? activeColor : 'hover:bg-muted/50'
         )}
         onClick={(e) => {
-          if (locked) {
+          try {
+            // Close the mobile menu when navigating to a section
+            setIsOpen(false);
+            handleSectionClick(module.id, section.id);
+          } catch (error) {
+            console.error('Error navigating to section:', error);
             e.preventDefault();
-          } else {
-            try {
-              // Close the mobile menu when navigating to a section
-              setIsOpen(false);
-              handleSectionClick(module.id, section.id);
-            } catch (error) {
-              console.error('Error navigating to section:', error);
-              e.preventDefault();
-            }
           }
         }}
       >
         <div className="flex items-center">
           {isComplete ? (
             <Check className={`h-4 w-4 mr-2 ${completedColor}`} />
-          ) : locked ? (
-            <Lock className="h-4 w-4 mr-2 text-muted-foreground" />
           ) : isNextSection ? (
             <ArrowRight className="h-4 w-4 mr-2 text-emerald-500" />
           ) : (
