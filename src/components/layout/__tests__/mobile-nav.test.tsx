@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // Note: In a real project, you would set up jest-dom in a setupTests file
-import { MobileNav } from '../mobile-nav.improved';
+import { MobileNav } from '../mobile-nav';
 import { LearningProgressProvider } from '@/contexts/learning-progress-context';
 
 // Mock next/navigation
@@ -10,7 +10,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // We'll mock the component instead of the module
-jest.mock('../mobile-nav.improved', () => ({
+jest.mock('../mobile-nav', () => ({
   MobileNav: () => {
     const React = require('react');
     const [isOpen, setIsOpen] = React.useState(false);
