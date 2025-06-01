@@ -221,19 +221,19 @@ export function MobileLearningSidebar({
       className={cn(
         "fixed bottom-6 right-6 z-40 rounded-full shadow-lg p-3 lg:hidden",
         pathPrefix === 'bitcoin'
-          ? 'bg-bitcoin-orange hover:bg-bitcoin-orange/90' // Changed
+          ? 'bg-white hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600'
           : pathPrefix === 'lightning'
-          ? 'bg-lightning-purple hover:bg-lightning-purple/90' // Assumed correct
-          : 'bg-cyan-500 hover:bg-cyan-500/90' // Known working
+          ? 'bg-white hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600'
+          : 'bg-cyan-500 hover:bg-cyan-500/90' // Liquid - unchanged
       )}
       aria-label="Open learning path navigation"
     >
       {pathPrefix === 'bitcoin' ? (
-        <Bitcoin className="h-6 w-6 text-white" />
+        <Bitcoin className="h-6 w-6 text-bitcoin-orange" /> // Icon color changed
       ) : pathPrefix === 'lightning' ? (
-        <Zap className="h-6 w-6 text-white" />
+        <Zap className="h-6 w-6 text-yellow-400" /> // Icon color changed
       ) : (
-        <Droplet className="h-6 w-6 text-white" /> // Liquid FAB icon
+        <Droplet className="h-6 w-6 text-white" /> // Liquid - unchanged
       )}
     </Button>
   );

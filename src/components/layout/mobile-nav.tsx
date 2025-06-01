@@ -102,7 +102,7 @@ export function MobileNav() {
           />
           
           {/* Menu panel */}
-          <div className="fixed right-0 top-0 h-full w-4/5 max-w-sm bg-background p-6 shadow-xl">
+          <div className="fixed right-0 top-0 h-full w-4/5 max-w-sm bg-white dark:bg-slate-900 border-2 border-red-500 p-6 shadow-xl">
             <div className="flex items-center justify-between mb-8">
               <Link 
                 href="/"
