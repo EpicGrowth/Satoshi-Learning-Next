@@ -221,10 +221,10 @@ export function MobileLearningSidebar({
       className={cn(
         "fixed bottom-6 right-6 z-40 rounded-full shadow-lg p-3 lg:hidden",
         pathPrefix === 'bitcoin'
-          ? 'bg-[var(--primary-light)] hover:bg-[var(--primary-light)]/90'
+          ? 'bg-bitcoin-orange hover:bg-bitcoin-orange/90' // Changed
           : pathPrefix === 'lightning'
-          ? 'bg-lightning-purple hover:bg-lightning-purple/90'
-          : 'bg-cyan-500 hover:bg-cyan-500/90' // Liquid FAB background
+          ? 'bg-lightning-purple hover:bg-lightning-purple/90' // Assumed correct
+          : 'bg-cyan-500 hover:bg-cyan-500/90' // Known working
       )}
       aria-label="Open learning path navigation"
     >
