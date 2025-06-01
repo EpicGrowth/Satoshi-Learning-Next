@@ -36,8 +36,8 @@ const normalizeProgressData = (data: UserProgress): UserProgress => {
   const normalized = { ...data };
   
   // Process both bitcoin and lightning paths
-  ['bitcoin', 'lightning'].forEach(pathType => {
-    const pathData = normalized[pathType as 'bitcoin' | 'lightning'];
+  (['bitcoin', 'lightning', 'liquid'] as const).forEach(pathType => { // Added 'liquid'
+    const pathData = normalized[pathType]; // Use pathType directly
     
     // Process each module
     Object.keys(pathData).forEach(moduleId => {
@@ -141,9 +141,15 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
       }
 
       // Calculate progress based on completed steps
-      const totalSteps = type === 'bitcoin' 
-        ? bitcoinModules.find(m => m.id === moduleId)?.sections.find(s => s.id === sectionId)?.checkboxCount || 1
-        : lightningModules.find(m => m.id === moduleId)?.sections.find(s => s.id === sectionId)?.checkboxCount || 1;
+      let modulesForType;
+      if (type === 'bitcoin') {
+        modulesForType = bitcoinModules;
+      } else if (type === 'lightning') {
+        modulesForType = lightningModules;
+      } else { // type === 'liquid'
+        modulesForType = liquidModules;
+      }
+      const totalSteps = modulesForType.find(m => m.id === moduleId)?.sections.find(s => s.id === sectionId)?.checkboxCount || 1;
       
       sectionProgress.progress = Math.round((sectionProgress.completedSteps.length / totalSteps) * 100);
 
@@ -203,7 +209,16 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
       updatedModuleProgress.completedSections[sectionId].progress = 100;
 
       // Check if all sections in this module are complete using the module configuration
-      const moduleConfig = (type === 'bitcoin' ? bitcoinModules : lightningModules).find(m => m.id === moduleId);
+      let modulesForTypeUpdate;
+      if (type === 'bitcoin') {
+        modulesForTypeUpdate = bitcoinModules;
+      } else if (type === 'lightning') {
+        modulesForTypeUpdate = lightningModules;
+      } else { // type === 'liquid'
+        modulesForTypeUpdate = liquidModules;
+      }
+      const moduleConfig = modulesForTypeUpdate.find(m => m.id === moduleId);
+
       if (moduleConfig && moduleConfig.sections) { // Ensure moduleConfig and sections exist
         const allSectionsComplete = moduleConfig.sections.every(
           section => updatedModuleProgress.completedSections[section.id]?.progress === 100
