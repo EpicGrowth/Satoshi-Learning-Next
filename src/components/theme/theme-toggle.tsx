@@ -28,7 +28,7 @@ export function ThemeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="border-bitcoin-orange/20 bg-background/95 backdrop-blur-sm">
+      <DropdownMenuContent align="end" className="z-[51] border-bitcoin-orange/20 bg-background/95 backdrop-blur-sm">
         <DropdownMenuItem 
           onClick={() => setTheme("light")} 
           className="hover:bg-bitcoin-orange/5 cursor-pointer"
