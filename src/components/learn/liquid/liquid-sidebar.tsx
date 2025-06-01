@@ -21,8 +21,6 @@ export function LiquidSidebar() {
       pathPrefix="liquid"
       onModuleSelect={handleModuleSelect}
       showDifficultyFilter={showDifficultyFilter}
-      accentColor="text-cyan-500"
-      hoverColor="hover:bg-cyan-100 dark:hover:bg-cyan-900/20"
     />
   );
 }
