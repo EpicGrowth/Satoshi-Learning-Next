@@ -18,6 +18,13 @@ const footerLinks = {
     { name: 'Node Setup', href: '/learn/lightning/lightning-node-operations/node-setup' },
     { name: 'Security', href: '/learn/lightning/lightning-security/node-security' },
   ],
+  liquidLearning: [
+    { name: 'What is Liquid?', href: '/learn/liquid/liquid-fundamentals/what-is-liquid' },
+    { name: 'Federated Sidechains', href: '/learn/liquid/liquid-fundamentals/federated-sidechains' },
+    { name: 'Confidential Txns', href: '/learn/liquid/liquid-fundamentals/confidential-transactions' },
+    { name: 'Asset Issuance', href: '/learn/liquid/liquid-fundamentals/asset-issuance' },
+    { name: 'L-BTC', href: '/learn/liquid/liquid-assets/l-btc' },
+  ],
   resources: [
     { name: 'Bitcoin Whitepaper', href: 'https://bitcoin.org/bitcoin.pdf', external: true },
     { name: 'Lightning Network', href: 'https://lightning.network/', external: true },
@@ -119,6 +126,23 @@ export function Footer() {
             </ul>
           </div>
           
+          {/* Liquid Learning Links */}
+          <div>
+            <h2 className="font-semibold text-base mb-4 text-foreground">Liquid Network</h2>
+            <ul className="space-y-3 text-sm">
+              {footerLinks.liquidLearning.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground/90 hover:text-bitcoin-orange transition-colors inline-flex items-center"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Resources Links */}
           <div>
             <h2 className="font-semibold text-base mb-4 text-foreground">Resources</h2>

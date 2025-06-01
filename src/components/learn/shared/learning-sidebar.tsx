@@ -14,7 +14,7 @@ import { LearningModule, Section } from '@/types/learning';
 
 interface LearningSidebarProps {
   modules: LearningModule[];
-  pathPrefix: 'bitcoin' | 'lightning';
+  pathPrefix: 'bitcoin' | 'lightning' | 'liquid';
   onModuleSelect?: (moduleId: string, sectionId: string) => void;
   showDifficultyFilter?: boolean;
 }
@@ -109,12 +109,16 @@ export function LearningSidebar({
     const isNextSection = nextIncomplete?.moduleId === module.id && nextIncomplete?.sectionId === section.id;
     
     // Determine theme colors using our standardized CSS variables
-    const activeColor = pathPrefix === 'bitcoin' 
-      ? 'text-[var(--primary-light)] bg-[var(--primary-light)]/5' 
-      : 'text-lightning-purple bg-lightning-purple/5';
-    const completedColor = pathPrefix === 'bitcoin' 
-      ? 'text-[var(--primary-light)]' 
-      : 'text-lightning-purple';
+    const activeColor = pathPrefix === 'bitcoin'
+      ? 'text-[var(--primary-light)] bg-[var(--primary-light)]/5'
+      : pathPrefix === 'lightning'
+      ? 'text-lightning-purple bg-lightning-purple/5'
+      : 'text-blue-500 bg-blue-500/5'; // Default for liquid
+    const completedColor = pathPrefix === 'bitcoin'
+      ? 'text-[var(--primary-light)]'
+      : pathPrefix === 'lightning'
+      ? 'text-lightning-purple'
+      : 'text-blue-500'; // Default for liquid
 
     return (
       <Link
@@ -231,13 +235,17 @@ export function LearningSidebar({
               const formattedProgress = `${Math.round(progressPercentage)}%`;
               
               // Different styling based on light/dark mode is handled by Tailwind's dark class
-              const backgroundColor = pathPrefix === 'bitcoin' 
-                ? 'bg-[var(--primary-light)]/5 dark:bg-[var(--primary-light)]/10' 
-                : 'bg-lightning-purple/5 dark:bg-lightning-purple/10';
+              const backgroundColor = pathPrefix === 'bitcoin'
+                ? 'bg-[var(--primary-light)]/5 dark:bg-[var(--primary-light)]/10'
+                : pathPrefix === 'lightning'
+                ? 'bg-lightning-purple/5 dark:bg-lightning-purple/10'
+                : 'bg-blue-500/5 dark:bg-blue-500/10'; // Default for liquid
                 
-              const progressBarColor = pathPrefix === 'bitcoin' 
-                ? 'bg-[var(--primary-light)]' 
-                : 'bg-lightning-purple';
+              const progressBarColor = pathPrefix === 'bitcoin'
+                ? 'bg-[var(--primary-light)]'
+                : pathPrefix === 'lightning'
+                ? 'bg-lightning-purple'
+                : 'bg-blue-500'; // Default for liquid
                 
               const badgeColor = getDifficultyColor(module.difficulty);
 
@@ -258,8 +266,10 @@ export function LearningSidebar({
                       <div className="flex items-center">
                         {pathPrefix === 'bitcoin' ? (
                           <span className="text-[var(--primary-light)] mr-2">₿</span>
-                        ) : (
+                        ) : pathPrefix === 'lightning' ? (
                           <span className="text-lightning-purple mr-2">⚡</span>
+                        ) : (
+                          <span className="text-blue-500 mr-2">💧</span> // Default icon for liquid
                         )}
                         <span className="font-medium">{module.title}</span>
                       </div>
