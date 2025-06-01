@@ -133,6 +133,11 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
   const primaryColor = pathType === 'bitcoin' ? 'var(--primary-light)' : 
                       pathType === 'lightning' ? 'var(--lightning-purple)' : 
                       'var(--cyan-500)';
+
+  const themedTextColor =
+    pathType === 'bitcoin' ? 'text-bitcoin-orange' :
+    pathType === 'lightning' ? 'text-lightning-purple' :
+    'text-cyan-500'; // For Liquid
   
   return (
     <div className="w-full max-w-6xl pt-0 pb-4 sm:pb-6 md:pb-8 px-0 sm:px-4 md:px-6 mx-auto overflow-hidden">
@@ -202,6 +207,7 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
                   size="sm"
                   className={cn(
                     'flex items-center gap-1 sm:gap-2 px-1 sm:px-4 py-1 sm:py-2 sm:min-w-[120px] max-w-[45%] justify-center border border-border rounded-md',
+                    themedTextColor, // Added
                     !prev && 'invisible'
                   )}
                   onClick={() => prev && navigate(prev.moduleId, prev.sectionId)}
@@ -215,7 +221,13 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    'flex items-center gap-1 sm:gap-2 px-1 sm:px-4 py-1 sm:py-2 sm:min-w-[120px] max-w-[45%] justify-center border border-border rounded-md',
+                    'flex items-center gap-1 sm:gap-2 px-1 sm:px-4 py-1 sm:py-2 sm:min-w-[120px] max-w-[45%] justify-center border rounded-md',
+                    isSectionCompleted ? 'text-white' : themedTextColor,
+                    isSectionCompleted
+                      ? (pathType === 'bitcoin' ? 'bg-bitcoin-orange border-bitcoin-orange hover:bg-bitcoin-orange/90'
+                         : pathType === 'lightning' ? 'bg-lightning-purple border-lightning-purple hover:bg-lightning-purple/90'
+                         : 'bg-cyan-500 border-cyan-500 hover:bg-cyan-500/90')
+                      : 'bg-transparent border-border', // Default border when not completed
                     !next && 'invisible'
                   )}
                   onClick={() => {
@@ -226,11 +238,7 @@ export function ModuleLayout({ children }: ModuleLayoutProps) {
                   }}
                   disabled={!next || !isSectionCompleted}
                   title={!isSectionCompleted ? 'Complete the verification checkbox first' : 'Continue to next section'}
-                  style={{ 
-                    backgroundColor: isSectionCompleted ? primaryColor : 'transparent', 
-                    color: isSectionCompleted ? 'white' : 'currentColor', 
-                    borderColor: isSectionCompleted ? primaryColor : 'var(--border)' 
-                  }}
+                  // Removed inline style
                 >
                   <span className="text-xs sm:text-sm truncate">Next</span>
                   <ArrowRight className="h-4 w-4 flex-shrink-0" />
