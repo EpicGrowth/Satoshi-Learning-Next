@@ -15,7 +15,8 @@ import {
   X, 
   Menu,
   Bitcoin,
-  Zap
+  Zap,
+  Droplet // Added for Liquid
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLearningProgress } from '@/contexts/learning-progress-context';
@@ -25,7 +26,7 @@ import { ResetProgressButton } from './reset-progress-button';
 
 interface MobileLearningSidebarProps {
   modules: LearningModule[];
-  pathPrefix: 'bitcoin' | 'lightning';
+  pathPrefix: 'bitcoin' | 'lightning' | 'liquid'; // Updated
   onModuleSelect?: (moduleId: string, sectionId: string) => void;
 }
 
@@ -133,12 +134,17 @@ export function MobileLearningSidebar({
     const isNextSection = nextIncomplete?.moduleId === module.id && nextIncomplete?.sectionId === section.id;
     
     // Determine theme colors using our standardized CSS variables
-    const activeColor = pathPrefix === 'bitcoin' 
-      ? 'text-[var(--primary-light)] bg-[var(--primary-light)]/5' 
-      : 'text-lightning-purple bg-lightning-purple/5';
-    const completedColor = pathPrefix === 'bitcoin' 
-      ? 'text-[var(--primary-light)]' 
-      : 'text-lightning-purple';
+    const activeColor = pathPrefix === 'bitcoin'
+      ? 'text-[var(--primary-light)] bg-[var(--primary-light)]/5'
+      : pathPrefix === 'lightning'
+      ? 'text-lightning-purple bg-lightning-purple/5'
+      : 'text-cyan-500 bg-cyan-500/5'; // Liquid active color
+
+    const completedColor = pathPrefix === 'bitcoin'
+      ? 'text-[var(--primary-light)]'
+      : pathPrefix === 'lightning'
+      ? 'text-lightning-purple'
+      : 'text-cyan-500'; // Liquid completed color
 
     // Ensure the path is valid
     const sectionPath = `/learn/${pathPrefix}/${module.id}/${section.id}`;
@@ -184,8 +190,14 @@ export function MobileLearningSidebar({
           <div className="flex items-center">
             <span className="text-xs text-muted-foreground mr-2">{progress}%</span>
             <div className="w-8 h-1.5 rounded-full bg-muted overflow-hidden">
-              <div 
-                className={`h-full ${pathPrefix === 'bitcoin' ? 'bg-[var(--primary-light)]' : 'bg-lightning-purple'}`}
+              <div
+                className={`h-full ${
+                  pathPrefix === 'bitcoin'
+                    ? 'bg-[var(--primary-light)]'
+                    : pathPrefix === 'lightning'
+                    ? 'bg-lightning-purple'
+                    : 'bg-cyan-500' // Liquid progress bar color
+                }`}
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -208,14 +220,20 @@ export function MobileLearningSidebar({
       onClick={() => setIsOpen(true)}
       className={cn(
         "fixed bottom-6 right-6 z-40 rounded-full shadow-lg p-3 lg:hidden",
-        pathPrefix === 'bitcoin' ? 'bg-[var(--primary-light)] hover:bg-[var(--primary-light)]/90' : 'bg-lightning-purple hover:bg-lightning-purple/90'
+        pathPrefix === 'bitcoin'
+          ? 'bg-[var(--primary-light)] hover:bg-[var(--primary-light)]/90'
+          : pathPrefix === 'lightning'
+          ? 'bg-lightning-purple hover:bg-lightning-purple/90'
+          : 'bg-cyan-500 hover:bg-cyan-500/90' // Liquid FAB background
       )}
       aria-label="Open learning path navigation"
     >
       {pathPrefix === 'bitcoin' ? (
         <Bitcoin className="h-6 w-6 text-white" />
-      ) : (
+      ) : pathPrefix === 'lightning' ? (
         <Zap className="h-6 w-6 text-white" />
+      ) : (
+        <Droplet className="h-6 w-6 text-white" /> // Liquid FAB icon
       )}
     </Button>
   );
@@ -250,11 +268,17 @@ export function MobileLearningSidebar({
                 <div className="flex items-center">
                   {pathPrefix === 'bitcoin' ? (
                     <Bitcoin className="h-5 w-5 text-[var(--primary-light)] mr-2" />
-                  ) : (
+                  ) : pathPrefix === 'lightning' ? (
                     <Zap className="h-5 w-5 text-lightning-purple mr-2" />
+                  ) : (
+                    <Droplet className="h-5 w-5 text-cyan-500 mr-2" /> // Liquid header icon
                   )}
                   <span className="font-bold text-base">
-                    {pathPrefix === 'bitcoin' ? 'Bitcoin Learning' : 'Lightning Learning'}
+                    {pathPrefix === 'bitcoin'
+                      ? 'Bitcoin Learning'
+                      : pathPrefix === 'lightning'
+                      ? 'Lightning Learning'
+                      : 'Liquid Learning'} {/* Liquid header title */}
                   </span>
                 </div>
                 <Button 
@@ -347,13 +371,17 @@ export function MobileLearningSidebar({
                     const formattedProgress = `${Math.round(progressPercentage)}%`;
                     
                     // Different styling based on light/dark mode is handled by Tailwind's dark class
-                    const backgroundColor = pathPrefix === 'bitcoin' 
-                      ? 'bg-[var(--primary-light)]/5 dark:bg-[var(--primary-light)]/10' 
-                      : 'bg-lightning-purple/5 dark:bg-lightning-purple/10';
+                    const backgroundColor = pathPrefix === 'bitcoin'
+                      ? 'bg-[var(--primary-light)]/5 dark:bg-[var(--primary-light)]/10'
+                      : pathPrefix === 'lightning'
+                      ? 'bg-lightning-purple/5 dark:bg-lightning-purple/10'
+                      : 'bg-cyan-500/5 dark:bg-cyan-500/10'; // Liquid module background
                       
-                    const progressBarColor = pathPrefix === 'bitcoin' 
-                      ? 'bg-[var(--primary-light)]' 
-                      : 'bg-lightning-purple';
+                    const progressBarColor = pathPrefix === 'bitcoin'
+                      ? 'bg-[var(--primary-light)]'
+                      : pathPrefix === 'lightning'
+                      ? 'bg-lightning-purple'
+                      : 'bg-cyan-500'; // Liquid module progress bar
                       
                     const badgeColor = getDifficultyColor(module.difficulty);
 
@@ -374,8 +402,10 @@ export function MobileLearningSidebar({
                             <div className="flex items-center">
                               {pathPrefix === 'bitcoin' ? (
                                 <span className="text-[var(--primary-light)] mr-2">₿</span>
-                              ) : (
+                              ) : pathPrefix === 'lightning' ? (
                                 <span className="text-lightning-purple mr-2">⚡</span>
+                              ) : (
+                                <Droplet className="h-4 w-4 text-cyan-500 mr-2" /> // Liquid module title icon
                               )}
                               <span className="font-medium">{module.title}</span>
                             </div>

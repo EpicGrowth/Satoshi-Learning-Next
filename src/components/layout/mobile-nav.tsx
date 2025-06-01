@@ -45,16 +45,10 @@ const navigationItems = [
     items: generateLearningItems(lightningModules, 'lightning'),
   },
   {
-    title: 'Liquid Learning', // Reconstructed object
+    title: 'Liquid Learning',
     icon: Droplet,
     path: '/learn/liquid',
-    items: [
-      {
-        title: 'Test: What is Liquid? (Hardcoded)',
-        href: '/learn/liquid/liquid-fundamentals/what-is-liquid'
-      },
-      ...generateLearningItems(liquidModules, 'liquid')
-    ],
+    items: generateLearningItems(liquidModules, 'liquid'),
   },
   {
     title: 'Resources',
