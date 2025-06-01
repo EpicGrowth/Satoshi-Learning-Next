@@ -15,7 +15,8 @@ import {
   CircleCheck, 
   RefreshCw, 
   Bitcoin, 
-  Zap 
+  Zap,
+  Droplet // Added for Liquid
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
@@ -23,7 +24,7 @@ import { Button } from '@/components/ui/button';
 
 interface MobileProgressTrackerProps {
   modules: LearningModule[];
-  pathPrefix: 'bitcoin' | 'lightning';
+  pathPrefix: 'bitcoin' | 'lightning' | 'liquid'; // Updated
 }
 
 export function MobileProgressTracker({ modules, pathPrefix }: MobileProgressTrackerProps) {
@@ -103,7 +104,11 @@ export function MobileProgressTracker({ modules, pathPrefix }: MobileProgressTra
           <div className="bg-card border border-border rounded-lg p-4 m-4 max-w-xs w-full">
             <h3 className="font-semibold mb-2">Reset Progress</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Are you sure you want to reset your {pathPrefix === 'bitcoin' ? 'Bitcoin' : 'Lightning'} learning progress? 
+              Are you sure you want to reset your {
+                pathPrefix === 'bitcoin' ? 'Bitcoin'
+                : pathPrefix === 'lightning' ? 'Lightning'
+                : 'Liquid' // Liquid reset text
+              } learning progress?
               This action cannot be undone.
             </p>
             <div className="flex justify-end gap-2">
@@ -134,8 +139,10 @@ export function MobileProgressTracker({ modules, pathPrefix }: MobileProgressTra
             <div className="relative h-8 w-8 rounded-full overflow-hidden border border-border/50 flex items-center justify-center bg-muted/20">
               {pathPrefix === 'bitcoin' ? (
                 <Bitcoin className="h-4 w-4 text-bitcoin-orange" />
-              ) : (
+              ) : pathPrefix === 'lightning' ? (
                 <Zap className="h-4 w-4 text-lightning-purple" />
+              ) : (
+                <Droplet className="h-4 w-4 text-cyan-500" /> // Liquid path icon
               )}
             </div>
             
@@ -147,7 +154,11 @@ export function MobileProgressTracker({ modules, pathPrefix }: MobileProgressTra
                   className="text-sm font-medium hover:underline flex items-center gap-1"
                   onClick={handlePathTitleClick}
                 >
-                  {pathPrefix === 'bitcoin' ? 'Bitcoin Learning Path' : 'Lightning Learning Path'}
+                  {pathPrefix === 'bitcoin'
+                    ? 'Bitcoin Learning Path'
+                    : pathPrefix === 'lightning'
+                    ? 'Lightning Learning Path'
+                    : 'Liquid Learning Path'} {/* Liquid path title */}
                 </a>
                 
                 {/* Reset button - separate from the toggle */}
