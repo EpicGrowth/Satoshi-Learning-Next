@@ -14,6 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Link from 'next/link';
 import { HoneycombBackground } from '@/components/animations/HoneycombBackground';
 import { LightningNetwork } from '@/components/learn/shared/lightning-network';
+import { liquidModules } from '@/config/learning-modules'; // Added for Liquid
+import { Droplet } from 'lucide-react'; // Added for Liquid icon
 
 type Stat = {
   number: string;
@@ -327,6 +329,82 @@ export default function Home() {
               </TabsContent>
             ))}
           </Tabs>
+        </div>
+      </section>
+
+      {/* Liquid Learning Path Section */}
+      <section className="container relative z-5 py-20 md:py-28">
+        <div className="absolute inset-0 bg-background/70 pointer-events-none"></div>
+        <div className="mx-auto max-w-[1200px] relative z-10">
+          <div className="mb-16 text-center">
+            <Badge variant="outline" className="mb-5 px-5 py-2.5 text-base font-medium border-cyan-600/40 text-cyan-600 bg-cyan-600/5">
+              <Droplet className="mr-2 h-5 w-5 text-cyan-600" />
+              Liquid Network
+            </Badge>
+            <h2 className="mb-6 text-3xl font-bold md:text-5xl">Explore the Liquid Network</h2>
+            <p className="mx-auto max-w-[800px] text-lg md:text-xl text-muted-foreground">
+              Dive into the Liquid Network, a Bitcoin sidechain for faster, confidential transactions and asset issuance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {liquidModules.map((module) => (
+              <Card
+                key={module.id}
+                className="group border-border/40 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-600/40 hover:shadow-lg overflow-hidden flex flex-col h-full"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-cyan-600/5 opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none"></div>
+                <CardHeader className="relative">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="p-2.5 rounded-lg bg-cyan-600/10 transition-all group-hover:bg-cyan-600/15">
+                      <module.icon className="h-6 w-6 text-cyan-600" />
+                    </div>
+                    <CardTitle className="text-xl font-semibold">{module.title}</CardTitle>
+                  </div>
+                  {module.difficulty && (
+                    <Badge variant="outline" className="font-medium text-xs border-cyan-600/30 text-cyan-600 bg-cyan-600/5 px-2 py-0.5">
+                      {module.difficulty}
+                    </Badge>
+                  )}
+                </CardHeader>
+                <CardContent className="relative flex-grow">
+                  <p className="text-base leading-relaxed text-muted-foreground mb-4">
+                    {module.description}
+                  </p>
+                  {/* Optional: List a few section titles from the module */}
+                  {module.sections && module.sections.length > 0 && (
+                    <div className="space-y-1.5 text-sm text-muted-foreground/80 mb-4">
+                      <p className="font-medium text-foreground/70 mb-1">Key topics:</p>
+                      {module.sections.slice(0, 2).map(section => (
+                        <div key={section.id} className="flex items-center">
+                          <ChevronRight className="h-3 w-3 mr-1.5 text-cyan-600/70" />
+                          <span>{section.title}</span>
+                        </div>
+                      ))}
+                      {module.sections.length > 2 && (
+                        <div className="flex items-center">
+                           <ChevronRight className="h-3 w-3 mr-1.5 text-cyan-600/70" />
+                          <span>And more...</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+                <CardFooter className="relative mt-auto pt-5 border-t border-border/30">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-cyan-600 group-hover:bg-cyan-600/10 group-hover:text-cyan-700 transition-all duration-300"
+                    asChild
+                  >
+                    <Link href={`/learn/liquid/${module.id}`}>
+                      Explore Module
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
