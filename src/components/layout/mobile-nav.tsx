@@ -11,12 +11,18 @@ import { bitcoinModules, lightningModules, liquidModules } from '@/config/learni
 
 // Generate navigation items dynamically from learning modules
 const generateLearningItems = (modules: any[], pathPrefix: string) => {
-  return modules.map(module => ({
-    title: module.title,
-    href: module.sections && module.sections.length > 0 
+  return modules.map(module => {
+    const href = module.sections && module.sections.length > 0
       ? `/learn/${pathPrefix}/${module.id}/${module.sections[0].id}`
-      : `/learn/${pathPrefix}/${module.id}`,
-  }));
+      : `/learn/${pathPrefix}/${module.id}`;
+    if (pathPrefix === 'liquid') {
+      console.log(`Generated Liquid href: ${href} for module ${module.id}`);
+    }
+    return {
+      title: module.title,
+      href: href,
+    };
+  });
 };
 
 // Navigation structure with dynamically generated learning paths
@@ -39,10 +45,16 @@ const navigationItems = [
     items: generateLearningItems(lightningModules, 'lightning'),
   },
   {
-    title: 'Liquid Learning',
+    title: 'Liquid Learning', // Reconstructed object
     icon: Droplet,
     path: '/learn/liquid',
-    items: generateLearningItems(liquidModules, 'liquid'),
+    items: [
+      {
+        title: 'Test: What is Liquid? (Hardcoded)',
+        href: '/learn/liquid/liquid-fundamentals/what-is-liquid'
+      },
+      ...generateLearningItems(liquidModules, 'liquid')
+    ],
   },
   {
     title: 'Resources',
@@ -204,11 +216,12 @@ export function MobileNav() {
                                   }`}
                                   onClick={(e) => {
                                     try {
-                                      setOpenSection(null);
+                                      setOpenSection(null); // Close the accordion section
+                                      setIsOpen(false);    // Explicitly close the entire menu
                                     } catch (err) {
                                       console.error('Navigation error:', err);
                                       setError('Failed to navigate. Please try again.');
-                                      e.preventDefault();
+                                      e.preventDefault(); // Prevent navigation on error
                                     }
                                   }}
                                 >
