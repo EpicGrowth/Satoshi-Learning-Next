@@ -16,21 +16,21 @@ Visit `http://localhost:3000` to view the application.
 - [Development Guide](docs/DEVELOPMENT.md) - Complete development documentation
 - [Technical Documentation](docs/TECHNICAL.md) - Technical architecture and implementation details
 - [Deployment Strategy](docs/DEPLOYMENT_STRATEGY.md) - Deployment procedures and infrastructure
-- [Content Strategy](docs/satoshi-station-content-strategy.md) - Content guidelines and standards
-- [Visual Guidelines](docs/satoshi-station-visual-guidelines-comprehensive.md) - Visual design standards
+- [Content Strategy](docs/CONTENT_STRATEGY.md) - Content guidelines and standards
+- [Visual Guidelines](docs/VISUAL_GUIDELINES.md) - Visual design standards
 - [Learning Path System](docs/LEARN_PATH_SYSTEM.md) - Learning path architecture and management
 - [Mobile Components](docs/MOBILE_COMPONENTS.md) - Mobile navigation and progress tracking components
-- [Search Indexing](docs/SEARCH_INDEXING.md) - Search functionality and indexing documentation
+- [API Documentation](docs/API_DOCUMENTATION.md) - API reference and integration guides
 - [Post Deployment Verification](docs/POST_DEPLOYMENT_VERIFICATION.md) - Deployment verification procedures
-- [Content Style Guide](docs/satoshi-station-content-style-guide-comprehensive.md) - Comprehensive content guidelines
-- [Editorial Workflow](docs/satoshi-station-editorial-workflow.md) - Content creation and review process
-- [Audience Personas](docs/satoshi-station-audience-personas.md) - Target audience definitions
-- [Measurement Framework](docs/satoshi-station-measurement-framework.md) - Analytics and success metrics
-- [Color & Typography](docs/COLOR-TYPOGRAPHY-UPDATE.md) - Design system specifications
-- [Voice Application Guide](docs/satoshi-station-voice-application-guide.md) - Brand voice guidelines
-- [Crisis Plan](docs/satoshi-station-crisis-plan.md) - Incident response procedures
-- [Response Frameworks](docs/satoshi-station-response-frameworks.md) - Communication guidelines
-- [Messaging Architecture](docs/satoshi-station-messaging-architecture.md) - Content organization strategy
+- [Content Style Guide](docs/CONTENT_STYLE_GUIDE.md) - Comprehensive content guidelines
+- [Editorial Workflow](docs/EDITORIAL_WORKFLOW.md) - Content creation and review process
+- [Audience Personas](docs/AUDIENCE_PERSONAS.md) - Target audience definitions
+- [Measurement Framework](docs/MEASUREMENT_FRAMEWORK.md) - Analytics and success metrics
+- [Color & Typography](docs/COLOR_TYPOGRAPHY_UPDATE.md) - Design system specifications
+- [Voice Application Guide](docs/VOICE_APPLICATION_GUIDE.md) - Brand voice guidelines
+- [Crisis Plan](docs/CRISIS_PLAN.md) - Incident response procedures
+- [Response Frameworks](docs/RESPONSE_FRAMEWORKS.md) - Communication guidelines
+- [Messaging Architecture](docs/MESSAGING_ARCHITECTURE.md) - Content organization strategy
 
 ## Project Overview
 
@@ -184,21 +184,17 @@ The learning path system has the following key components:
 - Protocol Updates
 - Security & Best Practices
 
-### Lightning Modules
+## Development Guidelines
 
-- Lightning Fundamentals
-- Payment Channels
-- Routing & Pathfinding
-- Lightning Implementations
-- Lightning Applications
-- LNURL & Lightning Address
+### Core Guidelines
+- [Accessibility Guide](docs/ACCESSIBILITY_GUIDE.md) - WCAG 2.1 compliance requirements
+- [Performance Optimization](docs/PERFORMANCE_OPTIMIZATION.md) - Performance standards and best practices
+- [Security Guidelines](docs/SECURITY_GUIDELINES.md) - Security implementation and best practices
 
 ### Developer Resources
-
-- Development Basics
-- Bitcoin RPC
-- Lightning Development
-- Smart Contracts
+- [API Documentation](docs/API_DOCUMENTATION.md) - Complete API reference
+- [Component Library](docs/COMPONENT_LIBRARY.md) - Reusable UI components
+- [Verification Tools](docs/VERIFICATION_TOOLS.md) - Bitcoin verification tools implementation
 - Security Best Practices
 - Wallet Development
 
@@ -451,15 +447,23 @@ This command executes the `scripts/generate-search-index.ts` script.
 
 ## Development Status
 
-### Completed
-- Implemented dark mode with colors matching the original sats.sv site
-- Added interactive learning modules with content from the original site
+### Recently Completed
+- Implemented comprehensive verification tools suite
+- Added accessibility compliance (WCAG 2.1)
+- Integrated Liquid learning path
+- Enhanced security measures
+- Optimized performance
+
+### Previously Completed
+- Implemented dark/light mode theming
+- Added interactive learning modules
+- Integrated progress tracking system
+- Implemented responsive design
 - Implemented verification checkboxes with progress tracking
 - Implemented learning sidebar with proper module expansion and progress display
 - Updated verification checkboxes to match the original green style
 - Stabilized Lightning and Liquid learning paths with consistent naming conventions
 - Fixed module navigation and progress tracking for Bitcoin, Lightning, and Liquid paths
-- Implemented consistent URL structure for all three learning paths
 - Added complete Liquid learning path modules and sections
 - Added all missing pages in the Lightning learning path, including advanced concepts
 
