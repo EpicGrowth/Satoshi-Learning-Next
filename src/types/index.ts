@@ -1,6 +1,6 @@
 export interface SearchIndexItem {
   id: string;
-  topic: 'bitcoin' | 'lightning';
+  topic: 'bitcoin' | 'lightning' | 'liquid';
   moduleId: string;
   sectionId: string;
   title: string;
