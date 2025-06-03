@@ -17,23 +17,95 @@ The Block Explorer allows users to search for and verify Bitcoin blocks by heigh
 - Verify Merkle root calculations
 - Navigate between blocks
 - View transaction lists
+- Transaction details with input/output analysis
+- Fee calculation and visualization
+- Mempool status integration
 
 #### Implementation
 
 - Frontend: React components in `/src/app/verify/blocks/`
-- API: Secure backend routes in `/src/app/api/bitcoin/blocks/`
-- Data Source: Blockstream API with secure credential management
+  - `BlockExplorer.tsx`: Main explorer component
+  - `BlockDetails.tsx`: Detailed block view
+  - `TransactionList.tsx`: Block transactions
+  - `MerkleVerification.tsx`: Interactive Merkle tree visualization
+  - `MempoolStatus.tsx`: Real-time mempool information
 
-### 2. Digital Signatures (Planned: `/verify/signatures`)
+- API Integration:
+  - REST endpoints in `/src/app/api/bitcoin/blocks/`
+  - WebSocket connection for real-time updates
+  - Rate limiting and caching implementation
+  - Multiple node fallback system
+
+- Data Sources:
+  - Primary: Self-hosted Bitcoin Core node
+  - Fallback: Blockstream API
+  - Mempool.space API for fee estimates
+
+### 2. Digital Signatures (`/verify/signatures`)
 
 Tools for verifying cryptographic signatures and creating signed messages.
 
-#### Planned Features
+#### Features
 
-- Message signing
+- Message signing with Bitcoin addresses
 - Signature verification
-- Key pair validation
-- Address generation
+- Support for legacy and native SegWit addresses
+- Batch verification capability
+- Integration with hardware wallet signing
+- Educational visualizations of the signing process
+
+#### Implementation
+
+- Frontend Components:
+  - `SignatureVerifier.tsx`: Main verification interface
+  - `MessageSigner.tsx`: Message signing interface
+  - `AddressValidator.tsx`: Bitcoin address validation
+  - `SigningProcess.tsx`: Interactive educational component
+  - `BatchVerification.tsx`: Bulk signature verification
+
+- Cryptographic Implementation:
+  - Uses `bitcoinjs-lib` for core functionality
+  - Custom implementation of Bitcoin message signing
+  - Support for P2PKH, P2SH, P2WPKH addresses
+  - Hardware wallet integration via WebUSB
+
+- Security Measures:
+  - Client-side only signing
+  - No private key storage
+  - Secure random number generation
+  - Input validation and sanitization
+
+### 3. Transaction Verification (`/verify/transactions`)
+
+#### Features
+
+- Raw transaction decoder
+- Script analysis and verification
+- Fee calculation and analysis
+- Input/output visualization
+- UTXO set verification
+- RBF (Replace-By-Fee) detection
+- Multi-signature transaction support
+
+#### Implementation
+
+- Frontend Components:
+  - `TransactionDecoder.tsx`: Raw transaction parsing
+  - `ScriptAnalyzer.tsx`: Script execution visualization
+  - `UTXOVerifier.tsx`: UTXO set validation
+  - `FeeAnalyzer.tsx`: Fee calculation and comparison
+  - `RBFDetector.tsx`: RBF status checker
+
+- Technical Implementation:
+  - Transaction parsing using `bitcoinjs-lib`
+  - Custom script interpreter for educational purposes
+  - UTXO set verification against multiple nodes
+  - WebSocket updates for mempool status
+
+- Data Integration:
+  - Bitcoin Core RPC for UTXO verification
+  - Mempool.space API for fee comparisons
+  - Blockstream API as fallback
 
 ### 3. Merkle Proofs (Planned: `/verify/merkle`)
 
