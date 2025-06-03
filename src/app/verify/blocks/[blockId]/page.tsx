@@ -21,7 +21,7 @@ const fetchBlockData = async (blockQuery: string) => {
 };
 
 // Educational content about Bitcoin blocks
-const educationalContent = [
+const baseEducationalContent = [
   {
     title: "What is a Bitcoin Block?",
     content: "A Bitcoin block is a container of transactions that is added to the blockchain approximately every 10 minutes. Each block includes a reference to the previous block, creating a chain that forms the immutable ledger."
@@ -36,6 +36,11 @@ const educationalContent = [
   }
 ];
 
+const genesisBlockContent = {
+  title: "The Genesis Block",
+  content: "The Genesis Block is the very first block mined on the Bitcoin blockchain. It was created by Satoshi Nakamoto and contains a hidden message in its coinbase transaction: 'The Times 03/Jan/2009 Chancellor on brink of second bailout for banks'."
+};
+
 export default function BlockDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -49,6 +54,7 @@ export default function BlockDetailPage() {
   const [transactionData, setTransactionData] = useState<any[]>([]);
   const [loadingTransactions, setLoadingTransactions] = useState(false);
   const [totalTransactions, setTotalTransactions] = useState(0);
+  const [educationalContent, setEducationalContent] = useState(baseEducationalContent);
 
   // Function to fetch a page of transactions
   const fetchTransactionPage = async (blockHash: string, page: number) => {
@@ -96,6 +102,10 @@ export default function BlockDetailPage() {
   };
 
   const formatTimestamp = (timestamp: number) => {
+    if (typeof timestamp !== 'number' || isNaN(timestamp)) {
+      return 'Invalid Date';
+    }
+    // Assuming timestamp is a Unix timestamp in seconds
     return new Date(timestamp * 1000).toLocaleString();
   };
 
@@ -104,11 +114,18 @@ export default function BlockDetailPage() {
     const loadBlockData = async () => {
       setIsLoading(true);
       setError('');
+      // Reset educational content to base for each load
+      setEducationalContent(baseEducationalContent);
       
       try {
         const data = await fetchBlockData(blockId);
         setBlockData(data);
         setTotalTransactions(data.tx_count || 0);
+
+        if (data.height === 0) {
+          setEducationalContent(prevContent => [genesisBlockContent, ...prevContent]);
+        }
+
         await fetchTransactionPage(data.hash, 1);
       } catch (err: any) {
         console.error('Block fetch error:', err);
@@ -182,7 +199,7 @@ export default function BlockDetailPage() {
           <CardHeader>
             <CardTitle className="flex items-center">
               <Database className="mr-2 h-5 w-5" />
-              Block #{blockData.height}
+              {blockData.height === 0 ? `Genesis Block (Block #0)` : `Block #${blockData.height}`}
             </CardTitle>
             <CardDescription>
               Verified from the Bitcoin blockchain
@@ -240,6 +257,12 @@ export default function BlockDetailPage() {
                 The Merkle root is a hash of all transaction hashes in this block, forming a Merkle tree.
                 It allows efficient verification that a transaction is included in a block.
               </p>
+              {blockData.height === 0 && blockData.tx_count === 1 && (
+                <p className="text-xs text-muted-foreground mt-2">
+                  Note: For the Genesis Block, which contains only one transaction (the coinbase transaction),
+                  the Merkle Root is identical to the hash of this single transaction.
+                </p>
+              )}
             </div>
             
             {blockData && blockData.hash && (
@@ -350,8 +373,7 @@ export default function BlockDetailPage() {
               className="flex items-center"
             >
               <ChevronLeft className="mr-1 h-4 w-4" />
-              Previous Block
-              {blockData.height === 1 && <span className="text-xs ml-1">(Genesis)</span>}
+              {blockData.height === 1 ? "Previous Block (Genesis Block #0)" : "Previous Block"}
             </Button>
             <Button 
               variant="outline" 
