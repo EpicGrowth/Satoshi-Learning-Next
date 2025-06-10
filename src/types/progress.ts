@@ -1,3 +1,22 @@
+export interface Certificate {
+  id: string;
+  recipientName: string;
+  pathType: 'bitcoin' | 'lightning' | 'liquid';
+  issuedAt: string;
+  completedModules: string[];
+  moduleDetails: Array<{
+    id: string;
+    title: string;
+    completedAt: string;
+    sections: Array<{
+      id: string;
+      title: string;
+      completedAt: string;
+    }>;
+  }>;
+  verificationHash: string;
+}
+
 export interface ModuleProgress {
   id: string;
   completedSections: Record<string, SectionProgress>;
@@ -25,4 +44,5 @@ export interface UserProgress {
     sectionId: string;
   };
   skillLevel: 'beginner' | 'intermediate' | 'advanced';
+  certificates?: Record<string, Certificate>;
 }

@@ -47,6 +47,7 @@ Satoshi Station's mission is to ignite a revolution in digital expression and Bi
 - **Interactive Visualizations**: Lightning Network demonstrations and Bitcoin concept illustrations
 - **Bitcoin Verification Tools**: Educational tools for verifying blocks, signatures, and Merkle proofs
 - **Strict Typography Requirements**: Exo 2 font (weight 700) with exact #FF523C orange color for all Satoshi Station branding
+- **Certification System**: Verifiable certificates for completed learning paths with PDF export functionality
 
 ## Learning Path Structure
 
@@ -94,6 +95,17 @@ All learning paths use consistent naming conventions with prefixed directory nam
 - **Liquid path**: Module directories use the 'liquid-' prefix (e.g., `liquid-fundamentals`, `liquid-technical`)
 
 Each module directory contains section directories, which in turn contain the `page.tsx` files that render the content for that section.
+
+## Certification System
+
+The platform includes a comprehensive certification system that rewards users for completing learning paths:
+
+- **Path-based Certificates**: Unique certificates for Bitcoin, Lightning, and Liquid learning paths
+- **Verification System**: Each certificate includes a unique verification hash
+- **PDF Export**: High-quality PDF export with professional branding
+- **Progress Tracking**: Detailed module and section completion tracking
+- **Dark Mode Support**: Certificates adapt to the user's theme preference
+- **Responsive Design**: Certificates display well on all screen sizes
 
 ## Learning Path Architecture
 
