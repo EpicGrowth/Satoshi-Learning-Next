@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { 
   Bitcoin, Zap, Shield, ArrowRight, Book, Code, 
   Database, Lock, Network, Wallet, Hash, Layers,
-  ChevronRight, Play, Terminal, FileCode, Github, MessageSquare, Gift
+  ChevronRight, Play, Terminal, FileCode, Github, MessageSquare, Gift,
+  Award
 } from 'lucide-react';
+import { CertificationPromotion } from '@/components/certification/CertificationPromotion';
 import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -229,7 +231,7 @@ export default function Home() {
             >
               <Link href="/learn/bitcoin/bitcoin-fundamentals/what-is-bitcoin">
                 Start Learning
-                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </Button>
             <Button
@@ -247,8 +249,7 @@ export default function Home() {
         </div>
       </section>
 
-
-        {/* Stats with enhanced visuals */}
+      {/* Stats with enhanced visuals */}
         <section className="container relative z-0 -mt-16 md:-mt-24">
           <div className="mx-auto mt-24 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
           {stats.map((stat) => (
@@ -526,6 +527,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Certification Promotion */}
+      <div className="animate-fade-in-up">
+        <CertificationPromotion />
+      </div>
     </div>
   );
 }

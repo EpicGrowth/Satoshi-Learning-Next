@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import { UserProgress, ModuleProgress, SectionProgress } from '@/types/progress';
+import { UserProgress, ModuleProgress, SectionProgress, Certificate } from '@/types/progress';
 import { bitcoinModules, lightningModules, liquidModules } from '@/config/learning-modules';
+import { createCertificate, isPathCompleted } from '@/lib/certificate';
 
 // Debounce helper with proper cleanup
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
@@ -27,6 +28,21 @@ interface LearningProgressContextType {
   isContentLocked: (type: 'bitcoin' | 'lightning' | 'liquid', moduleId: string, sectionId: string) => boolean;
   updateSkillLevel: (level: 'beginner' | 'intermediate' | 'advanced') => void;
   getModuleProgress: (type: 'bitcoin' | 'lightning' | 'liquid', moduleId: string) => ModuleProgress | undefined;
+  generatePathCertificate: (
+    pathType: 'bitcoin' | 'lightning' | 'liquid',
+    recipientName: string,
+    moduleDetails: Array<{
+      id: string;
+      title: string;
+      completedAt: string;
+      sections: Array<{
+        id: string;
+        title: string;
+        completedAt: string;
+      }>;
+    }>
+  ) => Promise<Certificate>;
+  getCertificate: (pathType: 'bitcoin' | 'lightning' | 'liquid') => Certificate | undefined;
 }
 
 const LearningProgressContext = createContext<LearningProgressContextType | undefined>(undefined);
@@ -65,7 +81,8 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     bitcoin: {},
     lightning: {},
     liquid: {},
-    skillLevel: 'beginner'
+    skillLevel: 'beginner',
+    certificates: {}
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -300,10 +317,66 @@ export function LearningProgressProvider({ children }: { children: React.ReactNo
     return false;
   }, []);
 
+  const generatePathCertificate = useCallback(
+    async (
+      pathType: 'bitcoin' | 'lightning' | 'liquid',
+      recipientName: string,
+      moduleDetails: Array<{
+        id: string;
+        title: string;
+        completedAt: string;
+        sections: Array<{
+          id: string;
+          title: string;
+          completedAt: string;
+        }>;
+      }>
+    ) => {
+      const modules = pathType === 'bitcoin' 
+        ? bitcoinModules 
+        : pathType === 'lightning' 
+        ? lightningModules 
+        : liquidModules;
+
+      const requiredModuleIds = modules.map(m => m.id);
+      const completedModuleIds = Object.entries(progress[pathType])
+        .filter(([_, moduleProgress]) => moduleProgress.completedAt)
+        .map(([moduleId]) => moduleId);
+
+      if (!isPathCompleted(pathType, completedModuleIds, requiredModuleIds)) {
+        throw new Error('Not all required modules are completed');
+      }
+
+      const certificate = createCertificate(pathType, recipientName, completedModuleIds, moduleDetails);
+
+      setProgress(prev => ({
+        ...prev,
+        certificates: {
+          ...prev.certificates,
+          [certificate.id]: certificate
+        }
+      }));
+
+      return certificate;
+    },
+    [progress]
+  );
+
+  const getCertificate = useCallback(
+    (pathType: 'bitcoin' | 'lightning' | 'liquid') => {
+      return Object.values(progress.certificates || {}).find(
+        cert => cert.pathType === pathType
+      );
+    },
+    [progress.certificates]
+  );
+
   return (
     <LearningProgressContext.Provider
       value={{
         progress,
+        generatePathCertificate,
+        getCertificate,
         updateSectionProgress,
         markSectionComplete,
         resetProgress,
